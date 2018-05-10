@@ -1,0 +1,11 @@
+build/
+.gradle/
+gradle/
+gradlew.bat
+gradlew
+.idea/
+shippable/
+*.iml
+*.ipr
+*.iws
+gradle.properties
