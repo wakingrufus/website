@@ -52,7 +52,7 @@ class Website(private val baseDir: File) {
     }
 
     fun upload() = slideshows.flatMap(Slideshow::files).plus(files())
-            .forEach({ file -> uploaders.forEach({ u -> u.upload(baseDir,file) }) })
+            .forEach({ file -> uploaders.forEach({ u -> u.upload(baseDir, file) }) })
 }
 
 fun website(baseDir: File, builder: Website.(baseDir: File) -> Unit): Website {
@@ -68,7 +68,6 @@ fun BODY.content(block: DIV.() -> Unit) {
     return div {
         style = css {
             display = Display.inlineBlock
-            //    width = 100.pct
         }
         block(this)
     }
@@ -76,11 +75,8 @@ fun BODY.content(block: DIV.() -> Unit) {
 
 fun BODY.sideNavBar(block: UL.() -> Unit) {
     return div {
+        classes += "navBar"
         style = css {
-            display = Display.inlineBlock
-            paddingRight = 2.em
-            borderRightStyle = BorderStyle.solid
-            borderRightColor = MyStyles.BORDER_COLOR
             verticalAlign = VerticalAlign.top
         }
         ul {

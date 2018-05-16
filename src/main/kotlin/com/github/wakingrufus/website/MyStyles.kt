@@ -23,19 +23,36 @@ class MyStyles {
             a {
                 color = LINK_COLOR
             }
-            media("screen and (max-width: 800px or min-resolution: 96dpi)") {
+
+            media("screen and (min-resolution: 120dpi)") {
+                body {
+                    fontSize = 1.5.em
+                }
+            }
+            media("screen and (min-resolution: 192dpi)") {
                 body {
                     fontSize = 2.em
                 }
             }
-            media("screen and (max-width: 800px)") {
-                body {
-                    fontSize = 2.em
+
+            media("screen and (max-width: 1080px)") {
+                (".navBar") {
+                    display = Display.block
+                    paddingBottom = 2.em
+                    borderBottomStyle = BorderStyle.solid
+                    borderBottomColor = MyStyles.BORDER_COLOR
+
+                }
+                (".navBar li") {
+                    display = Display.inlineBlock
                 }
             }
-            media("screen and (min-resolution: 96dpi)") {
-                body {
-                    fontSize = 2.em
+            media("screen and (min-width: 1080px)") {
+                (".navBar") {
+                    display = Display.inlineBlock
+                    paddingRight = 2.em
+                    borderRightStyle = BorderStyle.solid
+                    borderRightColor = MyStyles.BORDER_COLOR
                 }
             }
         }

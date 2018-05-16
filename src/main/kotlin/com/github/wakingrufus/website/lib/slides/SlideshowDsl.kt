@@ -132,7 +132,7 @@ fun DIV.slideList(block: UL.() -> Unit) {
             fontSize = 2.em
             lineHeight = LineHeight("1.5")
             display = Display.inlineBlock
-            padding(right = 1.em, left = 1.em)
+            padding(right = 2.em, left = 1.em)
         }
         block(this)
     }
@@ -168,6 +168,7 @@ fun DIV.slideCode(block: CODE.() -> Unit) {
         sampleCode {
             block.invoke(this)
         }
+
     }
 }
 

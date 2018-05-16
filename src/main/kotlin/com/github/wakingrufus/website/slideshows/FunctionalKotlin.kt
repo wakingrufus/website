@@ -23,6 +23,7 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "Pure functions - Deterministic", block = functionalKotlinDeterministic())
         slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsStory())
         slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsCode())
+        slide(title = "First Class Functions", block = functionalKotlinJavaNoFirstClassFunctions())
     }
 }
 
@@ -88,15 +89,32 @@ fun functionalKotlinImmutableData(): DIV.() -> Unit = {
         }
 
         slideCode {
-            text("class ImmutableValue(val stringData: String)\n\n" +
-                    "data class ImmutableDataValue(val stringData: String)\n\n" +
-                    "fun function(){\n" +
-                    "  val data = ImmutableValue(stringData = \"a\")\n" +
-                    "  data.stringData\n" +
-                    "  val dataClass = ImmutableDataValue(stringData = \"s\")\n" +
-                    "  val dataClass2 = dataClass.copy(stringData = \"a\")\n" +
-                    "  dataClass2.stringData\n" +
-                    "}")
+            declareClass(name = "ImmutableValue") {
+                property(modifier = "val", name = "stringData", type = "String")
+            }
+            dataClass(name = "ImmutableDataValue") {
+                property(modifier = "val", name = "stringData", type = "String")
+            }
+            declareFunction("function") {
+                body {
+                    indent(2)
+                    declareProperty(modifier = "val", name = "data", type = "ImmutableValue") {
+                        +"ImmutableValue(stringData = \"a\")"
+                    }
+                    indent(2)
+                    +"data."
+                    propertyName("stringData")
+                    +"\n"
+                    indent(2)
+                    declareProperty(modifier = "val", name = "dataClass"){
+                        +"ImmutableDataValue(stringData = \"s\")"
+                    }
+                    indent(2)
+                    declareProperty(modifier = "val", name = "dataClass2"){
+                        +"dataClass.copy(stringData = \"a\")"
+                    }
+                }
+            }
         }
     }
 }
@@ -154,32 +172,56 @@ fun functionalKotlinSideEffectsStory(): DIV.() -> Unit = {
 fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
     singleSlide {
         slideCode {
-            declareVal(name = "externalMessages", assignment = ": ArrayList<ChatMessage> = ArrayList()")
-        }
-        slideCode {
+            declareProperty(modifier = "val", name = "externalMessages", type = "ArrayList<ChatMessage>") {
+                +"ArrayList()"
+            }
+            +"\n"
             declareFunction(name = "addNewMessageSideEffect") {
-                +("(messages: ArrayList<ChatMessage>, newMessage: ChatMessage){\n" +
-                        "  messages.add(newMessage)")
-                comment("// Modifies input")
-                +"\n} "
+                argument(name = "messages", type = "ArrayList<ChatMessage>")
+                argument(name = "newMessage", type = "ChatMessage")
+                body {
+                    indent(2)
+                    +("messages.add(newMessage) ")
+                    comment("// Modifies input")
+                }
             }
-        }
-        slideCode {
+
             declareFunction(name = "addNewMessageSideEffect2") {
-                +("(newMessage: ChatMessage) {\n")
-                property("  externalMessages")
-                +".add(newMessage)"
-                comment("// Modifies something outside of scope")
-                +"\n}"
+                argument(name = "newMessage", type = "ChatMessage")
+                body {
+                    indent(2)
+                    propertyName("externalMessages")
+                    +".add(newMessage)"
+                    comment("// Modifies something outside of scope")
+                }
+            }
+
+            declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
+                argument(name = "messages", type = "ArrayList<ChatMessage>")
+                argument(name = "newMessage", type = "ChatMessage")
+                body {
+                    indent(2)
+                    declareReturn {
+                        +"messages.plus(newMessage)"
+                    }
+                }
             }
         }
+    }
+}
+
+fun functionalKotlinJavaNoFirstClassFunctions(): DIV.() -> Unit = {
+    singleSlide {
         slideCode {
-            declareFunction(
-                    name = "addNewMessage",
-                    args = "messages: ArrayList<ChatMessage>, newMessage: ChatMessage",
-                    returnType = "List<ChatMessage>") {
-                declareReturn {
-                    +"messages.plus(newMessage)"
+            declareClass(modifiers = listOf("public"), name = "NoFirstClassFunctions") {
+                function(name = "NoFirstClassFunctions") {
+                    body {
+                        indent(2)
+                        keyword("throw")
+                        +" "
+                        keyword("new")
+                        +(" UnsupportedOperationException();")
+                    }
                 }
             }
         }
