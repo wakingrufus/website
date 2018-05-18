@@ -60,6 +60,16 @@ class MyStyles {
 
     fun slideShowStyles(): String {
         return css {
+            media("screen and (max-width: 1200px)") {
+                body {
+                    fontSize = .5.em
+                }
+            }
+            media("screen and (min-width: 1200px) and (max-width: 1900px)") {
+                body {
+                    fontSize = .75.em
+                }
+            }
             html {
                 height = 100.pct
             }

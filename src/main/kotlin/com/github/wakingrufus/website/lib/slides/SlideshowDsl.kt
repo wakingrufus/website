@@ -113,7 +113,7 @@ fun DIV.splitSlide(leftBlock: DIV.() -> Unit, rightBlock: DIV.() -> Unit) {
     }
 }
 
-fun DIV.singleSlide(block: DIV.() -> Unit) {
+fun DIV.slideContent(block: DIV.() -> Unit) {
     return div {
         style = css {
             display = Display.block
@@ -138,23 +138,61 @@ fun DIV.slideList(block: UL.() -> Unit) {
     }
 }
 
-fun DIV.slidePicture(name: String) = slidePicture(name) {
+class PICTURE(val name: String, val alt: String) {
+    var css: (CSSBuilder.() -> Unit)? = null
+    var caption: (SPAN.() -> Unit)? = null
+    fun customCss(block: CSSBuilder.() -> Unit) {
+        css = block
+    }
+
+    fun caption(block: SPAN.() -> Unit) {
+        caption = block
+    }
+
+    operator fun invoke(div: DIV) {
+        div.apply {
+            figure {
+                style = css {
+                    display = Display.inlineBlock
+                    verticalAlign = VerticalAlign.top
+                    height = LinearDimension.auto
+                    width = LinearDimension.auto
+                    maxHeight = 100.pct
+                    css?.let {
+                        it(this)
+                    }
+                }
+                val imageResource = this::class.java.classLoader.getResourceAsStream(name)
+                val imageBase64 = Base64.getEncoder().encodeToString(imageResource.readBytes())
+                img(src = "data:image/png;base64, $imageBase64", alt = alt) {
+                    style = css {
+                        //   verticalAlign = VerticalAlign.top
+                          height = 90.pct
+                        //   width = LinearDimension.auto
+                        maxHeight = 90.pct
+                        css?.let {
+                            it(this)
+                        }
+                    }
+                }
+                caption?.let {
+                    figcaption {
+                        span {
+                            it(this)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 }
 
-fun DIV.slidePicture(name: String, block: CSSBuilder.() -> Unit) {
-    val imageResource = this::class.java.classLoader.getResourceAsStream(name)
-    val imageBase64 = Base64.getEncoder().encodeToString(imageResource.readBytes())
-    return img(src = "data:image/png;base64, $imageBase64") {
-        style = css {
-            verticalAlign = VerticalAlign.top
-            height = LinearDimension.auto
-            width = LinearDimension.auto
-            maxHeight = 100.pct
-            block(this)
-        }
+fun DIV.slidePicture(name: String, alt: String) = slidePicture(name = name, alt = alt) {
+}
 
-    }
+fun DIV.slidePicture(name: String, alt: String,block: PICTURE.() -> Unit) {
+    PICTURE(name = name, alt = alt).apply(block)(this)
 }
 
 fun DIV.slideCode(block: CODE.() -> Unit) {

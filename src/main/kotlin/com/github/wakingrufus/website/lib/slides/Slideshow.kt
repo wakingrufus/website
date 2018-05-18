@@ -80,6 +80,7 @@ fun slideTemplate(mainCssPath: String,
                   content: DIV.() -> Unit): HTML.() -> Unit = {
     head {
         link(href = mainCssPath, rel = "stylesheet")
+        meta { charset = "UTF-8" }
         title { +title }
     }
     body {
