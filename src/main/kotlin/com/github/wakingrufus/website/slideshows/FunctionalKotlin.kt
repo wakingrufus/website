@@ -37,6 +37,7 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsCode())
         slide(title = "First Class Functions", block = functionalKotlinJavaNoFirstClassFunctions())
         slide(title = "First Class Functions", block = firstClassFunctions())
+        slide(title = "Functions are Non-Imperative", block = functionsAreNonImperative())
     }
 }
 
@@ -339,10 +340,10 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                         declareProperty(modifier = "val", name = "staticValue", type = "String") {
                             +"\"STRING\""
                         }
-                        declareFunction(name = "pureFunction", returnType = "String") {
-                            returnStatement {
-                                +"\"MAGIC STRING\""
-                            }
+                    }
+                    declareFunction(name = "pureFunction", returnType = "String", indentation = 2) {
+                        returnStatement {
+                            +"\"MAGIC STRING\""
                         }
                     }
                     line {
@@ -357,6 +358,97 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                 returnStatement {
                     +"one.compareTo(two) == "
                     number(0)
+                }
+            }
+            declareFunctionExpression(
+                    name = "bigDecimalEquals",
+                    returnType = "Boolean",
+                    parameters = listOf(
+                            PARAMETER(name = "one", type = "BigDecimal"),
+                            PARAMETER(name = "two", type = "BigDecimal")
+                    )) {
+                +"one.compareTo(two) == "
+                number(0)
+            }
+            line {
+                declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
+                    +"one.compareTo(two) == "
+                    number(0)
+                }
+            }
+        }
+    }
+}
+
+fun functionsAreNonImperative(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"Imperative == order dependant" }
+        }
+        slideCode {
+            declareFunction(name = "fixChatMessageImperative", returnType = "List<String>", argsOnSeparateLines = false) {
+                parameter(name = "messages", type = "List<String>")
+                body {
+                    line {
+                        declareProperty(modifier = "val", name = "fixedMessages", type = "List<String>") {
+                            call(name = "ArrayList") {}
+                        }
+                    }
+                    block {
+                        prefix {
+                            keyword("for")
+                            +" (m "
+                            keyword("in")
+                            +" messages)"
+                        }
+
+                        line {
+                            declareProperty(modifier = "var", name = "fixedMessage", type = "String?") {
+                                +"m."
+                                propertyName("message")
+                            }
+                        }
+                        block {
+                            prefix {
+                                keyword("if")
+                                +" (m."
+                                propertyName("message")
+                                +"."
+                                functionName("contains")
+                                +"("
+                                string("bad word")
+                                +")"
+                            }
+                            line {
+                                +"fixedMessage = "
+                                +"m."
+                                propertyName("message")
+                                +"."
+                                functionName("replace")
+                                +"("
+                                string("bad word")
+                                +","
+                                string("****")
+                                +")"
+
+                            }
+
+                        }
+                        block {
+                            prefix {
+                                keyword("if")
+                                +" (m."
+                                propertyName("user")
+                                +" == "
+                                string("SYSTEM")
+                            }
+                            line {
+                                +"fixedMessage = "
+                                keyword("null")
+                            }
+
+                        }
+                    }
                 }
             }
         }

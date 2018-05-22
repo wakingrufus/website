@@ -31,6 +31,17 @@ fun CODE.keyword(text: String) {
     }
 }
 
+fun CODE.string(string: String){
+    return span {
+        style = css {
+            color = Color("#6A8759")
+        }
+        +"\""
+        +string
+        +"\""
+    }
+}
+
 fun CODE.number(value: Number) {
     return span {
 
@@ -45,6 +56,10 @@ fun CODE.line(indentation: Int = 0, code: CODE.() -> Unit) {
     indent(indentation)
     code.invoke(this)
     +"\n"
+}
+
+fun CODE.block(indentation: Int = 0, code: BLOCK.() -> Unit) {
+    BLOCK(indentation).apply(code)(this)
 }
 
 fun CODE.call(name: String, baseIndentation: Int = 0, block: CALL.() -> Unit) {
@@ -99,10 +114,28 @@ fun CODE.dataClass(name: String,
 fun CODE.declareFunction(name: String,
                          returnType: String? = null,
                          argsOnSeparateLines: Boolean = true,
+                         indentation: Int = 0,
                          block: FUNCTION.() -> Unit) {
     this.apply {
-        FUNCTION(name = name, returnType = returnType, paramsOnSeparateLines = argsOnSeparateLines)
+        FUNCTION(name = name,
+                returnType = returnType,
+                paramsOnSeparateLines = argsOnSeparateLines,
+                indentation = indentation)
                 .apply(block)(this)
+    }
+}
+
+fun CODE.declareFunctionExpression(name: String,
+                                   returnType: String? = null,
+                                   argsOnSeparateLines: Boolean = true,
+                                   parameters: List<PARAMETER>,
+                                   block: BLOCK.() -> Unit) {
+    this.apply {
+        FUNCTION(name = name, returnType = returnType, paramsOnSeparateLines = argsOnSeparateLines, expression = true)
+                .apply {
+                    this.parameters = parameters
+                    body(block)
+                }(this)
     }
 }
 
@@ -223,65 +256,40 @@ class PROPERTY(val modifier: String? = null,
 }
 
 @CodeDsl
-class FUNCTION(val name: String,
-               val returnType: String? = null,
-               val indentation: Int = 0,
-               val paramsOnSeparateLines: Boolean = true) {
-    var parameters: List<PARAMETER> = ArrayList()
-    var body: (CODE.() -> Unit)? = null
-    var returnStatement: (CODE.() -> Unit)? = null
-
-    fun parameter(name: String, type: String?, value: (CODE.() -> Unit)? = null) {
-        parameters += PARAMETER(name = name, type = type).apply { value?.let { value(it) } }
+class BLOCK(val indentation: Int = 0) {
+    var prefix: (CODE.() -> Unit)? = null
+    var body: List<CODE.() -> Unit> = ArrayList()
+    fun line(block: CODE.() -> Unit) {
+        body += {
+            line(indentation + 1) {
+                block(this)
+            }
+        }
     }
 
-    fun body(bodyText: CODE.() -> Unit) {
-        body = bodyText
+    fun block(block: BLOCK.() -> Unit) {
+        body += { BLOCK(indentation = indentation + 1).apply(block)(this) }
     }
 
-    fun returnStatement(block: CODE.() -> Unit) {
-        returnStatement = block
+    fun prefix(block: CODE.() -> Unit) {
+        prefix = block
     }
 
     operator fun invoke(code: CODE) {
         code.apply {
-            indent(indentation)
-            keyword("fun")
-            +" "
-            functionName(name)
-            +"("
-            parameters.forEachIndexed { i, a ->
-                if (paramsOnSeparateLines) {
-                    +"\n"
-                    indent(indentation + 1)
+            line(indentation) {
+                prefix?.let {
+                    it(this)
+                    +" "
                 }
-                a.invoke(this)
-                if (i < parameters.size - 1) {
-                    +", "
-                }
+                +"{"
             }
-            +")"
-            returnType?.let {
-                +" : "
-                +it
-            }
-            +"{  "
-            body?.let {
-                +"\n"
-                it.invoke(this)
-            }
-            returnStatement?.let {
-                +"\n"
-                line {
-                    indent(1)
-                    declareReturn(it)
-                }
-            }
-            indent(indentation)
-            +"}\n"
+            body.forEach { it(this) }
+            line(indentation) { +"}" }
         }
     }
 }
+
 
 @CodeDsl
 class CLASS(val modifiers: List<String> = emptyList(),
