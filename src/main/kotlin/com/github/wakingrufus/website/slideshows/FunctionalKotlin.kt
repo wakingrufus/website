@@ -245,7 +245,6 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                     parameter(name = "newMessage", type = "ChatMessage")
                     body {
                         line {
-                            indent(2)
                             +("messages.add(newMessage) ")
                             comment("Modifies input")
                         }
@@ -257,7 +256,6 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                     parameter(name = "newMessage", type = "ChatMessage")
                     body {
                         line {
-                            indent(2)
                             propertyName("externalMessages")
                             +".add(newMessage)"
                             comment("Modifies something outside of scope")
