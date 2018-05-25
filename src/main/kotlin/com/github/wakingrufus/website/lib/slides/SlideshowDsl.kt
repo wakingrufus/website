@@ -42,6 +42,28 @@ fun DIV.slideshowTitle(block: H1.() -> Unit) {
     }
 }
 
+fun DIV.slideshowSubTitle(block: H3.() -> Unit) {
+    return div {
+        div {
+            style = css {
+                display = Display.block
+                width = 100.pct
+                height = 30.pct
+            }
+        }
+        h3 {
+            style = css {
+                display = Display.block
+                width = 100.pct
+                color = MyStyles.FONT_COLOR_WEAK
+                textAlign = TextAlign.center
+                fontSize = 4.em
+            }
+            block(this)
+        }
+    }
+}
+
 fun DIV.slideshowTitleFooter(block: DIV.() -> Unit) {
     return div {
         div {
@@ -80,6 +102,23 @@ fun DIV.slideTitle(block: H2.() -> Unit) {
             color = MyStyles.TITLE_FONT_COLOR
             textAlign = TextAlign.left
             fontSize = 4.em
+            marginBottom = 0.px
+        }
+        block(this)
+    }
+}
+
+fun DIV.slideSubTitle(block: H4.() -> Unit) {
+    return h4 {
+        style = css {
+            display = Display.block
+            width = 100.pct
+            color = MyStyles.FONT_COLOR_WEAK
+            textAlign = TextAlign.left
+            fontSize = 2.em
+            height = 1.em
+            marginTop = 0.px
+            marginBottom = 0.px
         }
         block(this)
     }
@@ -119,6 +158,7 @@ fun DIV.slideContent(block: DIV.() -> Unit) {
             display = Display.block
             width = 100.pct
             height = 80.pct
+            paddingTop = 1.em
         }
         block(this)
     }
@@ -138,6 +178,7 @@ fun DIV.slideList(block: UL.() -> Unit) {
     }
 }
 
+@HtmlTagMarker
 class PICTURE(val name: String, val alt: String) {
     var css: (CSSBuilder.() -> Unit)? = null
     var caption: (SPAN.() -> Unit)? = null
@@ -158,24 +199,22 @@ class PICTURE(val name: String, val alt: String) {
                     height = LinearDimension.auto
                     width = LinearDimension.auto
                     maxHeight = 100.pct
-                    css?.let {
-                        it(this)
-                    }
+                    this@PICTURE.css?.invoke(this)
                 }
-                val imageResource = this::class.java.classLoader.getResourceAsStream(name)
+                val imageResource = this::class.java.classLoader.getResourceAsStream(this@PICTURE.name)
                 val imageBase64 = Base64.getEncoder().encodeToString(imageResource.readBytes())
-                img(src = "data:image/png;base64, $imageBase64", alt = alt) {
+                img(src = "data:image/png;base64, $imageBase64", alt = this@PICTURE.alt) {
                     style = css {
                         //   verticalAlign = VerticalAlign.top
-                          height = 90.pct
+                        height = 90.pct
                         //   width = LinearDimension.auto
                         maxHeight = 90.pct
-                        css?.let {
+                        this@PICTURE.css?.let {
                             it(this)
                         }
                     }
                 }
-                caption?.let {
+                this@PICTURE.caption?.let {
                     figcaption {
                         span {
                             it(this)
@@ -188,10 +227,65 @@ class PICTURE(val name: String, val alt: String) {
 
 }
 
+fun DIV.slideTable(block: TABLE.() -> Unit) {
+    return table {
+        style = css {
+            fontSize = 3.em
+            borderStyle = BorderStyle.solid
+            borderColor = Color.white
+            borderWidth = 4.px
+            borderCollapse = BorderCollapse.collapse
+        }
+        block(this)
+    }
+}
+
+fun TBODY.row(cells: List<String>) {
+    return tr {
+        cells.forEach({
+            td {
+                style = css {
+                    borderStyle = BorderStyle.solid
+                    borderColor = Color.white
+                    borderWidth = 1.px
+                    padding(.4.em)
+                }
+                +it
+            }
+        })
+    }
+}
+
+fun TABLE.headers(headers: List<String>) {
+    return thead {
+        style = css {
+            fontWeight = FontWeight.bold
+        }
+        tr {
+            style = css {
+                borderStyle = BorderStyle.solid
+                borderColor = Color.white
+                borderWidth = 4.px
+            }
+            headers.forEach({
+                td {
+                    style = css {
+                        borderStyle = BorderStyle.solid
+                        borderColor = Color.white
+                        borderWidth = 1.px
+                        padding(.4.em)
+                    }
+                    +it
+                }
+            })
+        }
+    }
+}
+
 fun DIV.slidePicture(name: String, alt: String) = slidePicture(name = name, alt = alt) {
 }
 
-fun DIV.slidePicture(name: String, alt: String,block: PICTURE.() -> Unit) {
+fun DIV.slidePicture(name: String, alt: String, block: PICTURE.() -> Unit) {
     PICTURE(name = name, alt = alt).apply(block)(this)
 }
 
@@ -204,7 +298,7 @@ fun DIV.slideCode(block: CODE.() -> Unit) {
             display = Display.inlineBlock
         }
         sampleCode {
-            block.invoke(this)
+            block(this)
         }
 
     }

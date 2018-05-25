@@ -1,78 +1,71 @@
 package com.github.wakingrufus.website.lib.code
 
 import kotlinx.html.CODE
+import kotlinx.html.HtmlTagMarker
 
 
-@CodeDsl
+@HtmlTagMarker
 class FUNCTION(val name: String,
                val returnType: String? = null,
                val indentation: Int = 0,
                val paramsOnSeparateLines: Boolean = true,
                val expression: Boolean = false) {
     var parameters: List<PARAMETER> = ArrayList()
-    var body: (BLOCK)? = null
-    var returnStatement: (CODE.() -> Unit)? = null
+    var body: (CODE.() -> Unit)? = null
 
     fun parameter(name: String, type: String?, value: (CODE.() -> Unit)? = null) {
         parameters += PARAMETER(name = name, type = type).apply { value?.let { value(it) } }
     }
 
     fun body(bodyText: BLOCK.() -> Unit) {
-        body = BLOCK(indentation = indentation).apply(bodyText)
+        body = { BLOCK(indentation = this@FUNCTION.indentation).apply(bodyText)(this) }
     }
 
-    fun returnStatement(block: CODE.() -> Unit) {
-        returnStatement = block
+    fun expression(value: CODE.() -> Unit) {
+        body = value
     }
 
     private fun buildExpression(code: CODE) {
         code.apply {
             +" = "
-            body?.let {
-                it(this)
-            }
+            this@FUNCTION.body?.invoke(this)
             +"\n"
         }
     }
 
     private fun buildFunctionBody(code: CODE) {
         code.apply {
-            body?.let {
-                it.invoke(this)
-            }
-            returnStatement?.let {
-                +"\n"
-                line {
-                    indent(indentation+1)
-                    declareReturn(it)
-                }
-            }
+            this@FUNCTION.body?.invoke(this)
         }
     }
 
     operator fun invoke(code: CODE) {
         code.apply {
-            indent(indentation)
+            indent(this@FUNCTION.indentation)
             keyword("fun")
             +" "
-            functionName(name)
+            functionName(this@FUNCTION.name)
             +"("
-            parameters.forEachIndexed { i, a ->
-                if (paramsOnSeparateLines) {
+            this@FUNCTION.parameters.forEachIndexed { i, a ->
+                if (this@FUNCTION.paramsOnSeparateLines) {
                     +"\n"
-                    indent(indentation + 1)
+                    indent(this@FUNCTION.indentation + 2)
                 }
                 a.invoke(this)
-                if (i < parameters.size - 1) {
+                if (i < this@FUNCTION.parameters.size - 1) {
                     +", "
                 }
             }
-            +")"
-            returnType?.let {
-                +" : "
+            +") "
+            this@FUNCTION.returnType?.let {
+                +": "
                 +it
             }
-            if (expression) buildExpression(this) else buildFunctionBody(this)
+            if (this@FUNCTION.expression) {
+                this@FUNCTION.buildExpression(this)
+            } else {
+                this@FUNCTION.buildFunctionBody(this)
+            }
         }
     }
 }

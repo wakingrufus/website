@@ -19,7 +19,7 @@ class Slideshow(val baseDir: File,
             File(baseDir, index.toString() + ".html").apply {
                 logger.info("creating file: " + this.canonicalPath)
                 writeHtmlPage(FileWriter(this),
-                        slide.template(rootCss.path, slide.title, index, slides.size, slide.content))
+                        slide.template(rootCss.path, slide.title, slide.subTitle, index, slides.size, slide.content))
             }
         }.plus(
                 File(baseDir, rootCss.path).apply {
@@ -28,11 +28,11 @@ class Slideshow(val baseDir: File,
         )
     }
 
-    fun slide(title: String, block: DIV.() -> Unit) {
-        slides += Slide(title = title, template = ::slideTemplate, content = block)
+    fun slide(title: String, subTitle: String? = null, block: DIV.() -> Unit) {
+        slides += Slide(title = title, subTitle = subTitle, template = ::slideTemplate, content = block)
     }
 
-    fun titleSlide(title: String, block: DIV.() -> Unit) {
+    fun titleSlide(title: String, subTitle: String? = null, block: DIV.() -> Unit) {
         slides += Slide(title = title,
                 template = ::slideshowTitleSlide,
                 content = block)
@@ -41,6 +41,7 @@ class Slideshow(val baseDir: File,
 
 fun slideshowTitleSlide(mainCssPath: String,
                         title: String,
+                        subTitle: String? = null,
                         slideNumber: Int,
                         totalSlides: Int,
                         content: DIV.() -> Unit): HTML.() -> Unit = {
@@ -51,6 +52,9 @@ fun slideshowTitleSlide(mainCssPath: String,
     body {
         slide {
             slideshowTitle { +title }
+            subTitle?.let {
+                slideshowSubTitle { +it }
+            }
             this.apply(content)
             div {
                 a(href = if (slideNumber > 0) (slideNumber - 1).toString() + ".html" else "../" + Paths.INDEX_PATH) {
@@ -75,6 +79,7 @@ fun slideshowTitleSlide(mainCssPath: String,
 
 fun slideTemplate(mainCssPath: String,
                   title: String,
+                  subTitle: String? = null,
                   slideNumber: Int,
                   totalSlides: Int,
                   content: DIV.() -> Unit): HTML.() -> Unit = {
@@ -86,6 +91,7 @@ fun slideTemplate(mainCssPath: String,
     body {
         slide {
             slideTitle { +title }
+            slideSubTitle { +subTitle.orEmpty() }
             this.apply(content)
             div {
                 a(href = if (slideNumber > 0) (slideNumber - 1).toString() + ".html" else "../" + Paths.INDEX_PATH) {

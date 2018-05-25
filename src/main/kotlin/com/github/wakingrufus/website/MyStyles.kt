@@ -7,6 +7,7 @@ class MyStyles {
     companion object {
         val BACKGROUND_COLOR: Color = Color("#111111")
         val FONT_COLOR: Color = Color("#EEEEEE")
+        val FONT_COLOR_WEAK: Color = Color("#999999")
         val TITLE_FONT_COLOR: Color = Color("#9999FF")
         val FOOTER_FONT_COLOR: Color = Color("#999999")
         val LINK_COLOR: Color = Color("#9999EE")

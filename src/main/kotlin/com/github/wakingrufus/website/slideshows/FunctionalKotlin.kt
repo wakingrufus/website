@@ -6,10 +6,7 @@ import com.github.wakingrufus.website.lib.CssStringPage
 import com.github.wakingrufus.website.lib.Website
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.slides.*
-import kotlinx.html.DIV
-import kotlinx.html.a
-import kotlinx.html.li
-import kotlinx.html.ul
+import kotlinx.html.*
 
 /**
  * Abstract:
@@ -26,7 +23,7 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
     slideshow(
             name = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME,
             rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())) {
-        titleSlide(title = "Functional Kotlin", block = functionalKotlinTitleSlide())
+        titleSlide(title = "Functional Kotlin", subTitle = "And How to Test it", block = functionalKotlinTitleSlide())
         slide(title = "Functional Programming", block = functionalKotlinFunctionalProgramming())
         slide(title = "Immutable Data", block = functionalKotlinImmutableDataStory())
         slide(title = "Immutable Data", block = functionalKotlinImmutableData())
@@ -37,7 +34,14 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsCode())
         slide(title = "First Class Functions", block = functionalKotlinJavaNoFirstClassFunctions())
         slide(title = "First Class Functions", block = firstClassFunctions())
-        slide(title = "Functions are Non-Imperative", block = functionsAreNonImperative())
+        slide(title = "Functions are Non-Imperative", subTitle = "Imperative == order dependant", block = functionsAreNonImperative())
+        slide(title = "Higher Order Functions", block = higherOrderFunctions())
+        slide(title = "Kotlin Standard Functions", block = kotlinStandardFunctions())
+        slide(title = "The Shape of Code", block = shapeOfCode())
+        slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers())
+        slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm())
+        slide(title = "Recap", block = recap())
+        slide(title = "More Resources", block = moreResources())
     }
 }
 
@@ -109,21 +113,21 @@ fun functionalKotlinImmutableData(): DIV.() -> Unit = {
             }
             declareFunction("function") {
                 body {
-                    line(indentation = 2) {
+                    line {
                         declareProperty(modifier = "val", name = "data", type = "ImmutableValue") {
                             +"ImmutableValue(stringData = \"a\")"
                         }
                     }
-                    line(indentation = 2) {
+                    line {
                         +"data."
                         propertyName("stringData")
                     }
-                    line(indentation = 2) {
+                    line {
                         declareProperty(modifier = "val", name = "dataClass") {
                             +"ImmutableDataValue(stringData = \"s\")"
                         }
                     }
-                    line(indentation = 2) {
+                    line {
                         declareProperty(modifier = "val", name = "dataClass2") {
                             +"dataClass.copy(stringData = \"a\")"
                         }
@@ -152,28 +156,32 @@ fun functionalKotlinDeterministicStory(): DIV.() -> Unit = {
 fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
     slideContent {
         slideCode {
-            dataClass(name = "ChatMessage") {
-                value(name = "user", type = "String")
-                value(name = "timestamp", type = "Instant")
-                value(name = "message", type = "String")
+            line {
+                dataClass(name = "ChatMessage") {
+                    value(name = "user", type = "String")
+                    value(name = "timestamp", type = "Instant")
+                    value(name = "message", type = "String")
+                }
             }
             declareFunction(name = "newMessage",
                     returnType = "ChatMessage",
                     argsOnSeparateLines = false) {
                 parameter(name = "message", type = "String")
-                returnStatement {
-                    call(name = "ChatMessage", baseIndentation = 1) {
-                        argument("user") {
-                            +"System.getProperty(\"user.name\")"
-                        }
-                        argument("timestamp") {
-                            +"Instant.now()"
-                        }
-                        argument("message") {
-                            +"message"
+                body {
+                    line {
+                        keyword("return ")
+                        call(name = "ChatMessage", baseIndentation = 1) {
+                            argument("user") {
+                                +"System.getProperty(\"user.name\")"
+                            }
+                            argument("timestamp") {
+                                +"Instant.now()"
+                            }
+                            argument("message") {
+                                +"message"
+                            }
                         }
                     }
-
                 }
             }
         }
@@ -183,29 +191,33 @@ fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
 fun functionalKotlinDeterministic(): DIV.() -> Unit = {
     slideContent {
         slideCode {
-            dataClass(name = "ChatMessage") {
-                value(name = "user", type = "String")
-                value(name = "timestamp", type = "Instant")
-                value(name = "message", type = "String")
+            line {
+                dataClass(name = "ChatMessage") {
+                    value(name = "user", type = "String")
+                    value(name = "timestamp", type = "Instant")
+                    value(name = "message", type = "String")
+                }
             }
             declareFunction(name = "newMessage",
                     returnType = "ChatMessage") {
                 parameter(name = "message", type = "String")
                 parameter(name = "user", type = "String")
                 parameter(name = "timestamp", type = "Instant")
-                returnStatement {
-                    call(name = "ChatMessage", baseIndentation = 1) {
-                        argument("user") {
-                            +"user"
-                        }
-                        argument("timestamp") {
-                            +"timestamp"
-                        }
-                        argument("message") {
-                            +"message"
+                body {
+                    line {
+                        keyword("return ")
+                        call(name = "ChatMessage", baseIndentation = 1) {
+                            argument("user") {
+                                +"user"
+                            }
+                            argument("timestamp") {
+                                +"timestamp"
+                            }
+                            argument("message") {
+                                +"message"
+                            }
                         }
                     }
-
                 }
             }
         }
@@ -235,7 +247,7 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                         line {
                             indent(2)
                             +("messages.add(newMessage) ")
-                            comment("// Modifies input")
+                            comment("Modifies input")
                         }
                     }
                 }
@@ -248,7 +260,7 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                             indent(2)
                             propertyName("externalMessages")
                             +".add(newMessage)"
-                            comment("// Modifies something outside of scope")
+                            comment("Modifies something outside of scope")
                         }
                     }
                 }
@@ -257,8 +269,11 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                 declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
                     parameter(name = "messages", type = "List<ChatMessage>")
                     parameter(name = "newMessage", type = "ChatMessage")
-                    returnStatement {
-                        +"messages.plus(newMessage)"
+                    body {
+                        line {
+                            keyword("return ")
+                            +"messages.plus(newMessage)"
+                        }
                     }
                 }
             }
@@ -330,45 +345,59 @@ fun firstClassFunctions(): DIV.() -> Unit = {
             li { +"There are also first class functions" }
         }
         slideCode {
-            declareClass(name = "UtilityClass") {
-                companionObject {
-                    line {
-                        +"{"
-                    }
-                    line {
-                        indent(2)
-                        declareProperty(modifier = "val", name = "staticValue", type = "String") {
-                            +"\"STRING\""
+            line {
+                declareClass(name = "UtilityClass") {
+                    companionObject {
+                        line {
+                            +"{"
                         }
-                    }
-                    declareFunction(name = "pureFunction", returnType = "String", indentation = 2) {
-                        returnStatement {
-                            +"\"MAGIC STRING\""
+                        line {
+                            indent(2)
+                            declareProperty(modifier = "val", name = "staticValue", type = "String") {
+                                +"\"STRING\""
+                            }
                         }
-                    }
-                    line {
-                        indent(1)
-                        +"}"
+                        declareFunction(name = "pureFunction", returnType = "String", indentation = 2) {
+                            body {
+                                line {
+                                    keyword("return ")
+                                    +"\"MAGIC STRING\""
+                                }
+                            }
+                        }
+                        line {
+                            indent(1)
+                            +"}"
+                        }
                     }
                 }
             }
-            declareFunction(name = "bigDecimalEquals", returnType = "Boolean") {
-                parameter(name = "one", type = "BigDecimal")
-                parameter(name = "two", type = "BigDecimal")
-                returnStatement {
-                    +"one.compareTo(two) == "
-                    number(0)
+            line {
+                declareFunction(name = "bigDecimalEquals", returnType = "Boolean") {
+                    parameter(name = "one", type = "BigDecimal")
+                    parameter(name = "two", type = "BigDecimal")
+                    body {
+                        line {
+                            keyword("return")
+                            +" one.compareTo(two) == "
+                            number(0)
+                        }
+                    }
                 }
             }
-            declareFunctionExpression(
-                    name = "bigDecimalEquals",
-                    returnType = "Boolean",
-                    parameters = listOf(
-                            PARAMETER(name = "one", type = "BigDecimal"),
-                            PARAMETER(name = "two", type = "BigDecimal")
-                    )) {
-                +"one.compareTo(two) == "
-                number(0)
+            line {
+                declareFunctionExpression(
+                        name = "bigDecimalEquals",
+                        returnType = "Boolean",
+                        parameters = listOf(
+                                PARAMETER(name = "one", type = "BigDecimal"),
+                                PARAMETER(name = "two", type = "BigDecimal")
+                        )) {
+                    line {
+                        +"one.compareTo(two) == "
+                        number(0)
+                    }
+                }
             }
             line {
                 declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
@@ -382,11 +411,8 @@ fun firstClassFunctions(): DIV.() -> Unit = {
 
 fun functionsAreNonImperative(): DIV.() -> Unit = {
     slideContent {
-        slideList {
-            li { +"Imperative == order dependant" }
-        }
         slideCode {
-            declareFunction(name = "fixChatMessageImperative", returnType = "List<String>", argsOnSeparateLines = false) {
+            declareFunction(name = "fixChatMessageImperative", returnType = "List<String>") {
                 parameter(name = "messages", type = "List<String>")
                 body {
                     line {
@@ -407,6 +433,9 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                                 +"m."
                                 propertyName("message")
                             }
+                        }
+                        line {
+                            comment("What if you move the following block")
                         }
                         block {
                             prefix {
@@ -432,7 +461,6 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                                 +")"
 
                             }
-
                         }
                         block {
                             prefix {
@@ -448,8 +476,221 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                             }
 
                         }
+                        block {
+                            prefix {
+                                keyword("if")
+                                +" (fixedMessage != "
+                                keyword("null")
+                                +")"
+                            }
+                            line {
+                                +"fixedMessage = fixedMessage."
+                                functionName("toLowerCase")
+                                +"()"
+                            }
+
+                        }
+                        line {
+                            comment("to here")
+                        }
+                        block {
+                            prefix {
+                                keyword("if")
+                                +" (fixedMessage != "
+                                keyword("null")
+                                +")"
+                            }
+                            line {
+                                +"fixedMessages."
+                                call("add", argsOnDifferentLines = false) {
+                                    argument {
+                                        +"fixedMessage"
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    line {
+                        keyword("return")
+                        +" fixedMessages"
                     }
                 }
+            }
+
+        }
+        slideCode {
+            declareFunctionExpression(name = "fixChatMessagesNotImperative",
+                    returnType = "List<String>",
+                    parameters = listOf(PARAMETER(name = "messages", type = "List<ChatMessage>"))) {
+                line {}
+                line(1) {
+                    +"messages."
+                    functionName("filter")
+                    +"{ it."
+                    propertyName("user")
+                    +" != "
+                    string("SYSTEM")
+                    +" }"
+                }
+                line(2) {
+                    +"."
+                    functionName("map")
+                    +"{ it."
+                    propertyName("messages")
+                    +"."
+                    functionName("replace")
+                    +"("
+                    string("bad word")
+                    +","
+                    string("****")
+                    +")}"
+                }
+                line(2) {
+                    +"."
+                    functionName("map")
+                    +"(String::toLowerCase)"
+                }
+
+            }
+        }
+    }
+}
+
+fun higherOrderFunctions(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"Higher order functions can take function as a parameter" }
+            li { +"Higher order functions can return a function" }
+        }
+        slideCode {
+            declareFunctionExpression(
+                    name = "twice",
+                    argsOnSeparateLines = false,
+                    returnType = "(T)->T",
+                    parameters = listOf(PARAMETER(name = "f", type = "(T)->T"))) {
+                line {
+                    +"f(f(it))"
+                }
+            }
+            declareFunctionExpression(
+                    name = "f",
+                    argsOnSeparateLines = false,
+                    parameters = listOf(PARAMETER(name = "x", type = "Int"))) {
+                line {
+                    +"x + "
+                    number(3)
+                }
+            }
+            block {
+                line {
+                    +"println(twice(::f)("
+                    number(7)
+                    +"))"
+                    comment("13")
+                }
+            }
+        }
+    }
+
+}
+
+fun kotlinStandardFunctions(): DIV.() -> Unit = {
+    slideContent {
+        slideTable {
+            headers(listOf("Function", "`this` or `it`", "Block return"))
+            tbody {
+                row(listOf("let", "it", "yes"))
+                row(listOf("run", "this", "yes"))
+                row(listOf("with (not extension)", "this", "yes"))
+                row(listOf("apply", "this", "no"))
+                row(listOf("also", "it", "no"))
+            }
+        }
+    }
+}
+
+fun shapeOfCode():DIV.() -> Unit = {
+    slideList {
+        li { +"let" }
+        ul {
+            li {+"Idiomatic 'if not null'"}
+        }
+    }
+
+}
+
+fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
+
+}
+
+fun kotlinIsMultiParadigm(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"No program is 100% pure functional" }
+            li { +" Push state out to the ‘edges’." }
+            li { +"Place application’s core data and logic in immutable constructs (value types)." }
+            li { +"Represent state as objects with mutable references to immutable core constructs." }
+            li { +"Shell: OOP, state, IO, Side effects, GUI" }
+            li { +"Core: Pure functions, stateless, logic" }
+            li { +"Use functional parameters to inject functions with side effects" }
+            li { +"Use functional parameters on the boundary of your shell/core" }
+        }
+    }
+}
+
+fun recap(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"Principles of functional programming" }
+            ul {
+                li { +"Immutable data" }
+                li { +"Pure functions" }
+                li { +"First-class functions" }
+                li { +"Higher-order functions" }
+            }
+            li { +"Kotlin features" }
+            ul {
+                li { +"Kotlin standard functions" }
+                li { +"Function literals with receivers" }
+            }
+
+            li {
+                +"Use functional parameters to “inject” the functions which have side effects into "
+                +"our functions under test in order to allow a lambda “mock” to be injected for testing."
+            }
+        }
+    }
+}
+
+fun moreResources(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li {
+                a(href = "http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html") {
+                    +"Objects Should Be Immutable"
+                }
+                +" - "
+                a(href = "http://www.yegor256.com") {+"Yegor Bugayenko"}
+            }
+            li {
+                a(href = "https://www.infoq.com/presentations/Value-Values") { +"The Value of Values" }
+                +" - "
+                a(href = "https://twitter.com/richhickey"){+"Rich Hickey"}
+            }
+            li {
+                a(href = "https://gist.github.com/kbilsted/abdc017858cad68c3e7926b03646554e") {
+                    +"Functional Core, Imperative Shell"
+                }
+                +" - "
+                a(href = "http://firstclassthoughts.co.uk/"){+"Kasper B. Graversen"}
+            }
+            li {
+                a(href = "https://kotlinexpertise.com/coping-with-kotlins-scope-functions/"){
+                    +"Coping with Kotlin's Scope Functions"
+                }
+                +" - "
+                a(href = "https://simon-wirtz.de/"){+"Simon Wirtz"}
             }
         }
     }
