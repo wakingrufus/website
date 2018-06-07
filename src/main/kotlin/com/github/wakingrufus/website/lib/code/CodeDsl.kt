@@ -55,21 +55,43 @@ fun CODE.line(indentation: Int = 0, code: CODE.() -> Unit) {
     +"\n"
 }
 
-fun CODE.block(indentation: Int = 0, code: BLOCK.() -> Unit) {
-    BLOCK(indentation).apply(code)(this)
+fun CODE.block(indentation: Int = 0, inline: Boolean = false, code: BLOCK.() -> Unit) {
+    BLOCK(indentation = indentation, inline = inline).apply(code)(this)
 }
 
-fun CODE.call(name: String, argsOnDifferentLines: Boolean = true, baseIndentation: Int = 0, block: CALL.() -> Unit) {
+fun CODE.call(name: String, argsOnDifferentLines: Boolean = true, baseIndentation: Int = 0, block: CALL.() -> Unit): CODE {
+    this.apply {
+        CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
+                .apply(block)(this)
+    }
+    return this
+}
+
+fun CODE.constructor(name: String, argsOnDifferentLines: Boolean = true, baseIndentation: Int = 0, block: CALL.() -> Unit) {
     this.apply {
         CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                 .apply(block)(this)
     }
 }
 
+fun CODE.on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit) {
+    SUBJECT(subject).apply(block)(this)
+}
+
 fun CODE.functionName(text: String) {
     return span {
         style = css {
             color = Color("#FFC66D")
+        }
+        +text
+    }
+}
+
+fun CODE.functionCall(text: String) {
+    return span {
+        style = css {
+            color = Color("#FFC66D")
+            fontStyle = FontStyle.italic
         }
         +text
     }
@@ -98,16 +120,17 @@ fun CODE.comment(text: String) {
 fun CODE.declareClass(modifiers: List<String> = emptyList(),
                       name: String,
                       superClass: String? = null,
+                      propsOnSeparateLines: Boolean = true,
                       block: CLASS.() -> Unit = {}) {
-    CLASS(modifiers = modifiers, name = name, superClass = superClass)
+    CLASS(modifiers = modifiers, name = name, superClass = superClass, propsOnSeparateLines = propsOnSeparateLines)
             .apply(block)(this)
 }
 
 fun CODE.dataClass(name: String,
-                   superClass: String? = null,
+                   propsOnSeparateLines: Boolean = true,
                    block: CLASS.() -> Unit = {}) {
     this.apply {
-        CLASS(modifiers = listOf("data"), name = name, superClass = superClass)
+        CLASS(modifiers = listOf("data"), propsOnSeparateLines = propsOnSeparateLines, name = name)
                 .apply(block)(this)
     }
 }
@@ -130,9 +153,9 @@ fun CODE.declareFunctionExpression(name: String,
                                    returnType: String? = null,
                                    argsOnSeparateLines: Boolean = true,
                                    parameters: List<PARAMETER>,
-                                   expression: CODE.() -> Unit) {
+                                   expression: STATEMENT.() -> Unit) {
     this.apply {
-        FUNCTION(name = name, returnType = returnType, paramsOnSeparateLines = argsOnSeparateLines, expression = true)
+        FUNCTION(name = name, returnType = returnType, paramsOnSeparateLines = argsOnSeparateLines)
                 .apply {
                     this.parameters = parameters
                     expression(expression)

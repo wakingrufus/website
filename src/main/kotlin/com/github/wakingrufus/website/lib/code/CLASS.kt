@@ -6,7 +6,8 @@ import kotlinx.html.HtmlTagMarker
 @HtmlTagMarker
 class CLASS(val modifiers: List<String> = emptyList(),
             val name: String,
-            val superClass: String? = null) {
+            val superClass: String? = null,
+            val propsOnSeparateLines : Boolean = true) {
 
     var properties: List<PROPERTY> = ArrayList()
     var functions: List<FUNCTION> = ArrayList()
@@ -41,8 +42,12 @@ class CLASS(val modifiers: List<String> = emptyList(),
                 +it.name
                 +"("
                 it.properties.forEach({
-                    +"\n"
-                    indent(1)
+                    if(this@CLASS.propsOnSeparateLines) {
+                        +"\n"
+                        indent(1)
+                    } else {
+                        +" "
+                    }
                     it(this)
                 })
                 +") "
@@ -64,7 +69,7 @@ class CLASS(val modifiers: List<String> = emptyList(),
                     }
                     +"}"
                 }
-                +"\n"
+                +"\n\n"
             }
         }
 

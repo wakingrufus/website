@@ -79,6 +79,8 @@ class MyStyles {
                 fontFamily = "sans-serif"
                 backgroundColor = BACKGROUND_COLOR
                 color = FONT_COLOR
+                marginTop = 0.px
+                marginBottom = 0.px
             }
             a {
                 color = LINK_COLOR

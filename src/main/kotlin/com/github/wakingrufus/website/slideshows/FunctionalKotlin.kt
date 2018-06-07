@@ -37,6 +37,10 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "Functions are Non-Imperative", subTitle = "Imperative == order dependant", block = functionsAreNonImperative())
         slide(title = "Higher Order Functions", block = higherOrderFunctions())
         slide(title = "Kotlin Standard Functions", block = kotlinStandardFunctions())
+        slide(title = "let", block = let())
+        slide(title = "apply", block = apply())
+        slide(title = "also", block = also())
+        slide(title = "run", block = run())
         slide(title = "The Shape of Code", block = shapeOfCode())
         slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers())
         slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm())
@@ -105,31 +109,44 @@ fun functionalKotlinImmutableData(): DIV.() -> Unit = {
         }
 
         slideCode {
-            declareClass(name = "ImmutableValue") {
+            declareClass(name = "ImmutableValue", propsOnSeparateLines = false) {
                 property(modifier = "val", name = "stringData", type = "String")
             }
-            dataClass(name = "ImmutableDataValue") {
+            dataClass(name = "ImmutableDataValue", propsOnSeparateLines = false) {
                 property(modifier = "val", name = "stringData", type = "String")
             }
             declareFunction("function") {
                 body {
-                    line {
-                        declareProperty(modifier = "val", name = "data", type = "ImmutableValue") {
-                            +"ImmutableValue(stringData = \"a\")"
+                    assignment(modifier = "val", name = "data", type = "ImmutableValue") {
+                        inlineExpression {
+                            call(name = "ImmutableValue", argsOnDifferentLines = false) {
+                                argument(name = "stringData") {
+                                    string("a")
+                                }
+                            }
                         }
                     }
-                    line {
+                    expression {
                         +"data."
                         propertyName("stringData")
                     }
-                    line {
-                        declareProperty(modifier = "val", name = "dataClass") {
-                            +"ImmutableDataValue(stringData = \"s\")"
+                    assignment(modifier = "val", name = "dataClass") {
+                        inlineExpression {
+                            call(name = "ImmutableDataValue", argsOnDifferentLines = false) {
+                                argument(name = "stringData") {
+                                    string("s")
+                                }
+                            }
                         }
                     }
-                    line {
-                        declareProperty(modifier = "val", name = "dataClass2") {
-                            +"dataClass.copy(stringData = \"a\")"
+                    assignment(modifier = "val", name = "dataClass2") {
+                        inlineExpression {
+                            +"dataClass."
+                            call(name = "copy", argsOnDifferentLines = false) {
+                                argument(name = "stringData") {
+                                    string("a")
+                                }
+                            }
                         }
                     }
                 }
@@ -168,11 +185,14 @@ fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
                     argsOnSeparateLines = false) {
                 parameter(name = "message", type = "String")
                 body {
-                    line {
+                    expression {
                         keyword("return ")
                         call(name = "ChatMessage", baseIndentation = 1) {
                             argument("user") {
-                                +"System.getProperty(\"user.name\")"
+                                +"System."
+                                call(name = "getProperty", argsOnDifferentLines = false) {
+                                    argument { string("user.name") }
+                                }
                             }
                             argument("timestamp") {
                                 +"Instant.now()"
@@ -204,7 +224,7 @@ fun functionalKotlinDeterministic(): DIV.() -> Unit = {
                 parameter(name = "user", type = "String")
                 parameter(name = "timestamp", type = "Instant")
                 body {
-                    line {
+                    expression {
                         keyword("return ")
                         call(name = "ChatMessage", baseIndentation = 1) {
                             argument("user") {
@@ -239,38 +259,50 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                     +"ArrayList()"
                 }
             }
-            line {
-                declareFunction(name = "addNewMessageSideEffect") {
-                    parameter(name = "messages", type = "ArrayList<ChatMessage>")
-                    parameter(name = "newMessage", type = "ChatMessage")
-                    body {
-                        line {
-                            +("messages.add(newMessage) ")
-                            comment("Modifies input")
+            declareFunction(name = "addNewMessageSideEffect") {
+                parameter(name = "messages", type = "ArrayList<ChatMessage>")
+                parameter(name = "newMessage", type = "ChatMessage")
+                body {
+                    expression {
+                        +("messages.")
+                        call(name = "add", argsOnDifferentLines = false) {
+                            argument { +"newMessage" }
+                        }
+                        comment("Modifies input")
+                    }
+                }
+            }
+
+            declareFunction(name = "addNewMessageSideEffect2", argsOnSeparateLines = false) {
+                parameter(name = "newMessage", type = "ChatMessage")
+                body {
+                    expression {
+                        propertyName("externalMessages")
+                        +"."
+                        call(name = "add", argsOnDifferentLines = false) {
+                            argument { +"newMessage" }
+                        }
+                        comment("Modifies something outside of scope")
+                    }
+                    expression {
+                        on({ propertyName("externalMessages") }) {
+                            call(name = "add", argsOnDifferentLines = false) {
+                                argument { +"newMessage" }
+                            }
                         }
                     }
                 }
             }
-            line {
-                declareFunction(name = "addNewMessageSideEffect2", argsOnSeparateLines = false) {
-                    parameter(name = "newMessage", type = "ChatMessage")
-                    body {
-                        line {
-                            propertyName("externalMessages")
-                            +".add(newMessage)"
-                            comment("Modifies something outside of scope")
-                        }
-                    }
-                }
-            }
-            line {
-                declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
-                    parameter(name = "messages", type = "List<ChatMessage>")
-                    parameter(name = "newMessage", type = "ChatMessage")
-                    body {
-                        line {
-                            keyword("return ")
-                            +"messages.plus(newMessage)"
+
+            declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
+                parameter(name = "messages", type = "List<ChatMessage>")
+                parameter(name = "newMessage", type = "ChatMessage")
+                body {
+                    expression {
+                        keyword("return ")
+                        +"messages."
+                        call(name = "plus", argsOnDifferentLines = false) {
+                            argument { +"newMessage" }
                         }
                     }
                 }
@@ -357,9 +389,9 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                         }
                         declareFunction(name = "pureFunction", returnType = "String", indentation = 2) {
                             body {
-                                line {
+                                expression {
                                     keyword("return ")
-                                    +"\"MAGIC STRING\""
+                                    string("MAGIC STRING")
                                 }
                             }
                         }
@@ -375,7 +407,7 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                     parameter(name = "one", type = "BigDecimal")
                     parameter(name = "two", type = "BigDecimal")
                     body {
-                        line {
+                        expression {
                             keyword("return")
                             +" one.compareTo(two) == "
                             number(0)
@@ -391,7 +423,7 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                                 PARAMETER(name = "one", type = "BigDecimal"),
                                 PARAMETER(name = "two", type = "BigDecimal")
                         )) {
-                    line {
+                    inlineExpression {
                         +"one.compareTo(two) == "
                         number(0)
                     }
@@ -411,145 +443,136 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
     slideContent {
         slideCode {
             declareFunction(name = "fixChatMessageImperative", returnType = "List<String>") {
-                parameter(name = "messages", type = "List<String>")
+                parameter(name = "messages", type = "List<ChatMessage>")
                 body {
-                    line {
-                        declareProperty(modifier = "val", name = "fixedMessages", type = "List<String>") {
-                            call(name = "ArrayList") {}
+                    assignment(modifier = "var", name = "fixedMessages", type = "List<String>") {
+                        inlineExpression {
+                            +"ArrayList()"
                         }
                     }
+                    expression {
+                        keyword("for")
+                        +" (m "
+                        keyword("in")
+                        +" messages)"
+                    }
                     block {
-                        prefix {
-                            keyword("for")
-                            +" (m "
-                            keyword("in")
-                            +" messages)"
-                        }
-
-                        line {
-                            declareProperty(modifier = "var", name = "fixedMessage", type = "String?") {
+                        assignment(modifier = "var", name = "fixedMessage", type = "String?") {
+                            inlineExpression {
                                 +"m."
                                 propertyName("message")
                             }
                         }
-                        line {
+                        expression {
                             comment("What if you move the following block")
                         }
+                        expression {
+                            keyword("if")
+                            +" (m."
+                            propertyName("message")
+                            +"."
+                            functionName("contains")
+                            +"("
+                            string("bad word")
+                            +")"
+                        }
                         block {
-                            prefix {
-                                keyword("if")
-                                +" (m."
-                                propertyName("message")
-                                +"."
-                                functionName("contains")
-                                +"("
-                                string("bad word")
-                                +")"
-                            }
-                            line {
-                                +"fixedMessage = "
-                                +"m."
-                                propertyName("message")
-                                +"."
-                                functionName("replace")
-                                +"("
-                                string("bad word")
-                                +","
-                                string("****")
-                                +")"
+                            assignment(name = "fixedMessage") {
+                                inlineExpression {
+                                    +"m."
+                                    propertyName("message")
 
-                            }
-                        }
-                        block {
-                            prefix {
-                                keyword("if")
-                                +" (m."
-                                propertyName("user")
-                                +" == "
-                                string("SYSTEM")
-                            }
-                            line {
-                                +"fixedMessage = "
-                                keyword("null")
-                            }
-
-                        }
-                        block {
-                            prefix {
-                                keyword("if")
-                                +" (fixedMessage != "
-                                keyword("null")
-                                +")"
-                            }
-                            line {
-                                +"fixedMessage = fixedMessage."
-                                functionName("toLowerCase")
-                                +"()"
-                            }
-
-                        }
-                        line {
-                            comment("to here")
-                        }
-                        block {
-                            prefix {
-                                keyword("if")
-                                +" (fixedMessage != "
-                                keyword("null")
-                                +")"
-                            }
-                            line {
-                                +"fixedMessages."
-                                call("add", argsOnDifferentLines = false) {
-                                    argument {
-                                        +"fixedMessage"
+                                }
+                                chain {
+                                    call(name = "replace") {
+                                        argument { string("bad word") }
+                                        argument { string("****") }
                                     }
                                 }
                             }
-
+                        }
+                        expression {
+                            keyword("if")
+                            +" (m."
+                            propertyName("user")
+                            +" == "
+                            string("SYSTEM")
+                            +")"
+                        }
+                        block {
+                            assignment(name = "fixedMessage") {
+                                inlineExpression {
+                                    keyword("null")
+                                }
+                            }
+                        }
+                        expression {
+                            keyword("if")
+                            +" (fixedMessage != "
+                            keyword("null")
+                            +")"
+                        }
+                        block {
+                            assignment(name = "fixedMessage") {
+                                inlineExpression {
+                                    +"fixedMessage."
+                                    functionName("toLowerCase")
+                                    +"()"
+                                }
+                            }
+                        }
+                        expression { comment("to here") }
+                        expression {
+                            keyword("if")
+                            +" (fixedMessage != "
+                            keyword("null")
+                            +")"
+                        }
+                        block {
+                            expression { +"fixedMessages += fixedMessage" }
                         }
                     }
-                    line {
+                    expression {
                         keyword("return")
                         +" fixedMessages"
                     }
                 }
             }
-
         }
+
         slideCode {
             declareFunctionExpression(name = "fixChatMessagesNotImperative",
                     returnType = "List<String>",
                     parameters = listOf(PARAMETER(name = "messages", type = "List<ChatMessage>"))) {
-                line {}
-                line(1) {
-                    +"messages."
-                    functionName("filter")
-                    +"{ it."
-                    propertyName("user")
-                    +" != "
-                    string("SYSTEM")
-                    +" }"
+                expression {
+                    on({ +"messages" }) {
+                        breakAndCall(name = "filter") {
+                            lambda(inline = true) {
+                                inlineExpression {
+                                    propertyName("user")
+                                    +" != "
+                                    string("SYSTEM")
+                                }
+                            }
+                        }
+                        breakAndCall(name = "map") {
+                            lambda(inline = true) {
+                                inlineExpression {
+                                    +"it."
+                                    propertyName("messages")
+                                    +"."
+                                    call(name = "replace", argsOnDifferentLines = false) {
+                                        argument { string("bad word") }
+                                        argument { string("****") }
+                                    }
+                                }
+                            }
+                        }
+                        breakAndCall(name = "map", argsOnDifferentLines = false) {
+                            argument { +"String::toLowerCase" }
+                        }
+                    }
                 }
-                line(2) {
-                    +"."
-                    functionName("map")
-                    +"{ it."
-                    propertyName("messages")
-                    +"."
-                    functionName("replace")
-                    +"("
-                    string("bad word")
-                    +","
-                    string("****")
-                    +")}"
-                }
-                line(2) {
-                    +"."
-                    functionName("map")
-                    +"(String::toLowerCase)"
-                }
-
             }
         }
     }
@@ -567,7 +590,7 @@ fun higherOrderFunctions(): DIV.() -> Unit = {
                     argsOnSeparateLines = false,
                     returnType = "(T)->T",
                     parameters = listOf(PARAMETER(name = "f", type = "(T)->T"))) {
-                line {
+                inlineExpression {
                     +"f(f(it))"
                 }
             }
@@ -575,13 +598,13 @@ fun higherOrderFunctions(): DIV.() -> Unit = {
                     name = "f",
                     argsOnSeparateLines = false,
                     parameters = listOf(PARAMETER(name = "x", type = "Int"))) {
-                line {
+                inlineExpression {
                     +"x + "
                     number(3)
                 }
             }
             block {
-                line {
+                expression {
                     +"println(twice(::f)("
                     number(7)
                     +"))"
@@ -590,8 +613,8 @@ fun higherOrderFunctions(): DIV.() -> Unit = {
             }
         }
     }
-
 }
+
 
 fun kotlinStandardFunctions(): DIV.() -> Unit = {
     slideContent {
@@ -608,15 +631,132 @@ fun kotlinStandardFunctions(): DIV.() -> Unit = {
     }
 }
 
-fun shapeOfCode():DIV.() -> Unit = {
-    slideList {
-        li { +"let" }
-        ul {
-            li {+"Idiomatic 'if not null'"}
+
+fun let(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"let" }
+            ul {
+                li { +"Idiomatic 'if not null'" }
+                li { +"Map nullable value if not null" }
+            }
+
+        }
+        slideCode {
+            dataClass(name = "Data", propsOnSeparateLines = false) {
+                property(modifier = "val", name = "value", type = "Int?")
+            }
+            +"\n"
+            declareFunction(name = "getFromDatabase", returnType = "Data?") {
+                body {
+                    expression { +"..." }
+                }
+            }
+            declareFunction(name = "getValue", returnType = "BigDecimal") {
+                body {
+                    expression {
+                        keyword("return ")
+                        call(name = "getFromDatabase") {}
+                        +"?."
+                        call("let") {
+                            lambda {
+                                expression {
+                                    +"it."
+                                    call(name = "toBigDecimal") {}
+                                }
+                            }
+                        }
+                        +" :? BigDecimal."
+                        propertyName("ZERO")
+                    }
+                }
+            }
         }
     }
-
 }
+
+
+fun apply(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"apply" }
+            ul {
+                li { +"Initialize an object without its own fluent builder api" }
+                li { +"creating a builder interface on top of void/Unit methods/operations" }
+            }
+        }
+        slideCode {
+            declareFunction("buildObject", returnType = "Calendar") {
+                body {
+                    expression {
+                        keyword("return ")
+                        on({ +"Calendar" }) {
+                            call(name = "getInstance") {}
+                            call(name = "apply", argsOnDifferentLines = false) {
+                                lambda {
+                                    expression {
+                                        call(name = "set", argsOnDifferentLines = false) {
+                                            argument { number(2017) }
+                                            argument { number(3) }
+                                            argument { number(1) }
+                                            argument { number(4) }
+                                            argument { number(56) }
+                                            argument { number(34) }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+fun also(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"also" }
+            ul {
+                li { +"Perform side effects" }
+            }
+        }
+        slideCode {
+
+        }
+    }
+}
+
+
+fun run(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+
+            li { +"run" }
+            ul {
+                li { +"Initialize" }
+            }
+        }
+        slideCode {
+
+        }
+    }
+}
+
+
+fun shapeOfCode(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"let" }
+        }
+        slideCode {
+
+        }
+    }
+}
+
 
 fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
 
@@ -626,7 +766,7 @@ fun kotlinIsMultiParadigm(): DIV.() -> Unit = {
     slideContent {
         slideList {
             li { +"No program is 100% pure functional" }
-            li { +" Push state out to the ‘edges’." }
+            li { +"Push state out to the ‘edges’." }
             li { +"Place application’s core data and logic in immutable constructs (value types)." }
             li { +"Represent state as objects with mutable references to immutable core constructs." }
             li { +"Shell: OOP, state, IO, Side effects, GUI" }
@@ -669,26 +809,26 @@ fun moreResources(): DIV.() -> Unit = {
                     +"Objects Should Be Immutable"
                 }
                 +" - "
-                a(href = "http://www.yegor256.com") {+"Yegor Bugayenko"}
+                a(href = "http://www.yegor256.com") { +"Yegor Bugayenko" }
             }
             li {
                 a(href = "https://www.infoq.com/presentations/Value-Values") { +"The Value of Values" }
                 +" - "
-                a(href = "https://twitter.com/richhickey"){+"Rich Hickey"}
+                a(href = "https://twitter.com/richhickey") { +"Rich Hickey" }
             }
             li {
                 a(href = "https://gist.github.com/kbilsted/abdc017858cad68c3e7926b03646554e") {
                     +"Functional Core, Imperative Shell"
                 }
                 +" - "
-                a(href = "http://firstclassthoughts.co.uk/"){+"Kasper B. Graversen"}
+                a(href = "http://firstclassthoughts.co.uk/") { +"Kasper B. Graversen" }
             }
             li {
-                a(href = "https://kotlinexpertise.com/coping-with-kotlins-scope-functions/"){
+                a(href = "https://kotlinexpertise.com/coping-with-kotlins-scope-functions/") {
                     +"Coping with Kotlin's Scope Functions"
                 }
                 +" - "
-                a(href = "https://simon-wirtz.de/"){+"Simon Wirtz"}
+                a(href = "https://simon-wirtz.de/") { +"Simon Wirtz" }
             }
         }
     }

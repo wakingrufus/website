@@ -8,21 +8,23 @@ import kotlinx.html.HtmlTagMarker
 class FUNCTION(val name: String,
                val returnType: String? = null,
                val indentation: Int = 0,
-               val paramsOnSeparateLines: Boolean = true,
-               val expression: Boolean = false) {
+               val paramsOnSeparateLines: Boolean = true) {
     var parameters: List<PARAMETER> = ArrayList()
     var body: (CODE.() -> Unit)? = null
+    var expression: Boolean = false
 
     fun parameter(name: String, type: String?, value: (CODE.() -> Unit)? = null) {
         parameters += PARAMETER(name = name, type = type).apply { value?.let { value(it) } }
     }
 
     fun body(bodyText: BLOCK.() -> Unit) {
-        body = { BLOCK(indentation = this@FUNCTION.indentation).apply(bodyText)(this) }
+        body = { BLOCK(indentation = this@FUNCTION.indentation, inline = false).apply(bodyText)(this) }
+        expression = false
     }
 
-    fun expression(value: CODE.() -> Unit) {
-        body = value
+    fun expression(value: STATEMENT.() -> Unit) {
+        body = {STATEMENT(this@FUNCTION.indentation + 1).apply(value)(this)}
+        expression = true
     }
 
     private fun buildExpression(code: CODE) {
@@ -66,6 +68,7 @@ class FUNCTION(val name: String,
             } else {
                 this@FUNCTION.buildFunctionBody(this)
             }
+            +"\n"
         }
     }
 }
