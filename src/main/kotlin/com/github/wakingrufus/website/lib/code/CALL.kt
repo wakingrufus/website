@@ -29,6 +29,9 @@ class CALL(val name: String, val baseIndentation: Int = 0, val argsOnDifferentLi
                     a(this)
                     if (i < this@CALL.arguments.size - 1) {
                         +","
+                        if (!this@CALL.argsOnDifferentLines) {
+                            +" "
+                        }
                     }
                 }
                 +")"

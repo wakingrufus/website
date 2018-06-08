@@ -8,7 +8,7 @@ class SUBJECT(val subject: CODE.() -> Unit) {
 
     var calls: List<CODE.() -> Unit> = ArrayList()
 
-    fun call(name: String, argsOnDifferentLines: Boolean = true, baseIndentation: Int = 0, block: CALL.() -> Unit) {
+    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
         calls += {
             +"."
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)

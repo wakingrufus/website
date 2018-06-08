@@ -7,7 +7,7 @@ import kotlinx.html.HtmlTagMarker
 class CLASS(val modifiers: List<String> = emptyList(),
             val name: String,
             val superClass: String? = null,
-            val propsOnSeparateLines : Boolean = true) {
+            val propsOnSeparateLines: Boolean = true) {
 
     var properties: List<PROPERTY> = ArrayList()
     var functions: List<FUNCTION> = ArrayList()
@@ -29,8 +29,8 @@ class CLASS(val modifiers: List<String> = emptyList(),
         functions += FUNCTION(name = name, returnType = returnType, indentation = 1).apply(block)
     }
 
-    fun companionObject(objectBlock: CODE.() -> Unit) {
-        companionObject = objectBlock
+    fun companionObject(objectBlock: BLOCK.() -> Unit) {
+        companionObject = { BLOCK(indentation = 1,inline = false).apply(objectBlock)(this) }
     }
 
     operator fun invoke(code: CODE) {
@@ -42,7 +42,7 @@ class CLASS(val modifiers: List<String> = emptyList(),
                 +it.name
                 +"("
                 it.properties.forEach({
-                    if(this@CLASS.propsOnSeparateLines) {
+                    if (this@CLASS.propsOnSeparateLines) {
                         +"\n"
                         indent(1)
                     } else {
@@ -56,13 +56,14 @@ class CLASS(val modifiers: List<String> = emptyList(),
                     +it
                 }
 
-                if(it.companionObject != null || it.functions.isNotEmpty()) {
+                if (it.companionObject != null || it.functions.isNotEmpty()) {
                     +"{\n"
-                   it.companionObject?.let {
+                    it.companionObject?.let {
                         indent(1)
                         keyword("companion object")
                         +" : "
                         it(this)
+                        +"\n"
                     }
                     it.functions.forEach {
                         it(this)

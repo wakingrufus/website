@@ -41,7 +41,6 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "apply", block = apply())
         slide(title = "also", block = also())
         slide(title = "run", block = run())
-        slide(title = "The Shape of Code", block = shapeOfCode())
         slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers())
         slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm())
         slide(title = "Recap", block = recap())
@@ -187,7 +186,7 @@ fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
                 body {
                     expression {
                         keyword("return ")
-                        call(name = "ChatMessage", baseIndentation = 1) {
+                        constructor(name = "ChatMessage", baseIndentation = 1, argsOnDifferentLines = true) {
                             argument("user") {
                                 +"System."
                                 call(name = "getProperty", argsOnDifferentLines = false) {
@@ -226,7 +225,7 @@ fun functionalKotlinDeterministic(): DIV.() -> Unit = {
                 body {
                     expression {
                         keyword("return ")
-                        call(name = "ChatMessage", baseIndentation = 1) {
+                        constructor(name = "ChatMessage", baseIndentation = 1, argsOnDifferentLines = true) {
                             argument("user") {
                                 +"user"
                             }
@@ -375,43 +374,36 @@ fun firstClassFunctions(): DIV.() -> Unit = {
             li { +"There are also first class functions" }
         }
         slideCode {
-            line {
-                declareClass(name = "UtilityClass") {
-                    companionObject {
-                        line {
-                            +"{"
+            declareClass(name = "UtilityClass") {
+                companionObject {
+                    expression {
+                        declareProperty(modifier = "val", name = "staticValue", type = "String") {
+                            string("STRING")
                         }
-                        line {
-                            indent(2)
-                            declareProperty(modifier = "val", name = "staticValue", type = "String") {
-                                +"\"STRING\""
-                            }
-                        }
-                        declareFunction(name = "pureFunction", returnType = "String", indentation = 2) {
-                            body {
+                    }
+                    expression {
+                        declareFunction(
+                                name = "pureFunction",
+                                returnType = "String") {
+                            body(indentation = this@companionObject.indentation + 1) {
                                 expression {
                                     keyword("return ")
                                     string("MAGIC STRING")
                                 }
                             }
                         }
-                        line {
-                            indent(1)
-                            +"}"
-                        }
                     }
                 }
             }
-            line {
-                declareFunction(name = "bigDecimalEquals", returnType = "Boolean") {
-                    parameter(name = "one", type = "BigDecimal")
-                    parameter(name = "two", type = "BigDecimal")
-                    body {
-                        expression {
-                            keyword("return")
-                            +" one.compareTo(two) == "
-                            number(0)
-                        }
+
+            declareFunction(name = "bigDecimalEquals", returnType = "Boolean", argsOnSeparateLines = true) {
+                parameter(name = "one", type = "BigDecimal")
+                parameter(name = "two", type = "BigDecimal")
+                body {
+                    expression {
+                        keyword("return")
+                        +" one.compareTo(two) == "
+                        number(0)
                     }
                 }
             }
@@ -442,7 +434,10 @@ fun firstClassFunctions(): DIV.() -> Unit = {
 fun functionsAreNonImperative(): DIV.() -> Unit = {
     slideContent {
         slideCode {
-            declareFunction(name = "fixChatMessageImperative", returnType = "List<String>") {
+            declareFunction(
+                    name = "fixChatMessageImperative",
+                    argsOnSeparateLines = true,
+                    returnType = "List<String>") {
                 parameter(name = "messages", type = "List<ChatMessage>")
                 body {
                     assignment(modifier = "var", name = "fixedMessages", type = "List<String>") {
@@ -724,7 +719,34 @@ fun also(): DIV.() -> Unit = {
             }
         }
         slideCode {
-
+            declareFunction(name = "functionWithSideEffect", returnType = "String") {
+                parameter(name = "input", type = "String")
+                body {
+                    expression {
+                        keyword("return ")
+                        on({
+                            call(name = "doStuff") {
+                                argument { +"input" }
+                            }
+                        }) {
+                            call(name = "also") {
+                                lambda {
+                                    expression {
+                                        on({ propertyName("log") }) {
+                                            call(name = "log") {
+                                                argument {
+                                                    string("doing stuff to ")
+                                                    +" + input"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -733,32 +755,87 @@ fun also(): DIV.() -> Unit = {
 fun run(): DIV.() -> Unit = {
     slideContent {
         slideList {
-
             li { +"run" }
             ul {
-                li { +"Initialize" }
+                li { +"Initialize and transform" }
             }
         }
         slideCode {
-
+            declareProperty(modifier = "val", name = "dayOfYear", type = "Int") {
+                on({ +"Calendar" }) {
+                    call(name = "getInstance") {}
+                    call(name = "run") {
+                        lambda {
+                            expression {
+                                call(name = "set") {
+                                    argument {
+                                        +"Calendar."
+                                        propertyName("YEAR")
+                                    }
+                                    argument { number(2030) }
+                                }
+                            }
+                            expression {
+                                call(name = "get") {
+                                    argument {
+                                        +"Calendar."
+                                        propertyName("DAY_OF_YEAR")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
-
-
-fun shapeOfCode(): DIV.() -> Unit = {
-    slideContent {
-        slideList {
-            li { +"let" }
-        }
-        slideCode {
-
-        }
-    }
-}
-
 
 fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"Can be used similar to apply" }
+            li { +"Building block of DSLs" }
+        }
+        slideCode {
+            declareFunction(extentionOf = "String", name = "build", returnType = "String") {
+                parameter(name = "block", type = "String.() -> Unit")
+                body {
+                    expression {
+                        keyword("return ")
+                        on({
+                            constructor(name = "StringBuilder") {
+                                argument { keyword("this") }
+                            }
+                        }) {
+                            call(name = "apply") {
+                                argument { +"block" }
+                            }
+                            call(name = "toString") {}
+                        }
+
+                    }
+                }
+            }
+            declareFunction("use") {
+                body {
+                    expression {
+                        on({ string("") }) {
+                            call("build") {
+                                lambda {
+                                    expression {
+                                        call("append") {
+                                            argument { string("34") }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 }
 

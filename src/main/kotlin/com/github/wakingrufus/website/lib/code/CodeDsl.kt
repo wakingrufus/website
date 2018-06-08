@@ -59,15 +59,14 @@ fun CODE.block(indentation: Int = 0, inline: Boolean = false, code: BLOCK.() -> 
     BLOCK(indentation = indentation, inline = inline).apply(code)(this)
 }
 
-fun CODE.call(name: String, argsOnDifferentLines: Boolean = true, baseIndentation: Int = 0, block: CALL.() -> Unit): CODE {
+fun CODE.call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
     this.apply {
         CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                 .apply(block)(this)
     }
-    return this
 }
 
-fun CODE.constructor(name: String, argsOnDifferentLines: Boolean = true, baseIndentation: Int = 0, block: CALL.() -> Unit) {
+fun CODE.constructor(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
     this.apply {
         CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                 .apply(block)(this)
@@ -137,13 +136,15 @@ fun CODE.dataClass(name: String,
 
 fun CODE.declareFunction(name: String,
                          returnType: String? = null,
-                         argsOnSeparateLines: Boolean = true,
+                         argsOnSeparateLines: Boolean = false,
                          indentation: Int = 0,
+                         extentionOf: String? = null,
                          block: FUNCTION.() -> Unit) {
     this.apply {
         FUNCTION(name = name,
                 returnType = returnType,
                 paramsOnSeparateLines = argsOnSeparateLines,
+                extensionOf = extentionOf,
                 indentation = indentation)
                 .apply(block)(this)
     }
