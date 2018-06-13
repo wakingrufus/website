@@ -7,15 +7,22 @@ import kotlinx.html.HtmlTagMarker
 class SUBJECT(val subject: CODE.() -> Unit) {
 
     var calls: List<CODE.() -> Unit> = ArrayList()
+    var operator: String = "."
 
     fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
         calls += {
-            +"."
+            +this@SUBJECT.operator
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(block)(this)
         }
     }
 
+    fun nullSafe(){
+        operator = "?."
+    }
+    fun standard(){
+        operator = "."
+    }
     fun breakAndCall(name: String,
                      argsOnDifferentLines: Boolean = true,
                      baseIndentation: Int = 0,
@@ -23,7 +30,7 @@ class SUBJECT(val subject: CODE.() -> Unit) {
         calls += {
             +"\n"
             indent(baseIndentation + 2)
-            +"."
+            +this@SUBJECT.operator
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(block)(this)
         }

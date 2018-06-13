@@ -32,7 +32,6 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "Pure Functions - Deterministic", block = functionalKotlinDeterministic())
         slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsStory())
         slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsCode())
-        slide(title = "First Class Functions", block = functionalKotlinJavaNoFirstClassFunctions())
         slide(title = "First Class Functions", block = firstClassFunctions())
         slide(title = "Functions are Non-Imperative", subTitle = "Imperative == order dependant", block = functionsAreNonImperative())
         slide(title = "Higher Order Functions", block = higherOrderFunctions())
@@ -43,6 +42,7 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "run", block = run())
         slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers())
         slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm())
+        slide(title = "Functional Testing", block = functionalTesting())
         slide(title = "Recap", block = recap())
         slide(title = "More Resources", block = moreResources())
     }
@@ -103,8 +103,6 @@ fun functionalKotlinImmutableData(): DIV.() -> Unit = {
             li { +"No need for defensive copies" }
             li { +"Helps prevent side effects" }
             li { +"Easier to cache" }
-            li { +"Prevent null references" }
-            li { +"Avoid Identity mutability" }
         }
 
         slideCode {
@@ -253,11 +251,6 @@ fun functionalKotlinSideEffectsStory(): DIV.() -> Unit = {
 fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
     slideContent {
         slideCode {
-            line {
-                declareProperty(modifier = "val", name = "externalMessages", type = "ArrayList<ChatMessage>") {
-                    +"ArrayList()"
-                }
-            }
             declareFunction(name = "addNewMessageSideEffect") {
                 parameter(name = "messages", type = "ArrayList<ChatMessage>")
                 parameter(name = "newMessage", type = "ChatMessage")
@@ -271,24 +264,21 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                     }
                 }
             }
-
+            +"\n"
+            declareProperty(modifier = "val", name = "externalMessages", type = "List<ChatMessage>") {
+                constructor("ArrayList") {}
+            }
+            +"\n"
             declareFunction(name = "addNewMessageSideEffect2", argsOnSeparateLines = false) {
                 parameter(name = "newMessage", type = "ChatMessage")
                 body {
-                    expression {
-                        propertyName("externalMessages")
-                        +"."
-                        call(name = "add", argsOnDifferentLines = false) {
-                            argument { +"newMessage" }
-                        }
-                        comment("Modifies something outside of scope")
-                    }
                     expression {
                         on({ propertyName("externalMessages") }) {
                             call(name = "add", argsOnDifferentLines = false) {
                                 argument { +"newMessage" }
                             }
                         }
+                        comment("Modifies something outside of scope")
                     }
                 }
             }
@@ -310,92 +300,17 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinJavaNoFirstClassFunctions(): DIV.() -> Unit = {
-    slideContent {
-        slideList {
-            li { +"Pure functions don't rely on state" }
-            li { +"Java does not have first-class functions" }
-            li { +"In Java, static utility classes contain pure functions" }
-        }
-        slideCode {
-            line {
-                keyword("public class")
-                +" "
-                +"UtilityClass {"
-            }
-            line {
-                indent(1)
-                keyword("public")
-                +" "
-                +"UtilityClass() {"
-            }
-            line {
-                indent(2)
-                keyword("throw new")
-                +" "
-                +("UnsupportedOperationException();")
-            }
-            line {
-                indent(1)
-                +"}"
-            }
-            line {
-                indent(1)
-                keyword("public static boolean")
-                +" "
-                +"bigDecimalEquals("
-            }
-            line {
-                indent(3)
-                +"BigDecimal one, "
-            }
-            line {
-                indent(3)
-                +"BigDecimal two) {"
-            }
-            line {
-                indent(2)
-                declareReturn { +"one.compareTo(two) == 0;" }
-            }
-            line {
-                indent(1)
-                +"}"
-            }
-            line { +"}" }
-        }
-    }
-}
-
 fun firstClassFunctions(): DIV.() -> Unit = {
     slideContent {
         slideList {
+            li { +"Classes are nouns" }
+            li { +"Methods are verbs" }
+            li { +"Functions are gerunds" }
             li { +"Kotlin does not have static methods/fields" }
             li { +"Kotlin has companion objects instead" }
             li { +"There are also first class functions" }
         }
         slideCode {
-            declareClass(name = "UtilityClass") {
-                companionObject {
-                    expression {
-                        declareProperty(modifier = "val", name = "staticValue", type = "String") {
-                            string("STRING")
-                        }
-                    }
-                    expression {
-                        declareFunction(
-                                name = "pureFunction",
-                                returnType = "String") {
-                            body(indentation = this@companionObject.indentation + 1) {
-                                expression {
-                                    keyword("return ")
-                                    string("MAGIC STRING")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
             declareFunction(name = "bigDecimalEquals", returnType = "Boolean", argsOnSeparateLines = true) {
                 parameter(name = "one", type = "BigDecimal")
                 parameter(name = "two", type = "BigDecimal")
@@ -516,7 +431,7 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                                 }
                             }
                         }
-                        expression { comment("to here") }
+                        expression { comment("to here?") }
                         expression {
                             keyword("if")
                             +" (fixedMessage != "
@@ -836,7 +751,6 @@ fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
             }
         }
     }
-
 }
 
 fun kotlinIsMultiParadigm(): DIV.() -> Unit = {
@@ -850,6 +764,128 @@ fun kotlinIsMultiParadigm(): DIV.() -> Unit = {
             li { +"Core: Pure functions, stateless, logic" }
             li { +"Use functional parameters to inject functions with side effects" }
             li { +"Use functional parameters on the boundary of your shell/core" }
+        }
+    }
+}
+
+fun sayHello(printFn: (String) -> Unit = System.out::println,
+             readFn: () -> String? = ::readLine) {
+    printFn(readFn()?.let {
+        "Hello, $it"
+    }.orEmpty())
+}
+
+fun functionalTesting(): DIV.() -> Unit = {
+    slideContent {
+        slideCode {
+            declareFunction(name = "sayHello") {
+                body {
+                    expression {
+                        on({
+                            +"System."
+                            propertyName("out")
+                        }) {
+                            call(name = "println") {
+                                argument {
+                                    on({
+                                        call(name = "readLine") {
+                                            packageFunction()
+                                        }
+                                    }) {
+                                        nullSafe()
+                                        call(name = "let") {
+                                            extensionFunction()
+                                            lambda {
+                                                expression {
+                                                    string("Hello, ")
+                                                    +" + it"
+                                                }
+                                            }
+                                        }
+                                        standard()
+                                        call("orElseEmpty") {
+                                            extensionFunction()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            declareFunction(name = "sayHello", argsOnSeparateLines = true) {
+                parameter(name = "printFn", type = "(String) -> Unit") {
+                    +"System."
+                    propertyName("out")
+                    +"::println"
+                }
+                parameter(name = "readFn", type = "() -> String?") {
+                    +"::readLine"
+                }
+                body {
+                    expression {
+
+                        call(name = "printFn") {
+                            argument {
+                                on({
+                                    call(name = "readLine") {}
+                                }) {
+                                    nullSafe()
+                                    call(name = "let") {
+                                        extensionFunction()
+                                        lambda {
+                                            expression {
+                                                string("Hello, ")
+                                                +" + it"
+                                            }
+                                        }
+                                    }
+                                    standard()
+                                    call("orElseEmpty") {
+                                        extensionFunction()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        slideCode {
+            keyword("@Test")
+            +"\n"
+            declareFunction(name = "`test sayHello`") {
+                body {
+                    expression {
+                        declareProperty(modifier = "val", name = "sb") {
+                            constructor("StringBuilder") {}
+                        }
+                    }
+                    expression {
+                        call("sayHello", argsOnDifferentLines = true, baseIndentation = 1) {
+                            packageFunction()
+                            argument(name = "printFn") {
+                                +"{ sb.append(it) }"
+                            }
+                            argument(name = "read") {
+                                block(inline = true) { inlineExpression { string("input") } }
+                            }
+                        }
+                    }
+                    expression {
+                        call("assertEquals") {
+                            argument {
+                                string("Hello, input")
+                            }
+                            argument {
+                                on({ +"sb" }) {
+                                    call("toString") {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ fun DIV.slideshowTitle(block: H1.() -> Unit) {
             style = css {
                 display = Display.block
                 width = 100.pct
-                height = 30.pct
+                height = 20.pct
             }
         }
         h1 {
@@ -44,13 +44,6 @@ fun DIV.slideshowTitle(block: H1.() -> Unit) {
 
 fun DIV.slideshowSubTitle(block: H3.() -> Unit) {
     return div {
-        div {
-            style = css {
-                display = Display.block
-                width = 100.pct
-                height = 30.pct
-            }
-        }
         h3 {
             style = css {
                 display = Display.block

@@ -34,6 +34,7 @@ class Slideshow(val baseDir: File,
 
     fun titleSlide(title: String, subTitle: String? = null, block: DIV.() -> Unit) {
         slides += Slide(title = title,
+                subTitle = subTitle,
                 template = ::slideshowTitleSlide,
                 content = block)
     }

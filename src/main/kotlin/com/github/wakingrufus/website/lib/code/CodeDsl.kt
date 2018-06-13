@@ -59,14 +59,22 @@ fun CODE.block(indentation: Int = 0, inline: Boolean = false, code: BLOCK.() -> 
     BLOCK(indentation = indentation, inline = inline).apply(code)(this)
 }
 
-fun CODE.call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
+fun CODE.call(name: String,
+              argsOnDifferentLines: Boolean = false,
+              baseIndentation: Int = 0,
+              block: CALL.() -> Unit) {
     this.apply {
-        CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
+        CALL(name = name,
+                argsOnDifferentLines = argsOnDifferentLines,
+                baseIndentation = baseIndentation)
                 .apply(block)(this)
     }
 }
 
-fun CODE.constructor(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
+fun CODE.constructor(name: String,
+                     argsOnDifferentLines: Boolean = false,
+                     baseIndentation: Int = 0,
+                     block: CALL.() -> Unit) {
     this.apply {
         CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                 .apply(block)(this)
@@ -81,16 +89,6 @@ fun CODE.functionName(text: String) {
     return span {
         style = css {
             color = Color("#FFC66D")
-        }
-        +text
-    }
-}
-
-fun CODE.functionCall(text: String) {
-    return span {
-        style = css {
-            color = Color("#FFC66D")
-            fontStyle = FontStyle.italic
         }
         +text
     }

@@ -1,12 +1,20 @@
 package com.github.wakingrufus.website.lib.code
 
+import com.github.wakingrufus.website.lib.css
+import kotlinx.css.Color
+import kotlinx.css.FontStyle
 import kotlinx.html.CODE
 import kotlinx.html.HtmlTagMarker
+import kotlinx.html.span
+import kotlinx.html.style
 
 @HtmlTagMarker
-class CALL(val name: String, val baseIndentation: Int = 0, val argsOnDifferentLines: Boolean = true) {
+class CALL(val name: String,
+           val baseIndentation: Int = 0,
+           val argsOnDifferentLines: Boolean = true) {
     var arguments: List<ARGUMENT> = ArrayList()
     var lambdaBlock: BLOCK? = null
+    var callType: (String) -> CODE.() -> Unit = ::functionCall
 
     fun argument(name: String? = null, value: (CODE.() -> Unit)) {
         arguments += ARGUMENT(name = name, valueBlock = value)
@@ -16,9 +24,18 @@ class CALL(val name: String, val baseIndentation: Int = 0, val argsOnDifferentLi
         lambdaBlock = BLOCK(indentation = baseIndentation + 1, inline = inline).apply(value)
     }
 
+    fun extensionFunction() {
+        callType = ::extensionFunctionCall
+    }
+
+    fun packageFunction() {
+        callType = ::packageFunctionCall
+    }
+
     operator fun invoke(code: CODE) {
         code.apply {
-            if (this@CALL.name[0].isLowerCase()) functionCall(this@CALL.name) else +this@CALL.name
+            this@CALL.callType(this@CALL.name)(this)
+            //  if (this@CALL.name[0].isLowerCase()) functionCall(this@CALL.name) else +this@CALL.name
             if (this@CALL.arguments.isNotEmpty() || this@CALL.lambdaBlock == null) {
                 +"("
                 this@CALL.arguments.forEachIndexed { i, a ->
@@ -40,6 +57,40 @@ class CALL(val name: String, val baseIndentation: Int = 0, val argsOnDifferentLi
                 +" "
                 it(this)
             }
+        }
+    }
+}
+
+
+fun functionCall(text: String): CODE.() -> Unit {
+    return {
+        span {
+            style = css {
+            }
+            +text
+        }
+    }
+}
+
+fun packageFunctionCall(text: String): CODE.() -> Unit {
+    return {
+        span {
+            style = css {
+                fontStyle = FontStyle.italic
+            }
+            +text
+        }
+    }
+}
+
+fun extensionFunctionCall(text: String): CODE.() -> Unit {
+    return {
+        span {
+            style = css {
+                color = Color("#FFC66D")
+                fontStyle = FontStyle.italic
+            }
+            +text
         }
     }
 }
