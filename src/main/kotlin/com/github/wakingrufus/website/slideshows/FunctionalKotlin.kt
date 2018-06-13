@@ -306,9 +306,8 @@ fun firstClassFunctions(): DIV.() -> Unit = {
             li { +"Classes are nouns" }
             li { +"Methods are verbs" }
             li { +"Functions are gerunds" }
-            li { +"Kotlin does not have static methods/fields" }
-            li { +"Kotlin has companion objects instead" }
-            li { +"There are also first class functions" }
+            li { +"Kotlin has first class functions" }
+            li { +"These replace the need for static methods" }
         }
         slideCode {
             declareFunction(name = "bigDecimalEquals", returnType = "Boolean", argsOnSeparateLines = true) {
