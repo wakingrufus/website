@@ -1,18 +1,21 @@
 package com.github.wakingrufus.website.lib
 
-
 import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.lib.slides.Slideshow
+import com.rometools.rome.feed.synd.SyndFeed
 import kotlinx.css.*
 import kotlinx.html.*
+import mu.KLogging
 import java.io.File
 import java.io.FileWriter
-import java.util.*
 
 class Website(private val baseDir: File) {
+    companion object : KLogging()
+
     private var htmlFiles: List<HtmlPage> = ArrayList()
     private var cssFiles: List<CssPage> = ArrayList()
     private var uploaders: List<Uploader> = ArrayList()
+    private var rssFeeds: List<RssFeed> = ArrayList()
     var slideshows: List<Slideshow> = ArrayList()
 
     fun cssFile(path: String, builder: CSSBuilder) {
@@ -25,6 +28,14 @@ class Website(private val baseDir: File) {
 
     fun htmlPage(path: String, builder: HTML.() -> Unit) {
         htmlFiles += HtmlPage(path, builder)
+    }
+
+    fun rssFeed(rssDir: String = "rss", path: String, feedContents: SyndFeed) {
+        rssFeeds += RssFeedBuilder(
+                file = File(baseDir, rssDir).let {
+                    it.mkdir()
+                    File(it, path)
+                }, builder = feedContents)
     }
 
     fun slideshow(name: String,
@@ -49,6 +60,11 @@ class Website(private val baseDir: File) {
             File(baseDir, it.path).apply {
                 it.write(FileWriter(this))
             }
+        }).plus(rssFeeds.map {
+            it.file.apply {
+                logger.info(this.canonicalPath)
+                it.write(FileWriter(it.file))
+            }
         })
     }
 
@@ -67,9 +83,7 @@ fun css(builder: CSSBuilder.() -> Unit): String {
 
 fun BODY.content(block: DIV.() -> Unit) {
     return div {
-        style = css {
-            display = Display.inlineBlock
-        }
+        classes = setOf("page-content")
         block(this)
     }
 }

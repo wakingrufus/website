@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id "org.jetbrains.kotlin.jvm" version "1.2.30"
+    id "org.jetbrains.kotlin.jvm" version "1.2.31"
     id 'jacoco'
     id 'application'
 }
@@ -30,6 +30,7 @@ dependencies {
     compile 'org.jetbrains:kotlin-css:1.0.0-pre.25-kotlin-1.2.30'
     compile 'org.jetbrains:kotlin-css-jvm:1.0.0-pre.25-kotlin-1.2.30'
     compile 'com.squareup:kotlinpoet:0.7.0'
+    compile 'com.rometools:rome:1.10.0'
 
     testCompile "org.jetbrains.kotlin:kotlin-test"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit"

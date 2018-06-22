@@ -4,14 +4,17 @@ import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import kotlinx.html.*
 import java.io.File
-import java.util.*
 
 object Paths {
     val INDEX_PATH = "index.html"
     val MASTODON_JFX_PATH = "mastodon-jfx.html"
+    val ANTIPATTERNS_PATH = "antipatterns.html"
     val CSS_PATH = "styles.css"
     val SLIDESHOW_CSS_PATH = "slideshow_styles.css"
     val FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME = "functional-kotlin-slideshow"
+    val RSS_PATH = "rss.xml"
+    val SITE_UPDATES_RSS_PATH = "site-updates.xml"
+    val FEEDS_PAGE = "feeds.html"
 }
 
 fun BODY.sideNav() {
@@ -20,10 +23,11 @@ fun BODY.sideNav() {
             li { a(href = Paths.INDEX_PATH) { +"Home" } }
             li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
             li { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Functional Kotlin" } }
+            li { a(href = Paths.ANTIPATTERNS_PATH) { +"Antipatterns" } }
+            li { a(href = Paths.FEEDS_PAGE) { +"Feeds" } }
         }
     }
 }
-
 
 class MyWebsite {
 
@@ -32,6 +36,10 @@ class MyWebsite {
             cssFile(path = Paths.CSS_PATH, cssString = MyStyles().styles())
             htmlPage(path = Paths.INDEX_PATH, builder = mainPage())
             htmlPage(path = Paths.MASTODON_JFX_PATH, builder = mastodonJfx())
+            htmlPage(path = Paths.FEEDS_PAGE, builder = feeds())
+            htmlPage(path = Paths.ANTIPATTERNS_PATH, builder = antipatterns())
+            rssFeed(path = Paths.RSS_PATH, feedContents = feed())
+            //    rssFeed(path = Paths.SITE_UPDATES_RSS_PATH, feedContents = siteUpdateFeed())
             apply(functionalKotlinSlideshow())
         }
     }
@@ -40,6 +48,9 @@ class MyWebsite {
 fun mainPage(): HTML.() -> Unit = {
     head {
         link(href = Paths.CSS_PATH, rel = "stylesheet")
+        link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
+            title = "RSS"
+        }
     }
     body {
         pageTitle("wakingrufus")
@@ -87,6 +98,23 @@ fun mastodonJfx(): HTML.() -> Unit = {
                     +"."
                 }
             }
+        }
+    }
+}
+
+fun feeds(): HTML.() -> Unit = {
+    head {
+        link(href = Paths.CSS_PATH, rel = "stylesheet")
+    }
+    body {
+        pageTitle("Feeds")
+        sideNav()
+        content {
+            ul {
+                li { a(href = "rss/" + Paths.RSS_PATH) { +"All Updates" } }
+                //   li { a(href = "rss/"+Paths.SITE_UPDATES_RSS_PATH) { +"Site Updates" } }
+            }
+
         }
     }
 }

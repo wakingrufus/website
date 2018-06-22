@@ -20,6 +20,7 @@ class MyStyles {
                 fontFamily = "sans-serif"
                 backgroundColor = BACKGROUND_COLOR
                 color = FONT_COLOR
+                margin(all = 0.px)
             }
             a {
                 color = LINK_COLOR
@@ -47,13 +48,21 @@ class MyStyles {
                 (".navBar li") {
                     display = Display.inlineBlock
                 }
+                (".page-content") {
+                    display = Display.block
+                }
             }
             media("screen and (min-width: 1080px)") {
                 (".navBar") {
                     display = Display.inlineBlock
-                    paddingRight = 2.em
+                    paddingRight = 2.pct
                     borderRightStyle = BorderStyle.solid
                     borderRightColor = MyStyles.BORDER_COLOR
+                    maxWidth = 18.pct
+                }
+                (".page-content") {
+                    display = Display.inlineBlock
+                    maxWidth = 79.pct
                 }
             }
         }
