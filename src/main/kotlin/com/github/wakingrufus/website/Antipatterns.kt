@@ -16,7 +16,7 @@ fun antipatterns(): HTML.() -> Unit = {
             p {
                 +"There are a lot of ways to develop software, and there is no one best way. "
                 +"For this reason, there is much literature about how to develop software. "
-                +"But with so many subjectivley good ways to develop software, it can be easier to just focus on how "
+                +"But with so many subjectively good ways to develop software, it can be easier to just focus on how "
                 em { +"not" }
                 +" to do it. "
                 +"I have identified a number of Software Engineering anti-patterns. "
