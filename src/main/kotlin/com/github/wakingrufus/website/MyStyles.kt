@@ -25,6 +25,10 @@ class MyStyles {
             a {
                 color = LINK_COLOR
             }
+            (".page-content") {
+                display = Display.inlineBlock
+                maxWidth = 79.pct
+            }
 
             media("screen and (min-resolution: 120dpi)") {
                 body {
@@ -59,10 +63,6 @@ class MyStyles {
                     borderRightStyle = BorderStyle.solid
                     borderRightColor = MyStyles.BORDER_COLOR
                     maxWidth = 18.pct
-                }
-                (".page-content") {
-                    display = Display.inlineBlock
-                    maxWidth = 79.pct
                 }
             }
         }
