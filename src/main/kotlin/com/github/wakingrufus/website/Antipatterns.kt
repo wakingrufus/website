@@ -67,4 +67,11 @@ fun refactoring(): DIV.() -> Unit = {
         +"A good rule of thumb is to only refactor code you are interacting with already. "
         +"But refactoring should be as much a part of your normal development workflow as writing tests."
     }
+    p {
+        +"Discuss this post on "
+        a(href = "https://mastodon.technology/@wakingrufus/100265615075039570") { +"Mastodon" }
+        +" or "
+        a(href = "https://twitter.com/wakingrufus/status/1011236173774245888") { +"Twitter" }
+        +"."
+    }
 }
