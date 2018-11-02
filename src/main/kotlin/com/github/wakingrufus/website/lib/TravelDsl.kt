@@ -31,7 +31,7 @@ class PLACE(val name: String,
     operator fun invoke(code: DIV) {
         code.run {
             a { id = this@PLACE.name.toLowerCase() }
-            headerLevel(this@PLACE.level)(this,null) {
+            headerLevel(this@PLACE.level)(this, null) {
                 if (this@PLACE.level.value == 6) {
                     style = css {
                         fontSize = .67.em
@@ -49,6 +49,10 @@ class PLACE(val name: String,
                         }
                     }
                     a(href = it) { +"Website" }
+                    this@PLACE.map?.let { m ->
+                        +" "
+                        a(href = m) { +"Map" }
+                    }
                 }
             }
             p {
