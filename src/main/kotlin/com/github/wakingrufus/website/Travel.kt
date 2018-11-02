@@ -22,11 +22,7 @@ fun travel(): HTML.() -> Unit = {
                 subArea("Denver", denver())
                 subArea("Central City", centralCity())
                 subArea("Frisco", frisco())
-                place("") {
-                    description { +"Nevadaville" }
-                }
             }
-
         }
     }
 }
