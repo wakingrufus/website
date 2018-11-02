@@ -48,6 +48,18 @@ val allEntries = entries {
             }
         }
     }
+    entry {
+        title = "Travel Guide"
+        author = "wakingrufus"
+        categories = listOf(siteUpdates)
+        link = "https://wakingrufus.neocities.org/" + Paths.TRAVEL_PATH
+        publishedDate = Date.from(ZonedDateTime.of(
+                LocalDate.of(2018, Month.NOVEMBER, 1),
+                LocalTime.of(8, 0, 0),
+                ZoneOffset.ofHours(-5)
+        ).toInstant())
+        content("I have a new page where I recommend places to visit while travelling based on my own travels.")
+    }
 }
 
 fun siteUpdateFeed(): SyndFeed = rss {

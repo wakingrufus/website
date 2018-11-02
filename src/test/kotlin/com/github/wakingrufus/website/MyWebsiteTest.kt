@@ -1,7 +1,7 @@
 package com.github.wakingrufus.website
 
-import org.junit.Test
 import com.github.wakingrufus.website.lib.writeHtmlPage
+import org.junit.jupiter.api.Test
 import java.io.File
 import java.io.FileWriter
 

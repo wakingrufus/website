@@ -3,8 +3,8 @@ package com.github.wakingrufus.website.lib
 import kotlinx.html.body
 import kotlinx.html.div
 import kotlinx.html.p
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.io.StringWriter
 
 class HtmlPageKtTest {

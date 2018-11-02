@@ -9,6 +9,7 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
     var body: List<CODE.() -> Unit> = ArrayList()
     fun line(block: CODE.() -> Unit) {
         body += {
+            +"\n"
             line(this@BLOCK.indentation + 1) {
                 block(this)
             }
@@ -33,14 +34,17 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
         body += { STATEMENT(indentation = this@BLOCK.indentation + 1).apply(statement)(this) }
     }
 
-    fun assignment(modifier: String? = null, name: String, type: String? = null, value: (STATEMENT.() -> Unit)) {
+    fun assignment(modifier: String? = null,
+                   name: String, type: String? = null,
+                   format: CODE.(String) -> Unit = CODE::propertyName,
+                   value: (STATEMENT.() -> Unit)) {
         body += {
             +"\n"
             indent(this@BLOCK.indentation + 1)
             modifier?.let {
                 keyword("$it ")
             }
-            +name
+           format(name)
             type?.let {
                 +": "
                 +it

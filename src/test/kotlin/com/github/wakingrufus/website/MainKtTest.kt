@@ -1,7 +1,7 @@
 package com.github.wakingrufus.website
 
 import com.github.wakingrufus.website.lib.slides.Slideshow
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.io.File
 
 class MainKtTest {

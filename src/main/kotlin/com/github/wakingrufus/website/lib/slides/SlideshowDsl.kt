@@ -235,7 +235,7 @@ fun DIV.slideTable(block: TABLE.() -> Unit) {
 
 fun TBODY.row(cells: List<String>) {
     return tr {
-        cells.forEach({
+        cells.forEach {
             td {
                 style = css {
                     borderStyle = BorderStyle.solid
@@ -245,7 +245,7 @@ fun TBODY.row(cells: List<String>) {
                 }
                 +it
             }
-        })
+        }
     }
 }
 
@@ -260,7 +260,7 @@ fun TABLE.headers(headers: List<String>) {
                 borderColor = Color.white
                 borderWidth = 4.px
             }
-            headers.forEach({
+            headers.forEach {
                 td {
                     style = css {
                         borderStyle = BorderStyle.solid
@@ -270,7 +270,7 @@ fun TABLE.headers(headers: List<String>) {
                     }
                     +it
                 }
-            })
+            }
         }
     }
 }
@@ -298,9 +298,9 @@ fun DIV.slideCode(block: CODE.() -> Unit) {
 }
 
 fun CSSBuilder.center() {
-    this.apply({
+    this.apply {
         display = Display.block
         marginRight = LinearDimension.auto
         marginLeft = LinearDimension.auto
-    })
+    }
 }

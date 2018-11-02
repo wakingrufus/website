@@ -5,6 +5,8 @@ import kotlinx.css.Color
 import kotlinx.css.FontStyle
 import kotlinx.css.FontWeight
 import kotlinx.css.em
+import kotlinx.css.properties.TextDecoration
+import kotlinx.css.properties.TextDecorationLine
 import kotlinx.html.*
 
 fun DIV.sampleCode(block: CODE.() -> Unit) {
@@ -104,6 +106,17 @@ fun CODE.propertyName(text: String) {
     }
 }
 
+fun CODE.variablePropertyName(text: String) {
+    return span {
+        style = css {
+            fontStyle = FontStyle.italic
+            color = Color("#9876AA")
+            textDecoration = TextDecoration(lines = setOf(TextDecorationLine.underline),
+                    color = Color("#BCA5C4"))
+        }
+        +text
+    }
+}
 fun CODE.comment(text: String) {
     return span {
         style = css {

@@ -17,6 +17,17 @@ class SUBJECT(val subject: CODE.() -> Unit) {
         }
     }
 
+    fun property(name: String){
+        calls += {
+            +this@SUBJECT.operator
+            propertyName(name)
+        }
+    }
+
+    fun assignment(){
+        operator = " = "
+    }
+
     fun nullSafe(){
         operator = "?."
     }

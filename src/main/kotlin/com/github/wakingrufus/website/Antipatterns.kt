@@ -33,12 +33,15 @@ fun antipatterns(): HTML.() -> Unit = {
 fun refactoring(): DIV.() -> Unit = {
     h2 { +"Refactoring as a Separate Ticket" }
     p {
-        +"Refactoring is an important part of software development. "
-        +"It is one of the primary ways to repay technical debt, and make sure your design evolves with the product. "
-        +"In fact, I have a motto: \"Always Be Refactoring\", and I define legacy code as code that you are scared to refactor. "
-        +"Despite this, many teams adopt the following practice (usually at the behest of management): "
-        +"When you are working on a ticket, and you see code which should be refactored, put a ticket for the refactor in the backlog, and finish your ticket without doing the refactor. "
-        +"There are a few reasons why this is a bad idea:"
+        +"""
+        Refactoring is an important part of software development.
+        It is one of the primary ways to repay technical debt, and make sure your design evolves with the product.
+        In fact, I have a motto: "Always Be Refactoring", and I define legacy code as code that you are scared to refactor.
+        Despite this, many teams adopt the following practice (usually at the behest of management):
+        When you are working on a ticket, and you see code which should be refactored,
+        put a ticket for the refactor in the backlog, and finish your ticket without doing the refactor.
+        There are a few reasons why this is a bad idea:"
+        """.trimIndent()
     }
     ol {
         li {

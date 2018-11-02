@@ -3,8 +3,8 @@ package com.github.wakingrufus.website.lib.slides
 import com.github.wakingrufus.website.lib.CssBuilderPage
 import com.github.wakingrufus.website.testOutputDir
 import kotlinx.css.CSSBuilder
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.io.File
 
 class SlideshowTest {
