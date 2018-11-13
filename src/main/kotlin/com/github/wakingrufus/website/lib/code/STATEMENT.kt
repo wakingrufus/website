@@ -44,9 +44,9 @@ class STATEMENT(val indentation: Int = 0) {
 
     }
 
-    fun block(block: BLOCK.() -> Unit) {
-        blockCall = BLOCK(indentation = indentation + 1).apply(block)
-    }
+//    fun block(block: BLOCK.() -> Unit) {
+//        blockCall = BLOCK(indentation = indentation + 1).apply(block)
+//    }
 
     operator fun String.unaryPlus() {
         this.let {

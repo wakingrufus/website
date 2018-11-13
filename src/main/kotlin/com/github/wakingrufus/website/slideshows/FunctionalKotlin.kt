@@ -564,14 +564,18 @@ fun let(): DIV.() -> Unit = {
             declareFunction(name = "getValue", returnType = "BigDecimal") {
                 body {
                     expression {
-                        keyword("return ")
-                        call(name = "getFromDatabase") {}
-                        +"?."
-                        call("let") {
-                            lambda {
-                                expression {
-                                    +"it."
-                                    call(name = "toBigDecimal") {}
+                        on(subject = {
+                            keyword("return ")
+                            call(name = "getFromDatabase") {}
+                        }){
+                            nullSafe()
+                            call("let") {
+                                lambda {
+                                    expression {
+                                        on({+"it"}){
+                                            call(name = "toBigDecimal") {}
+                                        }
+                                    }
                                 }
                             }
                         }

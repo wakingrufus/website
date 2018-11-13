@@ -30,6 +30,15 @@ fun CODE.keyword(text: String) {
     }
 }
 
+fun CODE.it() {
+    return span {
+        style = css {
+            fontWeight = FontWeight("999")
+        }
+        +"it"
+    }
+}
+
 fun CODE.string(string: String) {
     return span {
         style = css {
@@ -43,7 +52,6 @@ fun CODE.string(string: String) {
 
 fun CODE.number(value: Number) {
     return span {
-
         style = css {
             color = Color("#6897BB")
         }
@@ -64,7 +72,7 @@ fun CODE.block(indentation: Int = 0, inline: Boolean = false, code: BLOCK.() -> 
 fun CODE.call(name: String,
               argsOnDifferentLines: Boolean = false,
               baseIndentation: Int = 0,
-              block: CALL.() -> Unit) {
+              block: CALL.() -> Unit = {}) {
     this.apply {
         CALL(name = name,
                 argsOnDifferentLines = argsOnDifferentLines,
@@ -83,7 +91,7 @@ fun CODE.constructor(name: String,
     }
 }
 
-fun CODE.on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit) {
+fun CODE.on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit = {}) {
     SUBJECT(subject).apply(block)(this)
 }
 
@@ -117,6 +125,7 @@ fun CODE.variablePropertyName(text: String) {
         +text
     }
 }
+
 fun CODE.comment(text: String) {
     return span {
         style = css {
@@ -164,7 +173,7 @@ fun CODE.declareFunction(name: String,
 fun CODE.declareFunctionExpression(name: String,
                                    returnType: String? = null,
                                    argsOnSeparateLines: Boolean = true,
-                                   parameters: List<PARAMETER>,
+                                   parameters: List<PARAMETER> = listOf(),
                                    expression: STATEMENT.() -> Unit) {
     this.apply {
         FUNCTION(name = name, returnType = returnType, paramsOnSeparateLines = argsOnSeparateLines)
@@ -212,6 +221,77 @@ class ARGUMENT(val name: String?, val valueBlock: CODE.() -> Unit) {
                 parameterName(" = ")
             }
             code.apply(this@ARGUMENT.valueBlock)
+        }
+    }
+}
+
+val keywords = listOf("var", "val", "return", "fun")
+
+fun CODE.kotlinLine(line: String) {
+    if (line.trimStart().startsWith("fun ")) {
+        line.trimStart().removePrefix("fun ").let {
+            keyword("fun ")
+            it.substringBefore("{").substringBefore("(").let { functionName ->
+                functionName(functionName)
+                it.removePrefix(functionName).let {
+                    if (it.startsWith("(")) {
+                        functionParams(it.substringAfter("(").substringBefore(")"))
+                    }
+                    +it.substringAfter(")")
+                }
+
+            }
+
+        }
+    } else if (line.trimStart().startsWith("val")) {
+        line.trimStart().removePrefix("val ").let {
+            keyword("val ")
+
+        }
+    }
+//                line.split(" ").map {
+//                    if (keywords.contains(it)) keyword(it) else +it
+//                }
+    +"\n"
+}
+
+fun CODE.functionParams(params: String) {
+    +"("
+    if (params.length > 80) {
+        +"\n"
+        +" ".repeat(4)
+    }
+    +params
+    if (params.length > 80) {
+        +"\n"
+    }
+    +")"
+}
+
+fun CODE.functionBody(body: String) {
+    +"{\n"
+
+    +"}"
+}
+
+fun CODE.rawKotlin(raw: String) {
+    if (raw.contains("fun ")) {
+        rawKotlin(raw.substringBefore("fun "))
+        keyword("fun ")
+        rawKotlin(raw.substringAfter("fun "))
+    } else {
+        +raw
+    }
+}
+
+fun DIV.kotlin(code: String) {
+    return pre {
+        code {
+            style = css {
+                fontSize = 1.2.em
+                fontWeight = FontWeight.bold
+            }
+            rawKotlin(code)
         }
     }
 }

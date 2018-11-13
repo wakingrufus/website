@@ -30,7 +30,7 @@ fun BODY.sideNav() {
      //       li { a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Static Web Slides" } }
             li { a(href = Paths.ANTIPATTERNS_PATH) { +"Antipatterns" } }
             li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
-     //       li { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Static Web" } }
+       //     li { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Static Web" } }
             li { a(href = Paths.FEEDS_PAGE) { +"Feeds" } }
         }
     }

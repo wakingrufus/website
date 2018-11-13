@@ -9,7 +9,7 @@ class SUBJECT(val subject: CODE.() -> Unit) {
     var calls: List<CODE.() -> Unit> = ArrayList()
     var operator: String = "."
 
-    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit) {
+    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit = {}) {
         calls += {
             +this@SUBJECT.operator
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)

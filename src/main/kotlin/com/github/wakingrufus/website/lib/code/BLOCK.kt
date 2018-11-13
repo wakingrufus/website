@@ -16,6 +16,12 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
         }
     }
 
+    fun call(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
+        expression{
+            CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
+        }
+    }
+
     fun expression(block: CODE.() -> Unit) {
         body += {
             +"\n"
@@ -44,7 +50,7 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
             modifier?.let {
                 keyword("$it ")
             }
-           format(name)
+            format(name)
             type?.let {
                 +": "
                 +it
@@ -70,12 +76,17 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
         this.let { block ->
             code.apply {
                 +"{"
+                if(this@BLOCK.inline){
+                    +" "
+                }
                 block.body.forEach {
                     it(this)
                 }
                 if (!this@BLOCK.inline) {
                     +"\n"
                     indent(this@BLOCK.indentation)
+                } else {
+                    +" "
                 }
                 +"}"
             }

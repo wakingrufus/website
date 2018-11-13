@@ -88,19 +88,17 @@ fun BODY.content(block: DIV.() -> Unit) {
     }
 }
 
-fun BODY.sideNavBar(block: UL.() -> Unit) {
-    return div {
-        classes += "navBar"
+fun BODY.sideNavBar(block: UL.() -> Unit) = div {
+    classes += "navBar"
+    style = css {
+        verticalAlign = VerticalAlign.top
+    }
+    ul {
         style = css {
-            verticalAlign = VerticalAlign.top
+            listStyleType = ListStyleType.none
+            color = MyStyles.LINK_COLOR
         }
-        ul {
-            style = css {
-                listStyleType = ListStyleType.none
-                color = MyStyles.LINK_COLOR
-            }
-            block(this)
-        }
+        block(this)
     }
 }
 
