@@ -29,63 +29,64 @@ fun staticweb(): HTML.() -> Unit = {
 fun introToStaticWeb(): DIV.() -> Unit = {
     p {
         +"""
-                    The term "static web" refers to a style of web development that might seem out of place in today's
-                    modern scene of Javascript frameworks. But it is precisely the proliferation of javascript-based
-                    web applications that inspires a reaction to get back to some of the ideals of the web of yesteryear.
-                    In this article, we will review the benefits of the static web and look at how Kotlin can bring us
-                    some of the benefits of dynamic web programming to the static web world.
+            The term "static web" refers to a style of web development that might seem out of place in today's
+            modern scene of Javascript frameworks. But it is precisely the proliferation of javascript-based
+            web applications that inspires a reaction to get back to some of the ideals of the web of yesteryear.
+            In this article, we will review the benefits of the static web and look at how Kotlin can bring us
+            some of the benefits of dynamic web programming to the static web world.
                 """.trimIndent()
     }
     h2 { +"Documents, not Apps" }
     p {
         +"""
-                    The Web was designed to provide documents, in HTML.
-                    The addition of Javascript and AJAX to the standard set of web technologies allowed these documents to be dynamic.
-                    This opened up the door to a new way to deliver cross-platform application with rich UIs.
-                    The JS ecosystem developed around this idea of "Web Applications" in order to make it easier to develop these webapp,
-                    and bring along the perks of a true development environment. Pretty soon, this JS ecosystem
-                    became so ubiquitous, that nearly all websites on the internet are web applications.
-                """.trimIndent()
+            The Web was designed to provide documents, in HTML.
+            The addition of Javascript and AJAX to the standard set of web technologies allowed these documents to be dynamic.
+            This opened up the door to a new way to deliver cross-platform applications with rich UIs.
+            The JS ecosystem developed around this idea of "Web Applications" in order to make it easier to develop these webapps
+            and bring along the perks of a true development environment. Pretty soon, this JS ecosystem
+            became so ubiquitous, that nearly all websites on the internet are web applications.
+            """.trimIndent()
     }
     p {
         +"""
-                    But, this has had some downsides. The amount of data transferred when loading a website has exploded.
-                    Sites are built JS libraries which are built on other libraries which are built on others...
-                    Many memes have been written about the `node_modules` directory.
-                    All of those files are compiled into the application that is delivered as part of a page load.
-                    On top of this, sites have stuffed a myriad of trackers and advertisements into their sites in order to monetize you via surveillance capitalism.
-                    in addition to the privacy issues with this, it also makes these sites near unusable on slow connections,
-                    such as mobile connections or connections in rural areas or developing countries.
-                """.trimIndent()
+            But this has had some downsides. The amount of data transferred when loading a website has exploded.
+            Sites are built on JS libraries which are built on other libraries which are built on others...
+            Many memes have been written about the `node_modules` directory.
+            All of those files are compiled into the application that is delivered as part of a page load.
+            On top of this, sites have stuffed a myriad of trackers and advertisements into their sites
+            in order to monetize you via surveillance capitalism.
+            In addition to the privacy issues with this, it also makes these sites near unusable on slow connections
+            such as mobile connections or connections in rural areas or developing countries.
+            """.trimIndent()
     }
     p {
         +"""
-                    Some sites should be webapps, such as eCommerce sites, or web interfaces to applications (think gmail, etc).
-                    But most websites are just serving up static content, such as news websites and blogs.
-                    Lately, many people have desired a return to the simple websites.
-                    With todays technologies, static websites can be extremely fast and reliable.
-                    There is a new static webhost called
-                """.trimIndent()
+            Some sites should be webapps, such as eCommerce sites, or web interfaces to applications (think gmail, etc).
+            But most websites are just serving up static content, such as news websites and blogs.
+            There is no reason these types of sites need to carry all the baggage that comes with a webapp.
+            With todays technologies, static websites can be extremely fast and reliable.
+            There is a new static webhost called
+            """.trimIndent()
         +" "
         a(href = "http://www.neocites.org") { +"Neocities" }
-        +" a name which is an homage to the defunct Geocities."
+        +" a name which is an homage to the defunct Geocities, where many people are building static sites."
     }
     p {
         +"""
-                    I decided to build myself a personal website to publish my own content to, in order to avoid places like Medium, Twitter, or various Slideshow services.
-                    Anyone who has built a site by hand in HTML knows that this is very tedious.
-                    There are some frameworks for generating static sites, such as Jekyll and Hugo, which are great for most people.
-                    But I am a programmer, and i'd like the control i get from programming, with the benefits of using a framework as well.
-                    This is where Kotlin comes in.
-                """.trimIndent()
+            I decided to build myself a personal website to publish my own content to, in order to avoid places like Medium, Twitter, or various Slideshow services.
+            Anyone who has built a site by hand in HTML knows that this is very tedious.
+            There are some frameworks for generating static sites, such as Jekyll and Hugo, which are great for most people.
+            But I am a programmer, and i'd like the control i get from programming, with the benefits of using a framework as well.
+            This is where Kotlin comes in.
+            """.trimIndent()
     }
     p {
         +"""
-                    Kotlin is a very good language for DSLs. THe Kotlin team has created HTML and CSS DSLs already.
-                    Instead of building a DSL from scratch, I decided to extend these DSLs. I will walk you thought how I did this.
-                    Along the way, we will see how DSLs are built, using the HTML DSL as a model example,
-                    then how to write our own DSLs by extending the HTML DSL.
-                """.trimIndent()
+            Kotlin is a very good language for DSLs. THe Kotlin team has created HTML and CSS DSLs already.
+            Instead of building a DSL from scratch, I decided to extend these DSLs. I will walk you thought how I did this.
+            Along the way, we will see how DSLs are built, using the HTML DSL as a model example,
+            then how to write our own DSLs by extending the HTML DSL.
+            """.trimIndent()
     }
     p { +"First, let's briefly review some Kotlin features used in DSLs." }
 }
@@ -233,9 +234,11 @@ fun dslMarker(): DIV.() -> Unit = {
 fun htmlDsl(): DIV.() -> Unit = {
     h2 { +"HTML DSL" }
     p {
-        +"""
-                Next, let's look at an example of using the HTML DSL:
-            """.trimIndent()
+        +"The Jetbrains team as created a DSL for HTML which serves as a prime example of how to write DSLs in Kotlin"
+        +"It is available on "
+        a(href = "https://github.com/Kotlin/kotlinx.html") { +"GitHub" }
+        +". "
+        +"Here is an example of using the HTML DSL:"
     }
     sampleCode {
         on({
@@ -280,9 +283,11 @@ fun htmlDsl(): DIV.() -> Unit = {
 fun codeReuse(): DIV.() -> Unit = {
     h2 { +"Code reuse" }
     p {
-        +"""One of the first benefits we want to leverage is code reusability.
-            |So first, I extract the navigation bar of my site to a function.
-            |We will use and extension function to add a method that we can use within any BODY receiver block
+        +"""One of the first benefits of using a programming language over raw HTML we want to leverage is code reuse.
+            |I want every page on my site to contain a navigation element.
+            |In order to avoid repeating myself and risk the navigation sections of each page becoming different from each other,
+            |I extract the navigation bar of my site to a function.
+            |I use an extension function to add a method that I can use within any BODY receiver block
             """.trimMargin()
     }
     sampleCode {
@@ -290,20 +295,57 @@ fun codeReuse(): DIV.() -> Unit = {
             parameter(name = "block", type = "UL.() -> Unit")
             body {
                 expression {
-                    keyword("return")
-                    +""" div {
-        classes += "navBar"
-        style = css {
-            verticalAlign = VerticalAlign.top
-        }
-        ul {
-            style = css {
-                listStyleType = ListStyleType.none
-                color = MyStyles.LINK_COLOR
-            }
-            block(this)
-        }
-    }"""
+                    keyword("return ")
+                    call("div") {
+                        lambda() {
+                            assignment(name = "classes", operator = "+=") {
+                                inlineExpression { string("navBar") }
+                            }
+                            assignment(name = "style") {
+                                inlineExpression {
+                                    call("css") {
+                                        lambda(indentation = 2) {
+                                            assignment(name = "verticalAlign") {
+                                                inlineExpression {
+                                                    +"VerticalAlign.top"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            call("ul") {
+                                lambda {
+                                    assignment(name = "style") {
+                                        inlineExpression {
+                                            call(name = "css") {
+                                                lambda(indentation = 3) {
+                                                    assignment(name = "listStyleType") {
+                                                        inlineExpression {
+                                                            +"ListStyleType.none"
+                                                        }
+                                                    }
+                                                    assignment(name = "color") {
+                                                        inlineExpression {
+                                                            call(name = "Color") {
+                                                                argument { string("#9999EE") }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    expression {
+                                        call(name = "block") {
+                                            argument { keyword("this") }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

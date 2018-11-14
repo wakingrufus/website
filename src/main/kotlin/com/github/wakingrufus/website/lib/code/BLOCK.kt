@@ -43,6 +43,7 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
     fun assignment(modifier: String? = null,
                    name: String, type: String? = null,
                    format: CODE.(String) -> Unit = CODE::propertyName,
+                   operator: String = "=",
                    value: (STATEMENT.() -> Unit)) {
         body += {
             +"\n"
@@ -55,7 +56,7 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
                 +": "
                 +it
             }
-            +" = "
+            +" $operator "
             STATEMENT(this@BLOCK.indentation + 1).apply(value)(this)
         }
     }
