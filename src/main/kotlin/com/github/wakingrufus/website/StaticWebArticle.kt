@@ -297,7 +297,7 @@ fun codeReuse(): DIV.() -> Unit = {
                 expression {
                     keyword("return ")
                     call("div") {
-                        lambda() {
+                        lambda {
                             assignment(name = "classes", operator = "+=") {
                                 inlineExpression { string("navBar") }
                             }
@@ -351,42 +351,72 @@ fun codeReuse(): DIV.() -> Unit = {
         }
     }
     p {
-        +"""
-                Using this function, I can build my navigation like this:
-            """.trimIndent()
+        +"Using this function, I can build my navigation like this:"
     }
     sampleCode {
-        +"""
-fun BODY.sideNav() {
-    apply {
-        sideNavBar {
-            li { a(href = Paths.INDEX_PATH) { +"Home" } }
-            li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
+        declareFunction(name = "sideNav", extentionOf = "BODY") {
+            body {
+                expression {
+                    call(name = "apply") {
+                        lambda {
+                            call(name = "sideNavBar") {
+                                lambda {
+                                    call(name = "li") {
+                                        lambda(inline = true) {
+                                            inlineCall(name = "a") {
+                                                argument(name = "href") { string("index.html") }
+                                                lambda(inline = true) {
+                                                    inlineExpression {
+                                                        +"+"
+                                                        string("Home")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    call(name = "li") {
+                                        lambda(inline = true) {
+                                            inlineCall(name = "a") {
+                                                argument(name = "href") { string("travel.html") }
+                                                lambda(inline = true) {
+                                                    inlineExpression {
+                                                        +"+"
+                                                        string("Travel Guide")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-}"""
-    }
-    p {
-        +"""
-                And use it in each page on my site:
-            """.trimIndent()
-    }
+    p { +"And use it in each page on my site:" }
     sampleCode {
-        +"""
-
-fun mainPage(): HTML.() -> Unit = {
-    head {
-    }
-    body {
-        sideNav()
-    }
-}
-            """.trimIndent()
+        declareFunctionExpression(name = "mainPage", returnType = "HTML.() -> Unit"){
+            inlineExpression {
+                block {
+                    call(name = "head") {
+                        lambda { }
+                    }
+                    call(name = "body") {
+                        lambda {
+                            expression {
+                                call(name = "sideNav")
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 fun dslExtension(): DIV.() -> Unit = {
-
     p {
         +"""
                 Now, if we want to actually extend the DSL itsself first we need to define a backing object for the thing our DSL will describe.

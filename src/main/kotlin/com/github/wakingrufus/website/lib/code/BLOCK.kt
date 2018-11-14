@@ -15,7 +15,11 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
             }
         }
     }
-
+    fun inlineCall(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
+        inlineExpression{
+            CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
+        }
+    }
     fun call(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
         expression{
             CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
