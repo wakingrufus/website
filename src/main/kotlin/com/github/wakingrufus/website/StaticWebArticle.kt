@@ -22,6 +22,7 @@ fun staticweb(): HTML.() -> Unit = {
             codeReuse()(this)
             dslExtension()(this)
             usage()(this)
+            conclusion()(this)
         }
     }
 }
@@ -61,11 +62,15 @@ fun introToStaticWeb(): DIV.() -> Unit = {
             |in order to monetize you via
             """.trimMargin()
         +" "
-        a(href="https://en.wikipedia.org/wiki/Surveillance_capitalism"){+"surveillance capitalism"}
+        a(href = "https://en.wikipedia.org/wiki/Surveillance_capitalism") { +"surveillance capitalism" }
         +". "
         +"""In addition to the privacy issues with this, it also makes these sites near unusable on slow connections
             such as mobile connections or connections in rural areas or developing countries.
+            Dynamic webapps also degrade the idea of the
             """.trimIndent()
+        +" "
+        a(href = "https://en.wikipedia.org/wiki/Semantic_Web") { +"Semantic Web" }
+        +", a concept critical to accessibility on the web, especially for people who rely on screen readers."
     }
     p {
         +"""
@@ -77,7 +82,7 @@ fun introToStaticWeb(): DIV.() -> Unit = {
             """.trimIndent()
         +" "
         a(href = "http://neocites.org") { +"Neocities" }
-        +" a name which is an homage to the defunct Geocities, where many people are building static sites."
+        +", a name which is an homage to the defunct Geocities, where many people are building static sites."
     }
     p {
         +"""
@@ -222,17 +227,17 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
 fun dslMarker(): DIV.() -> Unit = {
     h2 { +"@DslMarker" }
     p {
-        +"""
-                |DSL markers help in DSLs when you are nesting multiple reciever calls.
-                |In our example, this would apply when we are within the reciever for an HTML body element,
-                |and we don't want to see any methods from the enclosing html element.
-                |It keeps in scope only the methods on the innermost reciever, and removes any methods on higher up recievers.
-                |They can still be accessed through an explicit call such as this@HTML.meta """.trimMargin()
+        +"""DSL markers help in DSLs when you are nesting multiple receiver calls.
+            |In our example, this would apply when we are within the receiver for an HTML body element,
+            |and we don't want to see any methods from the enclosing html element.
+            |It keeps in scope only the methods on the innermost receiver, and removes any methods on higher up receivers.
+            |They can still be accessed through an explicit call such as this@HTML.meta """.trimMargin()
     }
     p { +"DslMarkers are declared like this:" }
     sampleCode {
-        +"""@DslMarker
-                    |annotation class HtmlTagMarker""".trimMargin()
+        line { keyword("@DslMarker") }
+        keyword("annotation class")
+        +" HtmlTagMarker"
     }
     p {
         +"""The above example is declared within the kotlinx HTML DSL, which we will be extending, so we can re-use it.
@@ -407,7 +412,7 @@ fun codeReuse(): DIV.() -> Unit = {
     }
     p { +"And use it in each page on my site:" }
     sampleCode {
-        declareFunctionExpression(name = "mainPage", returnType = "HTML.() -> Unit"){
+        declareFunctionExpression(name = "mainPage", returnType = "HTML.() -> Unit") {
             inlineExpression {
                 block {
                     call(name = "head") {
@@ -584,6 +589,20 @@ fun subAreaWithPlaces(): PLACE.() -> Unit = {
     }
 }
             """.trimIndent()
+    }
+}
+
+
+fun conclusion(): DIV.() -> Unit = {
+    p {
+        +"""
+        Using a DSL lets me design my webpage with minimal repetition and boilerplate.
+        If this approach interests you, I encourage to check out the source code for my
+    """.trimIndent()
+        a(href = "https://neocities.org/wakingrufus") { +"Website" }
+        +" on "
+        a(href = "https://github.com/wakingrufus/website") { +"GitHub" }
+        +", which is built entirely in Kotlin using DSLs."
     }
 }
 
