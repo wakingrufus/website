@@ -421,7 +421,9 @@ fun codeReuse(): DIV.() -> Unit = {
                     call(name = "body") {
                         lambda {
                             expression {
-                                call(name = "sideNav")
+                                call(name = "sideNav") {
+                                    extensionFunction()
+                                }
                             }
                         }
                     }
@@ -433,37 +435,94 @@ fun codeReuse(): DIV.() -> Unit = {
 
 fun dslExtension(): DIV.() -> Unit = {
     p {
-        +"""
-                Now, if we want to actually extend the DSL itsself first we need to define a backing object for the thing our DSL will describe.
-            """.trimIndent()
+        +"""Next, instead of strict code reuse, I want to be able to easily replicate a pattern of usage of the DSL.
+            |For this example, I want to create a page where I can document my travels, and act as a guide to others
+            |who might be travelling in the same areas.
+            |I want to be able to break areas down into sub areas, and detail specific locations.
+            |To do this, I will extend the DSL itself in order to eliminate the boilerplate and repetition,
+            |but still expose the flexibility needed to do all the things I am looking for.
+            |DSLs are usually backed by objects, so to extend the DSL, we need to define a backing object for the thing our extension will describe.
+            """.trimMargin()
     }
     sampleCode {
-        +"""
-@HtmlTagMarker
-class PLACE(val name: String,
-            var website: String? = null,
-            var map: String? = null,
-            var description: P.() -> Unit = {},
-            val level: NestedAreaLevel = NestedAreaLevel(1)) {
-    private var places: List<PLACE> = ArrayList()
-    private var subAreas: List<PLACE> = ArrayList()
-
-    fun place(name: String, website: String? = null, block: PLACE.() -> Unit) {
-        places += PLACE(name = name, website = website, level = NestedAreaLevel(6)).apply(block)
-    }
-
-    fun subArea(name: String, block: PLACE.() -> Unit) {
-        subAreas += PLACE(name = name, level = level.next()).apply(block)
-    }
-
-    fun description(block: P.() -> Unit) {
-        description = block
-    }
-
-    operator fun invoke(code: DIV) {
-        // TODO
-    }
-            """.trimIndent()
+        line { keyword("@HtmlTagMarker") }
+        declareClass(name = "PLACE") {
+            value(name = "name", type = "String")
+            value(name = "website", type = "String?") { keyword("null") }
+            value(name = "map", type = "String?") { keyword("null") }
+            value(name = "description", type = "P.() -> Unit") { block(inline = true) {} }
+            value(name = "level", type = "NestedAreaLevel") {
+                call("NestedAreaLevel") { argument { number(1) } }
+            }
+            property(modifier = "private var", name = "places", type = "List<PLACE>", inConstructor = false) { call(name = "ArrayList") }
+            property(modifier = "private var", name = "subAreas", type = "List<PLACE>", inConstructor = false) { call(name = "ArrayList") }
+            function(name = "place") {
+                parameter(name = "name", type = "String")
+                parameter(name = "website", type = "String?") { keyword("null") }
+                parameter(name = "block", type = "PLACE.() -> Unit")
+                body {
+                    assignment(name = "places", operator = "+=") {
+                        inlineExpression {
+                            on({
+                                call(name = "PLACE") {
+                                    argument(name = "name") { +"name" }
+                                    argument(name = "website") { +"website" }
+                                    argument(name = "level") {
+                                        call("NestedAreaLevel") {
+                                            argument { number(6) }
+                                        }
+                                    }
+                                }
+                            }) {
+                                call("apply") {
+                                    extensionFunction()
+                                    argument { +"block" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            function(name = "subArea"){
+                parameter(name = "name", type = "String")
+                parameter(name = "block", type = "PLACE.() -> Unit")
+                body{
+                    assignment(name = "subAreas",operator = "+="){
+                        inlineExpression {
+                            on({
+                                call(name = "PLACE") {
+                                    argument(name = "name") { +"name" }
+                                    argument(name = "level") {
+                                        on({+"level"}){
+                                            call(name = "next")
+                                        }
+                                    }
+                                }
+                            }) {
+                                call("apply") {
+                                    extensionFunction()
+                                    argument { +"block" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            function(name = "description", paramsOnSeparateLines = false){
+                parameter(name = "block", type = "P.() -> Unit")
+                body {
+                    assignment(name = "description"){
+                        inlineExpression {  +"block" }
+                    }
+                }
+            }
+            function(operator = true,name = "invoke", paramsOnSeparateLines = false){
+                parameter(name = "code", type = "DIV")
+                body {
+                    +"// TODO"
+                }
+            }
+        }
     }
 
     p {
