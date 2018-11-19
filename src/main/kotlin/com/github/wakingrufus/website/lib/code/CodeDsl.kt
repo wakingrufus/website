@@ -167,6 +167,7 @@ fun CODE.declareFunction(name: String,
                 extensionOf = extentionOf,
                 indentation = indentation)
                 .apply(block)(this)
+        +"\n"
     }
 }
 
@@ -174,7 +175,7 @@ fun CODE.declareFunctionExpression(name: String,
                                    returnType: String? = null,
                                    argsOnSeparateLines: Boolean = true,
                                    parameters: List<PARAMETER> = listOf(),
-                                   expression: STATEMENT.() -> Unit) {
+                                   expression: CODE.() -> Unit) {
     this.apply {
         FUNCTION(name = name, returnType = returnType, paramsOnSeparateLines = argsOnSeparateLines)
                 .apply {
@@ -294,4 +295,8 @@ fun DIV.kotlin(code: String) {
             rawKotlin(code)
         }
     }
+}
+
+fun CODE.whenExpression(indentation: Int = 0, whenBlock: WHEN.() -> Unit) {
+    this.apply { WHEN(indentation = indentation).apply(whenBlock)(this) }
 }

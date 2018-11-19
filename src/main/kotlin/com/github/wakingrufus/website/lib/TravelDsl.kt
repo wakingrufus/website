@@ -12,7 +12,7 @@ class PLACE(val name: String,
             var website: String? = null,
             var map: String? = null,
             var description: P.() -> Unit = {},
-            val level: NestedAreaLevel = NestedAreaLevel(1)) {
+            val level: NestedAreaLevel = NestedAreaLevel.default) {
     private var places: List<PLACE> = ArrayList()
     private var subAreas: List<PLACE> = ArrayList()
 
@@ -39,7 +39,7 @@ class PLACE(val name: String,
                     }
                 }
                 +this@PLACE.name
-            }.apply { }
+            }
             this@PLACE.website?.let {
                 div {
                     if (this@PLACE.level.value == 6) {
@@ -86,20 +86,24 @@ fun FlowOrHeadingContent.headerLevel(level: NestedAreaLevel): FlowOrHeadingConte
         4 -> FlowOrHeadingContent::h4
         5 -> FlowOrHeadingContent::h5
         6 -> FlowOrHeadingContent::h6
-        else -> FlowOrHeadingContent::h1
+        else -> headerLevel(NestedAreaLevel.default)
     }
 }
 
-inline class NestedAreaLevel(val value: Int)
+inline class NestedAreaLevel(val value: Int) {
+    companion object {
+        val default = NestedAreaLevel(2)
+    }
 
-fun NestedAreaLevel.next(): NestedAreaLevel {
-    return when (this.value) {
-        1 -> NestedAreaLevel(2)
-        2 -> NestedAreaLevel(3)
-        3 -> NestedAreaLevel(4)
-        4 -> NestedAreaLevel(5)
-        5 -> NestedAreaLevel(6)
-        6 -> NestedAreaLevel(6)
-        else -> NestedAreaLevel(1)
+    fun next(): NestedAreaLevel {
+        return when (this.value) {
+            1 -> NestedAreaLevel(2)
+            2 -> NestedAreaLevel(3)
+            3 -> NestedAreaLevel(4)
+            4 -> NestedAreaLevel(5)
+            5 -> NestedAreaLevel(6)
+            6 -> NestedAreaLevel(6)
+            else -> NestedAreaLevel.default
+        }
     }
 }

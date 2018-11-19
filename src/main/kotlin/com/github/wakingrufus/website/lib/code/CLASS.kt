@@ -87,6 +87,7 @@ class CLASS(val modifiers: List<String> = emptyList(),
                     }
                     it.functions.forEach {
                         it(this)
+                        +"\n"
                     }
                     +"}"
                 }

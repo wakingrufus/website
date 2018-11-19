@@ -123,9 +123,11 @@ fun functionalKotlinImmutableData(): DIV.() -> Unit = {
                             }
                         }
                     }
-                    expression {
-                        +"data."
-                        propertyName("stringData")
+                    statement {
+                        inlineExpression {
+                            +"data."
+                            propertyName("stringData")
+                        }
                     }
                     assignment(modifier = "val", name = "dataClass") {
                         inlineExpression {
@@ -282,16 +284,17 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                     }
                 }
             }
-
+            +"\n"
             declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
                 parameter(name = "messages", type = "List<ChatMessage>")
                 parameter(name = "newMessage", type = "ChatMessage")
                 body {
-                    expression {
-                        keyword("return ")
-                        +"messages."
-                        call(name = "plus", argsOnDifferentLines = false) {
-                            argument { +"newMessage" }
+                    statement {
+                        returns {
+                            +"messages."
+                            call(name = "plus", argsOnDifferentLines = false) {
+                                argument { +"newMessage" }
+                            }
                         }
                     }
                 }
@@ -314,32 +317,31 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                 parameter(name = "one", type = "BigDecimal")
                 parameter(name = "two", type = "BigDecimal")
                 body {
-                    expression {
-                        keyword("return")
-                        +" one.compareTo(two) == "
-                        number(0)
+                    statement {
+                        returns {
+                            +" one.compareTo(two) == "
+                            number(0)
+                        }
                     }
                 }
             }
-            line {
-                declareFunctionExpression(
-                        name = "bigDecimalEquals",
-                        returnType = "Boolean",
-                        parameters = listOf(
-                                PARAMETER(name = "one", type = "BigDecimal"),
-                                PARAMETER(name = "two", type = "BigDecimal")
-                        )) {
-                    inlineExpression {
-                        +"one.compareTo(two) == "
-                        number(0)
-                    }
-                }
+            +"\n"
+            declareFunctionExpression(
+                    name = "bigDecimalEquals",
+                    returnType = "Boolean",
+                    parameters = listOf(
+                            PARAMETER(name = "one", type = "BigDecimal"),
+                            PARAMETER(name = "two", type = "BigDecimal")
+                    )) {
+                //inlineExpression {
+                +"one.compareTo(two) == "
+                number(0)
+                //    }
             }
-            line {
-                declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
-                    +"one.compareTo(two) == "
-                    number(0)
-                }
+            +"\n"
+            declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
+                +"one.compareTo(two) == "
+                number(0)
             }
         }
     }
@@ -359,91 +361,112 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                             +"ArrayList()"
                         }
                     }
-                    expression {
-                        keyword("for")
-                        +" (m "
-                        keyword("in")
-                        +" messages)"
-                    }
-                    block {
-                        assignment(modifier = "var", name = "fixedMessage", type = "String?") {
-                            inlineExpression {
-                                +"m."
-                                propertyName("message")
-                            }
+                    statement {
+                        inlineExpression {
+                            keyword("for")
+                            +" (m "
+                            keyword("in")
+                            +" messages)"
                         }
-                        expression {
-                            comment("What if you move the following block")
-                        }
-                        expression {
-                            keyword("if")
-                            +" (m."
-                            propertyName("message")
-                            +"."
-                            functionName("contains")
-                            +"("
-                            string("bad word")
-                            +")"
-                        }
-                        block {
-                            assignment(name = "fixedMessage") {
-                                inlineExpression {
-                                    +"m."
-                                    propertyName("message")
-
+                        inlineExpression {
+                            block(indentation = this@declareFunction.indentation + 1) {
+                                assignment(modifier = "var", name = "fixedMessage", type = "String?") {
+                                    inlineExpression {
+                                        +"m."
+                                        propertyName("message")
+                                    }
                                 }
-                                chain {
-                                    call(name = "replace") {
-                                        argument { string("bad word") }
-                                        argument { string("****") }
+                                expression {
+                                    comment("What if you move the following block")
+                                }
+                                statement {
+                                    inlineExpression {
+                                        keyword("if")
+                                        +" (m."
+                                        propertyName("message")
+                                        +"."
+                                        functionName("contains")
+                                        +"("
+                                        string("bad word")
+                                        +")"
+                                    }
+                                    inlineExpression {
+                                        block(indentation = this@block.indentation + 1) {
+                                            assignment(name = "fixedMessage") {
+                                                inlineExpression {
+                                                    +"m."
+                                                    propertyName("message")
+
+                                                }
+                                                chain {
+                                                    call(name = "replace") {
+                                                        argument { string("bad word") }
+                                                        argument { string("****") }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                statement {
+                                    inlineExpression {
+                                        keyword("if")
+                                        +" (m."
+                                        propertyName("user")
+                                        +" == "
+                                        string("SYSTEM")
+                                        +")"
+                                    }
+                                    inlineExpression {
+                                        block(indentation = this@block.indentation + 1) {
+                                            assignment(name = "fixedMessage") {
+                                                inlineExpression {
+                                                    keyword("null")
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                statement {
+                                    inlineExpression {
+                                        keyword("if")
+                                        +" (fixedMessage != "
+                                        keyword("null")
+                                        +")"
+                                    }
+                                    inlineExpression {
+                                        block(indentation = this@block.indentation + 1) {
+                                            assignment(name = "fixedMessage") {
+                                                inlineExpression {
+                                                    +"fixedMessage."
+                                                    functionName("toLowerCase")
+                                                    +"()"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                expression { comment("to here?") }
+                                statement {
+                                    inlineExpression {
+                                        keyword("if")
+                                        +" (fixedMessage != "
+                                        keyword("null")
+                                        +")"
+                                    }
+                                    inlineExpression {
+                                        block(indentation = this@block.indentation + 1) {
+                                            assignment(name = "fixedMessages", operator = "+=") {
+                                                inlineExpression { +"fixedMessage" }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
-                        expression {
-                            keyword("if")
-                            +" (m."
-                            propertyName("user")
-                            +" == "
-                            string("SYSTEM")
-                            +")"
-                        }
-                        block {
-                            assignment(name = "fixedMessage") {
-                                inlineExpression {
-                                    keyword("null")
-                                }
-                            }
-                        }
-                        expression {
-                            keyword("if")
-                            +" (fixedMessage != "
-                            keyword("null")
-                            +")"
-                        }
-                        block {
-                            assignment(name = "fixedMessage") {
-                                inlineExpression {
-                                    +"fixedMessage."
-                                    functionName("toLowerCase")
-                                    +"()"
-                                }
-                            }
-                        }
-                        expression { comment("to here?") }
-                        expression {
-                            keyword("if")
-                            +" (fixedMessage != "
-                            keyword("null")
-                            +")"
-                        }
-                        block {
-                            expression { +"fixedMessages += fixedMessage" }
-                        }
                     }
-                    expression {
-                        keyword("return")
-                        +" fixedMessages"
+                    returns {
+                        +"fixedMessages"
                     }
                 }
             }
@@ -453,33 +476,35 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
             declareFunctionExpression(name = "fixChatMessagesNotImperative",
                     returnType = "List<String>",
                     parameters = listOf(PARAMETER(name = "messages", type = "List<ChatMessage>"))) {
-                expression {
-                    on({ +"messages" }) {
-                        breakAndCall(name = "filter") {
-                            lambda(inline = true) {
-                                inlineExpression {
-                                    propertyName("user")
-                                    +" != "
-                                    string("SYSTEM")
+                on({
+                    +"\n"
+                    indent(1)
+                    +"messages"
+                }) {
+                    breakAndCall(name = "filter") {
+                        lambda(inline = true) {
+                            expression {
+                                propertyName("user")
+                                +" != "
+                                string("SYSTEM")
+                            }
+                        }
+                    }
+                    breakAndCall(name = "map") {
+                        lambda(inline = true) {
+                            expression {
+                                +"it."
+                                propertyName("messages")
+                                +"."
+                                call(name = "replace", argsOnDifferentLines = false) {
+                                    argument { string("bad word") }
+                                    argument { string("****") }
                                 }
                             }
                         }
-                        breakAndCall(name = "map") {
-                            lambda(inline = true) {
-                                inlineExpression {
-                                    +"it."
-                                    propertyName("messages")
-                                    +"."
-                                    call(name = "replace", argsOnDifferentLines = false) {
-                                        argument { string("bad word") }
-                                        argument { string("****") }
-                                    }
-                                }
-                            }
-                        }
-                        breakAndCall(name = "map", argsOnDifferentLines = false) {
-                            argument { +"String::toLowerCase" }
-                        }
+                    }
+                    breakAndCall(name = "map", argsOnDifferentLines = false) {
+                        argument { +"String::toLowerCase" }
                     }
                 }
             }
@@ -499,18 +524,14 @@ fun higherOrderFunctions(): DIV.() -> Unit = {
                     argsOnSeparateLines = false,
                     returnType = "(T)->T",
                     parameters = listOf(PARAMETER(name = "f", type = "(T)->T"))) {
-                inlineExpression {
-                    +"f(f(it))"
-                }
+                +"f(f(it))"
             }
             declareFunctionExpression(
                     name = "f",
                     argsOnSeparateLines = false,
                     parameters = listOf(PARAMETER(name = "x", type = "Int"))) {
-                inlineExpression {
-                    +"x + "
-                    number(3)
-                }
+                +"x + "
+                number(3)
             }
             block {
                 expression {
@@ -561,19 +582,19 @@ fun let(): DIV.() -> Unit = {
                     expression { +"..." }
                 }
             }
+            +"\n"
             declareFunction(name = "getValue", returnType = "BigDecimal") {
                 body {
-                    expression {
+                    returns {
                         on(subject = {
-                            keyword("return ")
-                            call(name = "getFromDatabase") {}
-                        }){
+                            call(name = "getFromDatabase")
+                        }) {
                             nullSafe()
-                            call("let") {
+                            call("let", baseIndentation = 1) {
                                 lambda {
                                     expression {
-                                        on({+"it"}){
-                                            call(name = "toBigDecimal") {}
+                                        on({ +"it" }) {
+                                            call(name = "toBigDecimal")
                                         }
                                     }
                                 }
@@ -601,11 +622,10 @@ fun apply(): DIV.() -> Unit = {
         slideCode {
             declareFunction("buildObject", returnType = "Calendar") {
                 body {
-                    expression {
-                        keyword("return ")
+                    returns {
                         on({ +"Calendar" }) {
                             call(name = "getInstance") {}
-                            call(name = "apply", argsOnDifferentLines = false) {
+                            call(name = "apply", argsOnDifferentLines = false, baseIndentation = 1) {
                                 lambda {
                                     expression {
                                         call(name = "set", argsOnDifferentLines = false) {
@@ -640,14 +660,13 @@ fun also(): DIV.() -> Unit = {
             declareFunction(name = "functionWithSideEffect", returnType = "String") {
                 parameter(name = "input", type = "String")
                 body {
-                    expression {
-                        keyword("return ")
+                    returns {
                         on({
                             call(name = "doStuff") {
                                 argument { +"input" }
                             }
                         }) {
-                            call(name = "also") {
+                            call(name = "also", baseIndentation = 1) {
                                 lambda {
                                     expression {
                                         on({ propertyName("log") }) {
@@ -735,11 +754,12 @@ fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
                     }
                 }
             }
+            +"\n"
             declareFunction("use") {
                 body {
                     expression {
                         on({ string("") }) {
-                            call("build") {
+                            call("build", baseIndentation = 1) {
                                 lambda {
                                     expression {
                                         call("append") {
@@ -796,7 +816,7 @@ fun functionalTesting(): DIV.() -> Unit = {
                                         }
                                     }) {
                                         nullSafe()
-                                        call(name = "let") {
+                                        call(name = "let", baseIndentation = 1) {
                                             extensionFunction()
                                             lambda {
                                                 expression {
@@ -834,7 +854,7 @@ fun functionalTesting(): DIV.() -> Unit = {
                                     call(name = "readLine") {}
                                 }) {
                                     nullSafe()
-                                    call(name = "let") {
+                                    call(name = "let", baseIndentation = 1) {
                                         extensionFunction()
                                         lambda {
                                             expression {
@@ -871,7 +891,7 @@ fun functionalTesting(): DIV.() -> Unit = {
                                 +"{ sb.append(it) }"
                             }
                             argument(name = "read") {
-                                block(inline = true) { inlineExpression { string("input") } }
+                                block(inline = true) { expression { string("input") } }
                             }
                         }
                     }

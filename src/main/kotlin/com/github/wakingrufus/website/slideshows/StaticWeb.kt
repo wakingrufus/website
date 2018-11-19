@@ -88,36 +88,31 @@ fun staticWebKotlinHtml(): DIV.() -> Unit = {
                     call("h1") {
                         extensionFunction()
                         lambda(inline = false, indentation = 0) {
-                            statement {
-                                expression {
-                                    +"+"
-                                    string("Header")
-                                }
+
+                            expression {
+                                +"+"
+                                string("Header")
                             }
                         }
                     }
                 }
                 call("p") {
                     extensionFunction()
-                    lambda(inline = false, indentation = 0) {
-                        statement {
-                            expression {
-                                +"+"
-                                string("Paragraph with link: ")
-                            }
-                            expression {
-                                call("a") {
-                                    extensionFunction()
-                                    argument(name = "href") {
-                                        string("http://www.duckduckgo.com")
-                                    }
-                                    lambda {
-                                        statement {
-                                            expression {
-                                                +"+"
-                                                string("DDG")
-                                            }
-                                        }
+                    lambda(inline = false) {
+                        expression {
+                            +"+"
+                            string("Paragraph with link: ")
+                        }
+                        expression {
+                            call("a",baseIndentation = 1) {
+                                extensionFunction()
+                                argument(name = "href") {
+                                    string("http://www.duckduckgo.com")
+                                }
+                                lambda {
+                                    expression {
+                                        +"+"
+                                        string("DDG")
                                     }
                                 }
                             }
@@ -147,7 +142,7 @@ fun staticWebKotlinCss(): DIV.() -> Unit = {
                     call("p") {
                         extensionFunction()
                         lambda(inline = false, indentation = 0) {
-                            line {
+                            statement {
                                 on({ variablePropertyName("style") }) {
                                     assignment()
                                     call("css") {
@@ -169,11 +164,9 @@ fun staticWebKotlinCss(): DIV.() -> Unit = {
                                     }
                                 }
                             }
-                            statement {
-                                expression {
-                                    +"+"
-                                    string("Paragraph")
-                                }
+                            expression {
+                                +"+"
+                                string("Paragraph")
                             }
                         }
                     }

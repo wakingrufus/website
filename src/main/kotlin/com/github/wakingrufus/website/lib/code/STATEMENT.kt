@@ -5,14 +5,23 @@ import kotlinx.html.HtmlTagMarker
 
 @HtmlTagMarker
 class STATEMENT(val indentation: Int = 0) {
+    var assignment: ASSIGNMENT? = null
+    var isReturn: Boolean = false
     var body: (List<CODE.() -> Unit>) = ArrayList()
-    var blockCall: BLOCK? = null
-    fun expression(block: CODE.() -> Unit) {
+
+    fun returns(block: CODE.() -> Unit) {
+        isReturn = true
         body += {
-            +"\n"
-            indent(this@STATEMENT.indentation)
             block(this)
         }
+    }
+
+    fun assignment(modifier: String? = null,
+                   name: String,
+                   format: CODE.(String) -> Unit = CODE::propertyName,
+                   type: String? = null,
+                   operator: String = "=") {
+        assignment = ASSIGNMENT(modifier = modifier, name = name, format = format, type = type, operator = operator)
     }
 
     fun inlineExpression(block: CODE.() -> Unit) {
@@ -25,47 +34,37 @@ class STATEMENT(val indentation: Int = 0) {
         body += { SUBJECT(subject).apply(block)(this) }
     }
 
-    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, call: CALL.() -> Unit) {
+    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = indentation, call: CALL.() -> Unit) {
         body += {
-            +"."
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(call)(this)
         }
     }
 
-    fun chain(block: STATEMENT.() -> Unit) {
+    fun chain(lineBreak: Boolean = false, block: STATEMENT.() -> Unit) {
         body += {
-            +"\n"
-            indent(this@STATEMENT.indentation + 1)
+            if (lineBreak) {
+                +"\n"
+                indent(this@STATEMENT.indentation + 1)
+            }
             STATEMENT(indentation = this@STATEMENT.indentation + 1)
-                    //   .apply { +"." }
+                    .apply { inlineExpression { +"." } }
                     .apply(block)(this)
         }
 
     }
 
-//    fun block(block: BLOCK.() -> Unit) {
-//        blockCall = BLOCK(indentation = indentation + 1).apply(block)
-//    }
-
-    operator fun String.unaryPlus() {
-        this.let {
-            expression {
-                +it
-            }
-        }
-    }
-
     operator fun invoke(code: CODE) {
         this.let { block ->
             code.apply {
+                block.assignment?.let {
+                    it(this)
+                }
+                if (block.isReturn) {
+                    code.keyword("return ")
+                }
                 block.body.forEachIndexed { index, function ->
                     function(this)
-                }
-
-                block.blockCall?.let {
-                    +" "
-                    it(this)
                 }
             }
         }

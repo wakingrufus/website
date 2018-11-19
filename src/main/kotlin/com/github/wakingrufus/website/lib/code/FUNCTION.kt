@@ -24,8 +24,8 @@ class FUNCTION(val operator: Boolean = false,
         expression = false
     }
 
-    fun expression(value: STATEMENT.() -> Unit) {
-        body = { STATEMENT(this@FUNCTION.indentation + 1).apply(value)(this) }
+    fun expression(value: CODE.() -> Unit) {
+        body = { value(this) }
         expression = true
     }
 
@@ -77,7 +77,6 @@ class FUNCTION(val operator: Boolean = false,
             } else {
                 this@FUNCTION.buildFunctionBody(this)
             }
-            +"\n"
         }
     }
 }

@@ -20,7 +20,7 @@ class CALL(val name: String,
         arguments += ARGUMENT(name = name, valueBlock = value)
     }
 
-    fun lambda(inline: Boolean = false, indentation: Int = baseIndentation + 1, value: (BLOCK.() -> Unit)) {
+    fun lambda(inline: Boolean = false, indentation: Int = baseIndentation, value: (BLOCK.() -> Unit)) {
         lambdaBlock = BLOCK(indentation = indentation, inline = inline).apply(value)
     }
 

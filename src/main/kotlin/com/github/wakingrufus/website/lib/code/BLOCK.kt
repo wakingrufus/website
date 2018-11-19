@@ -4,33 +4,29 @@ import kotlinx.html.CODE
 import kotlinx.html.HtmlTagMarker
 
 @HtmlTagMarker
-class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
+class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
     var prefix: (CODE.() -> Unit)? = null
     var body: List<CODE.() -> Unit> = ArrayList()
+    var statements: List<STATEMENT> = listOf()
+
     fun line(block: CODE.() -> Unit) {
         body += {
-            +"\n"
+         //   +"\n"
             line(this@BLOCK.indentation + 1) {
                 block(this)
             }
         }
     }
-    fun inlineCall(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
-        inlineExpression{
-            CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
-        }
-    }
     fun call(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
-        expression{
-            CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
+        statement{
+            call(name = name, baseIndentation = indentation, argsOnDifferentLines = argsOnDifferentLines, call = call)
+          //  CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
         }
     }
 
     fun expression(block: CODE.() -> Unit) {
-        body += {
-            +"\n"
-            indent(this@BLOCK.indentation + 1)
-            block(this)
+        statement {
+            inlineExpression(block)
         }
     }
 
@@ -41,27 +37,27 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
     }
 
     fun statement(statement: STATEMENT.() -> Unit) {
-        body += { STATEMENT(indentation = this@BLOCK.indentation + 1).apply(statement)(this) }
+        if(statements.isNotEmpty()){
+            inline = false
+        }
+        statements += STATEMENT(indentation = this@BLOCK.indentation + 1).apply(statement)
+    }
+
+    fun returns(block: CODE.() -> Unit){
+        statement {
+            returns (block)
+        }
     }
 
     fun assignment(modifier: String? = null,
-                   name: String, type: String? = null,
+                   name: String,
+                   type: String? = null,
                    format: CODE.(String) -> Unit = CODE::propertyName,
                    operator: String = "=",
                    value: (STATEMENT.() -> Unit)) {
-        body += {
-            +"\n"
-            indent(this@BLOCK.indentation + 1)
-            modifier?.let {
-                keyword("$it ")
-            }
-            format(name)
-            type?.let {
-                +": "
-                +it
-            }
-            +" $operator "
-            STATEMENT(this@BLOCK.indentation + 1).apply(value)(this)
+        statement {
+            assignment(modifier = modifier, name = name, type = type, format = format, operator = operator)
+            value(this)
         }
     }
 
@@ -81,10 +77,21 @@ class BLOCK(val indentation: Int = 0, val inline: Boolean = true) {
         this.let { block ->
             code.apply {
                 +"{"
-                if(this@BLOCK.inline){
-                    +" "
-                }
+//                if(this@BLOCK.inline){
+//                    +" "
+//                } else{
+//                    +"\n"
+//                }
                 block.body.forEach {
+                    it(this)
+                }
+                block.statements.forEach {
+                    if(this@BLOCK.inline){
+                        +" "
+                    } else{
+                        +"\n"
+                        indent(this@BLOCK.indentation+1)
+                    }
                     it(this)
                 }
                 if (!this@BLOCK.inline) {
