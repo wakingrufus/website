@@ -197,12 +197,13 @@ fun CODE.parameterName(text: String) {
     }
 }
 
-fun CODE.declareReturn(block: CODE.() -> Unit) {
-    this.apply {
-        keyword("return ")
-        block.invoke(this)
+fun CODE.scope(text: String) {
+    return span {
+        style = css {
+            color = Color("#467CDA")
+        }
+        +text
     }
-
 }
 
 fun CODE.declareProperty(modifier: String? = null, name: String, type: String? = null, value: (CODE.() -> Unit)? = null) {
@@ -215,19 +216,10 @@ fun CODE.indent(level: Int) {
     +"  ".repeat(level)
 }
 
-@HtmlTagMarker
-class ARGUMENT(val name: String?, val valueBlock: CODE.() -> Unit) {
 
-    operator fun invoke(code: CODE) {
-        code.apply {
-            this@ARGUMENT.name?.let {
-                parameterName(it)
-                parameterName(" = ")
-            }
-            code.apply(this@ARGUMENT.valueBlock)
-        }
-    }
-}
+/**
+ * raw kotlin formatting
+ */
 
 val keywords = listOf("var", "val", "return", "fun")
 
@@ -298,8 +290,4 @@ fun DIV.kotlin(code: String) {
             rawKotlin(code)
         }
     }
-}
-
-fun CODE.whenExpression(indentation: Int = 0, whenBlock: WHEN.() -> Unit) {
-    this.apply { WHEN(indentation = indentation).apply(whenBlock)(this) }
 }

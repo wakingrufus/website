@@ -287,9 +287,11 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                 body {
                     statement {
                         returns {
-                            +"messages."
-                            call(name = "plus", argsOnDifferentLines = false) {
-                                argument { +"newMessage" }
+                            code {
+                                +"messages."
+                                call(name = "plus", argsOnDifferentLines = false) {
+                                    argument { +"newMessage" }
+                                }
                             }
                         }
                     }
@@ -315,8 +317,10 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                 body {
                     statement {
                         returns {
-                            +" one.compareTo(two) == "
-                            number(0)
+                            code {
+                                +" one.compareTo(two) == "
+                                number(0)
+                            }
                         }
                     }
                 }
@@ -462,7 +466,9 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                         }
                     }
                     returns {
-                        +"fixedMessages"
+                        code {
+                            +"fixedMessages"
+                        }
                     }
                 }
             }
@@ -582,22 +588,24 @@ fun let(): DIV.() -> Unit = {
             declareFunction(name = "getValue", returnType = "BigDecimal") {
                 body {
                     returns {
-                        on(subject = {
-                            call(name = "getFromDatabase")
-                        }) {
-                            nullSafe()
-                            call("let", baseIndentation = 1) {
-                                lambda {
-                                    expression {
-                                        on({ +"it" }) {
-                                            call(name = "toBigDecimal")
+                        code {
+                            on(subject = {
+                                call(name = "getFromDatabase")
+                            }) {
+                                nullSafe()
+                                call("let", baseIndentation = 1) {
+                                    lambda {
+                                        expression {
+                                            on({ +"it" }) {
+                                                call(name = "toBigDecimal")
+                                            }
                                         }
                                     }
                                 }
                             }
+                            +" :? BigDecimal."
+                            propertyName("ZERO")
                         }
-                        +" :? BigDecimal."
-                        propertyName("ZERO")
                     }
                 }
             }
@@ -619,6 +627,7 @@ fun apply(): DIV.() -> Unit = {
             declareFunction("buildObject", returnType = "Calendar") {
                 body {
                     returns {
+                        code {
                         on({ +"Calendar" }) {
                             call(name = "getInstance") {}
                             call(name = "apply", argsOnDifferentLines = false, baseIndentation = 1) {
@@ -635,6 +644,7 @@ fun apply(): DIV.() -> Unit = {
                                     }
                                 }
                             }
+                        }
                         }
                     }
                 }
@@ -657,6 +667,7 @@ fun also(): DIV.() -> Unit = {
                 parameter(name = "input", type = "String")
                 body {
                     returns {
+                        code {
                         on({
                             call(name = "doStuff") {
                                 argument { +"input" }
@@ -676,6 +687,7 @@ fun also(): DIV.() -> Unit = {
                                     }
                                 }
                             }
+                        }
                         }
                     }
                 }

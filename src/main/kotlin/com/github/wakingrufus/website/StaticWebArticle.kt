@@ -182,8 +182,8 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
     sampleCode {
         declareFunction("builder", "String", false) {
             body {
-                expression {
-                    declareReturn {
+                returns {
+                    code {
                         on({
                             call("StringBuilder")
                         }) {
@@ -202,7 +202,6 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
     p { +"becomes" }
     sampleCode {
         declareFunctionExpression("dsl", "String", false) {
-            //   inlineExpression {
             on({
                 call(name = "stringDsl") {
                     packageFunction()
@@ -219,7 +218,6 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
                     }
                 }
             })
-            //   }
         }
     }
 }
@@ -309,54 +307,45 @@ fun codeReuse(): DIV.() -> Unit = {
         declareFunction(name = "sideNavBar", extentionOf = "BODY") {
             parameter(name = "block", type = "UL.() -> Unit")
             body {
-                statement {
-                    returns {
-                        call("div") {
-                            lambda {
-                                assignment(name = "classes", operator = "+=") {
-                                    inlineExpression { string("navBar") }
-                                }
-                                assignment(name = "style") {
-                                    inlineExpression {
-                                        call("css") {
-                                            lambda(indentation = 2) {
-                                                assignment(name = "verticalAlign") {
-                                                    inlineExpression {
-                                                        +"VerticalAlign.top"
-                                                    }
+                returns {
+                    call("div") {
+                        lambda {
+                            assignment(name = "classes", operator = "+=") {
+                                inlineExpression { string("navBar") }
+                            }
+                            assignment(name = "style") {
+                                    call("css") {
+                                        lambda {
+                                            assignment(name = "verticalAlign") {
+                                                inlineExpression {
+                                                    +"VerticalAlign.top"
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                statement {
-                                    call("ul") {
-                                        lambda {
-                                            assignment(name = "style") {
-                                                inlineExpression {
-                                                    call(name = "css") {
-                                                        lambda(indentation = 3) {
-                                                            assignment(name = "listStyleType") {
-                                                                inlineExpression {
-                                                                    +"ListStyleType.none"
-                                                                }
-                                                            }
-                                                            assignment(name = "color") {
-                                                                inlineExpression {
-                                                                    call(name = "Color") {
-                                                                        argument { string("#9999EE") }
-                                                                    }
-                                                                }
-                                                            }
+                            }
+                            statement {
+                                call("ul") {
+                                    lambda {
+                                        assignment(name = "style") {
+                                            call(name = "css") {
+                                                lambda {
+                                                    assignment(name = "listStyleType") {
+                                                        inlineExpression {
+                                                            +"ListStyleType.none"
+                                                        }
+                                                    }
+                                                    assignment(name = "color") {
+                                                        call(name = "Color") {
+                                                            argument { string("#9999EE") }
                                                         }
                                                     }
                                                 }
-
                                             }
-                                            statement {
-                                                call(name = "block") {
-                                                    argument { keyword("this") }
-                                                }
+                                        }
+                                        statement {
+                                            call(name = "block") {
+                                                argument { keyword("this") }
                                             }
                                         }
                                     }
@@ -542,7 +531,7 @@ fun dslExtension(): DIV.() -> Unit = {
                 """.trimIndent()
     }
     sampleCode {
-        declareClass(modifiers = listOf("inline", "class"), name = "NestedAreaLevel", propsOnSeparateLines = false) {
+        declareClass(modifiers = listOf("inline"), name = "NestedAreaLevel", propsOnSeparateLines = false) {
             value(name = "value", type = "Int", inConstructor = true)
             companionObject {
                 assignment(modifier = "val", name = "default") {
@@ -608,10 +597,30 @@ fun dslExtension(): DIV.() -> Unit = {
     }
     sampleCode {
         declareClass(name = "PLACE") {
-            function(operator = true, name = "invoke"){
+            function(operator = true, name = "invoke", paramsOnSeparateLines = false) {
                 parameter(name = "code", type = "DIV")
                 body {
+                    statement {
+                        on({ +"code" }) {
+                            call(name = "run") {
+                                extensionFunction()
+                                lambda {
+                                    call(name = "a") {
+                                        lambda {
+                                            assignment(name = "id") {
+                                                inlineExpression {
+                                                    keyword("this")
+                                                    scope("@PLACE")
+                                                    +".name.toLowerCase()"
+                                                }
+                                            }
 
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

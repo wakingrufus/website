@@ -31,7 +31,7 @@ class FUNCTION(val operator: Boolean = false,
 
     private fun buildExpression(code: CODE) {
         code.apply {
-            +" = "
+            +"= "
             this@FUNCTION.body?.invoke(this)
             +"\n"
         }
@@ -71,6 +71,7 @@ class FUNCTION(val operator: Boolean = false,
             this@FUNCTION.returnType?.let {
                 +": "
                 +it
+                +" "
             }
             if (this@FUNCTION.expression) {
                 this@FUNCTION.buildExpression(this)

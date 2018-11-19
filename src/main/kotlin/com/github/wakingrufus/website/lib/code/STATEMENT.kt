@@ -9,10 +9,10 @@ class STATEMENT(val indentation: Int = 0) {
     var isReturn: Boolean = false
     var body: (List<CODE.() -> Unit>) = ArrayList()
 
-    fun returns(block: CODE.() -> Unit) {
+    fun returns(block: EXPRESSION.() -> Unit) {
         isReturn = true
         body += {
-            block(this)
+            EXPRESSION(indentation = this@STATEMENT.indentation).apply(block)(this)
         }
     }
 

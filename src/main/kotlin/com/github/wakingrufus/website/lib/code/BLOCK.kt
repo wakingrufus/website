@@ -28,7 +28,7 @@ class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
         statements += STATEMENT(indentation = this@BLOCK.indentation + 1).apply(statement)
     }
 
-    fun returns(block: CODE.() -> Unit){
+    fun returns(block: EXPRESSION.() -> Unit){
         statement {
             returns (block)
         }
