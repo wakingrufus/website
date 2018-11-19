@@ -235,9 +235,9 @@ fun dslMarker(): DIV.() -> Unit = {
     }
     p { +"DslMarkers are declared like this:" }
     sampleCode {
-        line { keyword("@DslMarker") }
-        keyword("annotation class")
-        +" HtmlTagMarker"
+        keyword("@DslMarker")
+        +"\n"
+        annotationClass("HtmlTagMarker")
     }
     p {
         +"""The above example is declared within the kotlinx HTML DSL, which we will be extending, so we can re-use it.
@@ -273,7 +273,7 @@ fun htmlDsl(): DIV.() -> Unit = {
                         lambda {
                             call("h1") {
                                 lambda(inline = true) {
-                                    inlineExpression {
+                                    expression {
                                         +"+"
                                         string("Header")
                                     }
@@ -281,7 +281,7 @@ fun htmlDsl(): DIV.() -> Unit = {
                             }
                             call("p") {
                                 lambda(inline = true) {
-                                    inlineExpression {
+                                    expression {
                                         +"+"
                                         string("paragraph text")
                                     }
@@ -448,7 +448,8 @@ fun dslExtension(): DIV.() -> Unit = {
             """.trimMargin()
     }
     sampleCode {
-        line { keyword("@HtmlTagMarker") }
+        keyword("@HtmlTagMarker")
+        +"\n"
         declareClass(name = "PLACE") {
             value(name = "name", type = "String")
             value(name = "website", type = "String?") { keyword("null") }

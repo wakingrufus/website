@@ -172,12 +172,10 @@ fun functionalKotlinDeterministicStory(): DIV.() -> Unit = {
 fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
     slideContent {
         slideCode {
-            line {
-                dataClass(name = "ChatMessage") {
-                    value(name = "user", type = "String")
-                    value(name = "timestamp", type = "Instant")
-                    value(name = "message", type = "String")
-                }
+            dataClass(name = "ChatMessage") {
+                value(name = "user", type = "String")
+                value(name = "timestamp", type = "Instant")
+                value(name = "message", type = "String")
             }
             declareFunction(name = "newMessage",
                     returnType = "ChatMessage",
@@ -210,12 +208,10 @@ fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
 fun functionalKotlinDeterministic(): DIV.() -> Unit = {
     slideContent {
         slideCode {
-            line {
-                dataClass(name = "ChatMessage") {
-                    value(name = "user", type = "String")
-                    value(name = "timestamp", type = "Instant")
-                    value(name = "message", type = "String")
-                }
+            dataClass(name = "ChatMessage") {
+                value(name = "user", type = "String")
+                value(name = "timestamp", type = "Instant")
+                value(name = "message", type = "String")
             }
             declareFunction(name = "newMessage",
                     returnType = "ChatMessage") {

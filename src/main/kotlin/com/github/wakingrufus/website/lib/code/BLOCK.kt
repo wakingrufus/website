@@ -9,30 +9,15 @@ class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
     var body: List<CODE.() -> Unit> = ArrayList()
     var statements: List<STATEMENT> = listOf()
 
-    fun line(block: CODE.() -> Unit) {
-        body += {
-         //   +"\n"
-            line(this@BLOCK.indentation + 1) {
-                block(this)
-            }
-        }
-    }
     fun call(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
         statement{
             call(name = name, baseIndentation = indentation, argsOnDifferentLines = argsOnDifferentLines, call = call)
-          //  CALL(name = name, baseIndentation = this@BLOCK.indentation, argsOnDifferentLines = argsOnDifferentLines).apply(call)(this)
         }
     }
 
     fun expression(block: CODE.() -> Unit) {
         statement {
             inlineExpression(block)
-        }
-    }
-
-    fun inlineExpression(block: CODE.() -> Unit) {
-        body += {
-            block(this)
         }
     }
 
@@ -65,23 +50,10 @@ class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
         body += { BLOCK(indentation = this@BLOCK.indentation + 1, inline = false).apply(block)(this) }
     }
 
-    operator fun String.unaryPlus(): Unit {
-        this.let {
-            line {
-                +it
-            }
-        }
-    }
-
     operator fun invoke(code: CODE) {
         this.let { block ->
             code.apply {
                 +"{"
-//                if(this@BLOCK.inline){
-//                    +" "
-//                } else{
-//                    +"\n"
-//                }
                 block.body.forEach {
                     it(this)
                 }

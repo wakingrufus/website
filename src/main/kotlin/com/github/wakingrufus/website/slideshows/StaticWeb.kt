@@ -4,7 +4,10 @@ import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.lib.CssStringPage
 import com.github.wakingrufus.website.lib.Website
-import com.github.wakingrufus.website.lib.code.*
+import com.github.wakingrufus.website.lib.code.call
+import com.github.wakingrufus.website.lib.code.number
+import com.github.wakingrufus.website.lib.code.string
+import com.github.wakingrufus.website.lib.code.variablePropertyName
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.slides.*
 import kotlinx.css.Color
@@ -84,18 +87,17 @@ fun staticWebKotlinHtml(): DIV.() -> Unit = {
     slideContent {
         splitSlide(leftBlock = {
             slideCode {
-                line {
-                    call("h1") {
-                        extensionFunction()
-                        lambda(inline = false, indentation = 0) {
+                call("h1") {
+                    extensionFunction()
+                    lambda(inline = false, indentation = 0) {
 
-                            expression {
-                                +"+"
-                                string("Header")
-                            }
+                        expression {
+                            +"+"
+                            string("Header")
                         }
                     }
                 }
+                +"\n"
                 call("p") {
                     extensionFunction()
                     lambda(inline = false) {
@@ -104,7 +106,7 @@ fun staticWebKotlinHtml(): DIV.() -> Unit = {
                             string("Paragraph with link: ")
                         }
                         expression {
-                            call("a",baseIndentation = 1) {
+                            call("a", baseIndentation = 1) {
                                 extensionFunction()
                                 argument(name = "href") {
                                     string("http://www.duckduckgo.com")
@@ -138,36 +140,28 @@ fun staticWebKotlinCss(): DIV.() -> Unit = {
     slideContent {
         splitSlide(leftBlock = {
             slideCode {
-                line {
-                    call("p") {
-                        extensionFunction()
-                        lambda(inline = false, indentation = 0) {
-                            statement {
-                                on({ variablePropertyName("style") }) {
-                                    assignment()
-                                    call("css") {
-                                        lambda {
-                                            line {
-                                                on({ variablePropertyName("fontSize") }) {
-                                                    assignment()
-
-                                                }
-                                            }
-                                            assignment(name = "fontSize") {
-                                                on(subject = {
-                                                    number(2)
-                                                }) {
-                                                    property("em")
-                                                }
+                call("p") {
+                    extensionFunction()
+                    lambda(inline = false, indentation = 0) {
+                        statement {
+                            on({ variablePropertyName("style") }) {
+                                assignment()
+                                call("css", baseIndentation = 1) {
+                                    lambda {
+                                        assignment(name = "fontSize", format = CODE::variablePropertyName) {
+                                            on(subject = {
+                                                number(2)
+                                            }) {
+                                                property("em")
                                             }
                                         }
                                     }
                                 }
                             }
-                            expression {
-                                +"+"
-                                string("Paragraph")
-                            }
+                        }
+                        expression {
+                            +"+"
+                            string("Paragraph")
                         }
                     }
                 }

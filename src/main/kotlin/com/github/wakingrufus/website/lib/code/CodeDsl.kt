@@ -59,12 +59,6 @@ fun CODE.number(value: Number) {
     }
 }
 
-fun CODE.line(indentation: Int = 0, code: CODE.() -> Unit) {
-    indent(indentation)
-    code.invoke(this)
-    +"\n"
-}
-
 fun CODE.block(indentation: Int = 0, inline: Boolean = false, code: BLOCK.() -> Unit) {
     BLOCK(indentation = indentation, inline = inline).apply(code)(this)
 }
@@ -150,6 +144,15 @@ fun CODE.dataClass(name: String,
                    block: CLASS.() -> Unit = {}) {
     this.apply {
         CLASS(modifiers = listOf("data"), propsOnSeparateLines = propsOnSeparateLines, name = name)
+                .apply(block)(this)
+    }
+}
+
+fun CODE.annotationClass(name: String,
+                   propsOnSeparateLines: Boolean = true,
+                   block: CLASS.() -> Unit = {}) {
+    this.apply {
+        CLASS(modifiers = listOf("annotation"), propsOnSeparateLines = propsOnSeparateLines, name = name)
                 .apply(block)(this)
     }
 }

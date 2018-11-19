@@ -8,7 +8,7 @@ class CLASS(val modifiers: List<String> = emptyList(),
             val name: String,
             val superClass: String? = null,
             val propsOnSeparateLines: Boolean = true) {
-
+    // TODO: class annotations
     var constructorProperties: List<PROPERTY> = ArrayList()
     var properties: List<PROPERTY> = ArrayList()
     var functions: List<FUNCTION> = ArrayList()
@@ -81,9 +81,9 @@ class CLASS(val modifiers: List<String> = emptyList(),
                         +"\n"
                     }
                     it.properties.forEach {
-                        line(1){
-                            it(this)
-                        }
+                        indent(1)
+                        it(this)
+                        +"\n"
                     }
                     it.functions.forEach {
                         it(this)
