@@ -30,11 +30,15 @@ class STATEMENT(val indentation: Int = 0) {
         }
     }
 
-    fun on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit) {
-        body += { SUBJECT(subject).apply(block)(this) }
+    fun expression(block: EXPRESSION.() -> Unit) {
+        body += { EXPRESSION(indentation = this@STATEMENT.indentation).apply(block)(this) }
     }
 
-    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = indentation, call: CALL.() -> Unit) {
+    fun on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit) {
+        body += { SUBJECT(baseIndentation = this@STATEMENT.indentation, subject = subject).apply(block)(this) }
+    }
+
+    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = indentation, call: CALL.() -> Unit = {}) {
         body += {
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(call)(this)

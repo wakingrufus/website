@@ -12,12 +12,17 @@ import kotlinx.html.style
 class CALL(val name: String,
            val baseIndentation: Int = 0,
            val argsOnDifferentLines: Boolean = true) {
+    var subject : SUBJECT? = null
     var arguments: List<ARGUMENT> = ArrayList()
     var lambdaBlock: BLOCK? = null
     var callType: (String) -> CODE.() -> Unit = ::functionCall
 
     fun argument(name: String? = null, value: (CODE.() -> Unit)) {
         arguments += ARGUMENT(name = name, valueBlock = value)
+    }
+
+    fun argumentExp(name: String? = null, value: (EXPRESSION.() -> Unit)) {
+        arguments += ARGUMENT(name = name, valueBlock = {EXPRESSION().apply(value)(this)})
     }
 
     fun lambda(inline: Boolean = false, indentation: Int = baseIndentation, value: (BLOCK.() -> Unit)) {

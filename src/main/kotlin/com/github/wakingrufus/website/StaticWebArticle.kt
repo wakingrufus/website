@@ -23,6 +23,7 @@ fun staticweb(): HTML.() -> Unit = {
             dslExtension()(this)
             usage()(this)
             conclusion()(this)
+            additionalResources()(this)
         }
     }
 }
@@ -229,7 +230,8 @@ fun dslMarker(): DIV.() -> Unit = {
             |In our example, this would apply when we are within the receiver for an HTML body element,
             |and we don't want to see any methods from the enclosing html element.
             |It keeps in scope only the methods on the innermost receiver, and removes any methods on higher up receivers.
-            |They can still be accessed through an explicit call such as this@HTML.meta """.trimMargin()
+            |They can still be accessed through an explicit call such as this@HTML.meta.
+            |""".trimMargin()
     }
     p { +"DslMarkers are declared like this:" }
     sampleCode {
@@ -314,15 +316,15 @@ fun codeReuse(): DIV.() -> Unit = {
                                 inlineExpression { string("navBar") }
                             }
                             assignment(name = "style") {
-                                    call("css") {
-                                        lambda {
-                                            assignment(name = "verticalAlign") {
-                                                inlineExpression {
-                                                    +"VerticalAlign.top"
-                                                }
+                                call("css") {
+                                    lambda {
+                                        assignment(name = "verticalAlign") {
+                                            inlineExpression {
+                                                +"VerticalAlign.top"
                                             }
                                         }
                                     }
+                                }
                             }
                             statement {
                                 call("ul") {
@@ -601,20 +603,272 @@ fun dslExtension(): DIV.() -> Unit = {
                 parameter(name = "code", type = "DIV")
                 body {
                     statement {
-                        on({ +"code" }) {
+                        expression {
+                            code { +"code" }
                             call(name = "run") {
                                 extensionFunction()
                                 lambda {
-                                    call(name = "a") {
-                                        lambda {
-                                            assignment(name = "id") {
-                                                inlineExpression {
-                                                    keyword("this")
-                                                    scope("@PLACE")
-                                                    +".name.toLowerCase()"
+                                    statement {
+                                        call(name = "a") {
+                                            lambda(inline = true) {
+                                                assignment(name = "id") {
+                                                    inlineExpression {
+                                                        keyword("this")
+                                                        scope("@PLACE")
+                                                        +".name.toLowerCase()"
+                                                    }
                                                 }
                                             }
+                                        }
+                                    }
+                                    statement {
+                                        expression {
+                                            call(name = "headerLevel") {
+                                                argument {
+                                                    keyword("this")
+                                                    scope("@PLACE")
+                                                    +".level"
+                                                }
+                                            }
+                                            call(operator = "", name = "") {
+                                                argument { keyword("this") }
+                                                argument { keyword("null") }
+                                                lambda {
+                                                    ifStatement {
+                                                        conditionExpression {
+                                                            on({
+                                                                keyword("this")
+                                                                scope("@PLACE")
+                                                            }) {
+                                                                property("level")
+                                                                property("value")
+                                                            }
+                                                            code {
+                                                                +" == "
+                                                                number(6)
+                                                            }
+                                                        }
+                                                        trueblock {
+                                                            assignment(name = "style", format = CODE::variablePropertyName) {
+                                                                expression {
+                                                                    call(name = "css") {
+                                                                        lambda {
+                                                                            assignment(name = "marginBottom", format = CODE::variablePropertyName) {
+                                                                                on({ number(1) }) {
+                                                                                    property("em")
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    expression {
+                                                        +"+"
+                                                        keyword("this")
+                                                        scope("@PLACE")
+                                                        +".name"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    statement {
+                                        on({
+                                            keyword("this")
+                                            scope("@PLACE")
+                                        }) {
+                                            property("website")
+                                            call(name = "let", nullSafe = true) {
+                                                extensionFunction()
+                                                lambda {
+                                                    call(name = "div") {
+                                                        lambda {
+                                                            ifStatement {
+                                                                conditionExpression {
+                                                                    on({
+                                                                        keyword("this")
+                                                                        scope("@PLACE")
+                                                                    }) {
+                                                                        property("level")
+                                                                        property("value")
+                                                                    }
+                                                                    code {
+                                                                        +" == "
+                                                                        number(6)
+                                                                    }
 
+                                                                }
+                                                                trueblock {
+                                                                    assignment(name = "style", format = CODE::variablePropertyName) {
+                                                                        expression {
+                                                                            call(name = "css") {
+                                                                                lambda {
+                                                                                    assignment(name = "fontSize", format = CODE::variablePropertyName) {
+                                                                                        on({ number(.67) }) {
+                                                                                            property("em")
+                                                                                        }
+                                                                                    }
+                                                                                    assignment(name = "marginBottom", format = CODE::variablePropertyName) {
+                                                                                        on({ number(1) }) {
+                                                                                            property("em")
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            call(name = "a") {
+                                                                argument(name = "href") {
+                                                                    it()
+                                                                }
+                                                                lambda(inline = true) {
+                                                                    expression {
+                                                                        +"+"
+                                                                        string("Website")
+                                                                    }
+                                                                }
+                                                            }
+                                                            statement {
+                                                                on({
+                                                                    keyword("this")
+                                                                    scope("@PLACE")
+                                                                }) {
+                                                                    property("map")
+                                                                    call(name = "let", nullSafe = true) {
+                                                                        extensionFunction()
+                                                                        lambda {
+                                                                            statement {
+                                                                                inlineExpression {
+                                                                                    +"+"
+                                                                                    string(" ")
+                                                                                }
+                                                                            }
+                                                                            statement {
+                                                                                call(name = "a") {
+                                                                                    argument(name = "href") {
+                                                                                        it()
+                                                                                    }
+                                                                                    lambda(inline = true) {
+                                                                                        expression {
+                                                                                            +"+"
+                                                                                            string("Map")
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    statement {
+                                        call(name = "p") {
+                                            lambda {
+                                                ifStatement {
+                                                    conditionExpression {
+                                                        on({
+                                                            keyword("this")
+                                                            scope("@PLACE")
+                                                        }) {
+                                                            property("level")
+                                                            property("value")
+                                                        }
+                                                        code {
+                                                            +" == "
+                                                            number(6)
+                                                        }
+
+                                                    }
+                                                    trueblock {
+                                                        assignment(name = "style", format = CODE::variablePropertyName) {
+                                                            expression {
+                                                                call(name = "css") {
+                                                                    lambda {
+                                                                        assignment(name = "fontSize", format = CODE::variablePropertyName) {
+                                                                            on({ number(.67) }) {
+                                                                                property("em")
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                statement {
+                                                    on({
+                                                        keyword("this")
+                                                        scope("@PLACE")
+                                                    }) {
+                                                        call(name = "description") {
+                                                            argument { keyword("this") }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    statement {
+                                        call(name = "div") {
+                                            lambda {
+                                                assignment(name = "style") {
+                                                    call(name = "css") {
+                                                        lambda {
+                                                            assignment(name = "paddingLeft") {
+                                                                on({
+                                                                    keyword("this")
+                                                                    scope("@PLACE")
+                                                                }) {
+                                                                    property("level")
+                                                                    property("value")
+                                                                    property("em")
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                statement {
+                                                    on({
+                                                        keyword("this")
+                                                        scope("@PLACE")
+                                                    }) {
+                                                        property("places")
+                                                        call(name = "forEach") {
+                                                            extensionFunction()
+                                                            lambda {
+                                                                call(name = "it") {
+                                                                    argument { +"code" }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                statement {
+                                                    on({
+                                                        keyword("this")
+                                                        scope("@PLACE")
+                                                    }) {
+                                                        property("subAreas")
+                                                        call(name = "forEach") {
+                                                            extensionFunction()
+                                                            lambda {
+                                                                call(name = "it") {
+                                                                    argument { +"code" }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -624,119 +878,104 @@ fun dslExtension(): DIV.() -> Unit = {
                 }
             }
         }
-        +"""
-                operator fun invoke(code: DIV) {
-        code.run {
-            a { id = this@PLACE.name.toLowerCase() }
-            headerLevel(this@PLACE.level)(this, null) {
-                if (this@PLACE.level.value == 6) {
-                    style = css {
-                        fontSize = .67.em
-                        marginBottom = 1.em
-                    }
-                }
-                +this@PLACE.name
-            }.apply { }
-            this@PLACE.website?.let {
-                div {
-                    if (this@PLACE.level.value == 6) {
-                        style = css {
-                            fontSize = .67.em
-                            marginBottom = 1.em
-                        }
-                    }
-                    a(href = it) { +"Website" }
-                    this@PLACE.map?.let { m ->
-                        +" "
-                        a(href = m) { +"Map" }
-                    }
-                }
-            }
-            p {
-                if (this@PLACE.level.value == 6) {
-                    style = css {
-                        fontSize = .67.em
-                    }
-                }
-                this@PLACE.description(this)
-            }
-            div {
-                style = css {
-                    paddingLeft = this@PLACE.level.value.em
-                }
-                this@PLACE.places.forEach { place ->
-                    place(code)
-                }
-                this@PLACE.subAreas.forEach { subArea ->
-                    subArea(code)
-                }
-            }
-        }
-    }
-            """.trimIndent()
     }
 }
 
 fun usage(): DIV.() -> Unit = {
     h2 { +"Usage" }
-    p {
-        +"""
-                We are ready to use our DSL extensions. My Travel page looks like this:
-            """.trimIndent()
-    }
+    p { +"We are ready to use our DSL extensions. An example usage could look like this:" }
     sampleCode {
-        +"""
-                fun travel(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("Travel")
-        sideNav()
-        content {
-            ul {
-                li { a(href = "#colorado") { +"Colorado" } }
-            }
-            area(name = "Large Area") {
-                subArea("Sub Area w/ places", subAreaWithPlaces())
-                subArea("Sub Area", subArea())
-                subArea("subAreaWithSubAreaWithPlaces", subAreaWithSubAreaWithPlaces())
+        declareFunctionExpression(name = "travel", returnType = "HTML.() -> Unit") {
+            block {
+                statement {
+                    call(name = "head") {
+                        lambda {
+                            call(name = "link") {
+                                argument(name = "href") {
+                                    string("styles.css")
+                                }
+                                argument(name = "rel") { string("stylesheet") }
+                            }
+                        }
+                    }
+                }
+                statement {
+                    call(name = "body") {
+                        lambda {
+                            call(name = "h1") {
+                                lambda(inline = true) {
+                                    statement {
+                                        inlineExpression {
+                                            +"+"
+                                            string("Travel")
+                                        }
+                                    }
+                                }
+                            }
+                            statement {
+                                call(name = "sideNav")
+                            }
+                            statement {
+                                call(name = "content") {
+                                    lambda {
+                                        call(name = "area") {
+                                            argument { string("Large Area") }
+                                            lambda {
+                                                call(name = "subArea") {
+                                                    argument { string("example sub area") }
+                                                    lambda {
+                                                        assignment(name = "website", format = CODE::variablePropertyName) {
+                                                            inlineExpression { string("http://www.areawebsite.com") }
+                                                        }
+                                                        call(name = "description") {
+                                                            lambda(inline = true) {
+                                                                expression {
+                                                                    +"+"
+                                                                    string("subarea description")
+                                                                }
+                                                            }
+                                                        }
+                                                        call(name = "place") {
+                                                            argument(name = "name") {
+                                                                string("Place name")
+                                                            }
+                                                            argument(name = "website") {
+                                                                string("http://www.placewebsite.com")
+                                                            }
+                                                            lambda {
+                                                                assignment(name = "map") {
+                                                                    inlineExpression {
+                                                                        string("link to map")
+                                                                    }
+                                                                }
+                                                                call(name = "description") {
+                                                                    lambda(inline = true) {
+                                                                        expression {
+                                                                            +"+"
+                                                                            string("place description")
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-}
-
-fun subArea(): PLACE.() -> Unit = {
-    description { +" ... " }
-}
-
-fun subAreaWithSubAreaWithPlaces(): PLACE.() -> Unit = {
-    subArea("nested subarea") {
-        website = "https://google.com/"
-        description { +" ... " }
-        place(name = "Sample place within nested subarea",
-                website = "http://google.com/") {
-            map = "https://www.google.com/maps/..."
-            description { +" ... " }
+    p {
+        +"You can see my actual usage of this DSL on "
+        a(href = "https://github.com/wakingrufus/website/blob/master/src/main/kotlin/com/github/wakingrufus/website/Travel.kt") {
+            +"GitHub"
         }
-    }
-
-    place(name = "Sample place",
-            website = "http://google.com/") {
-        map = "https://www.google.com/maps/..."
-        description { +" ... " }
-    }
-}
-
-fun subAreaWithPlaces(): PLACE.() -> Unit = {
-    description { +" ... " }
-    place(name = "Sample place in a subarea",
-                website = "http://google.com/") {
-            map = "https://www.google.com/maps/..."
-            description { +" ... " }
-    }
-}
-            """.trimIndent()
     }
 }
 
@@ -747,6 +986,7 @@ fun conclusion(): DIV.() -> Unit = {
         Using a DSL lets me design my web page with minimal repetition and boilerplate.
         If this approach interests you, I encourage to check out the source code for my
     """.trimIndent()
+        +" "
         a(href = "https://neocities.org/wakingrufus") { +"Website" }
         +" on "
         a(href = "https://github.com/wakingrufus/website") { +"GitHub" }
@@ -754,3 +994,12 @@ fun conclusion(): DIV.() -> Unit = {
     }
 }
 
+
+fun additionalResources(): DIV.() -> Unit = {
+    p { +"If you are interested in learning more about Kotlin DSLs, check out the following links:" }
+    p { a(href = "https://proandroiddev.com/auto-generate-kotlin-dsl-f63342434154s") { +"AutoDSL" } }
+    p { a(href = "https://zsmb.co/kotlin-dsl-design-with-village-dsl/") { +"Kotlin DSL Design" } }
+    p { a(href = "https://kotlinexpertise.com/create-dsl-with-kotlin/") { +"Create a DSL in Kotlin" } }
+    p { +"If you are interested in learning more about the static web, check out the following links:" }
+    p { a(href = "https://www.coredna.com/blogs/the-web-is-broken") { +"The Web is Broken" } }
+}

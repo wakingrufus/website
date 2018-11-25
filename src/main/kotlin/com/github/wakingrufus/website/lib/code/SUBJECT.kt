@@ -4,44 +4,54 @@ import kotlinx.html.CODE
 import kotlinx.html.HtmlTagMarker
 
 @HtmlTagMarker
-class SUBJECT(val subject: CODE.() -> Unit) {
+class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
 
     var calls: List<CODE.() -> Unit> = ArrayList()
-    var operator: String = "."
 
-    fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = 0, block: CALL.() -> Unit = {}) {
+    fun call(name: String,
+             argsOnDifferentLines: Boolean = false,
+             baseIndentation: Int = this@SUBJECT.baseIndentation,
+             nullSafe: Boolean = false,
+             block: CALL.() -> Unit = {}) {
         calls += {
-            +this@SUBJECT.operator
+            if (nullSafe) {
+                +"?"
+            }
+            +"."
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(block)(this)
         }
     }
 
-    fun property(name: String){
+    fun property(name: String, nullSafe: Boolean = false) {
         calls += {
-            +this@SUBJECT.operator
+            if (nullSafe) {
+                +"?"
+            }
+            +"."
             propertyName(name)
         }
     }
 
-    fun assignment(){
-        operator = " = "
+    fun elvis(expression: EXPRESSION.() -> Unit) {
+        calls += {
+            +" ?: "
+            EXPRESSION().apply(expression)(this)
+        }
     }
 
-    fun nullSafe(){
-        operator = "?."
-    }
-    fun standard(){
-        operator = "."
-    }
     fun breakAndCall(name: String,
                      argsOnDifferentLines: Boolean = true,
                      baseIndentation: Int = 0,
+                     nullSafe: Boolean = false,
                      block: CALL.() -> Unit) {
         calls += {
             +"\n"
             indent(baseIndentation + 2)
-            +this@SUBJECT.operator
+            if (nullSafe) {
+                +"?"
+            }
+            +"."
             CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(block)(this)
         }

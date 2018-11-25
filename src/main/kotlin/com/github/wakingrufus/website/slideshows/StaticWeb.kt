@@ -143,17 +143,14 @@ fun staticWebKotlinCss(): DIV.() -> Unit = {
                 call("p") {
                     extensionFunction()
                     lambda(inline = false, indentation = 0) {
-                        statement {
-                            on({ variablePropertyName("style") }) {
-                                assignment()
-                                call("css", baseIndentation = 1) {
-                                    lambda {
-                                        assignment(name = "fontSize", format = CODE::variablePropertyName) {
-                                            on(subject = {
-                                                number(2)
-                                            }) {
-                                                property("em")
-                                            }
+                        assignment(name = "style", format = CODE::variablePropertyName) {
+                            call("css", baseIndentation = 1) {
+                                lambda {
+                                    assignment(name = "fontSize", format = CODE::variablePropertyName) {
+                                        on(subject = {
+                                            number(2)
+                                        }) {
+                                            property("em")
                                         }
                                     }
                                 }

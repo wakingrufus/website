@@ -18,7 +18,7 @@ fun travel(): HTML.() -> Unit = {
             ul {
                 li { a(href = "#colorado") { +"Colorado" } }
             }
-            area(name = "Colorado") {
+            area("Colorado") {
                 subArea("Denver", denver())
                 subArea("Central City", centralCity())
                 subArea("Frisco", frisco())

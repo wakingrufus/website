@@ -592,8 +592,7 @@ fun let(): DIV.() -> Unit = {
                             on(subject = {
                                 call(name = "getFromDatabase")
                             }) {
-                                nullSafe()
-                                call("let", baseIndentation = 1) {
+                                call("let", baseIndentation = 1, nullSafe = true) {
                                     lambda {
                                         expression {
                                             on({ +"it" }) {
@@ -602,9 +601,12 @@ fun let(): DIV.() -> Unit = {
                                         }
                                     }
                                 }
+                                elvis {
+                                    on({+"BigDecimal"}){
+                                        property(name = "ZERO")
+                                    }
+                                }
                             }
-                            +" :? BigDecimal."
-                            propertyName("ZERO")
                         }
                     }
                 }
@@ -628,23 +630,23 @@ fun apply(): DIV.() -> Unit = {
                 body {
                     returns {
                         code {
-                        on({ +"Calendar" }) {
-                            call(name = "getInstance") {}
-                            call(name = "apply", argsOnDifferentLines = false, baseIndentation = 1) {
-                                lambda {
-                                    expression {
-                                        call(name = "set", argsOnDifferentLines = false) {
-                                            argument { number(2017) }
-                                            argument { number(3) }
-                                            argument { number(1) }
-                                            argument { number(4) }
-                                            argument { number(56) }
-                                            argument { number(34) }
+                            on({ +"Calendar" }) {
+                                call(name = "getInstance") {}
+                                call(name = "apply", argsOnDifferentLines = false, baseIndentation = 1) {
+                                    lambda {
+                                        expression {
+                                            call(name = "set", argsOnDifferentLines = false) {
+                                                argument { number(2017) }
+                                                argument { number(3) }
+                                                argument { number(1) }
+                                                argument { number(4) }
+                                                argument { number(56) }
+                                                argument { number(34) }
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
                         }
                     }
                 }
@@ -667,27 +669,24 @@ fun also(): DIV.() -> Unit = {
                 parameter(name = "input", type = "String")
                 body {
                     returns {
-                        code {
-                        on({
-                            call(name = "doStuff") {
-                                argument { +"input" }
-                            }
-                        }) {
-                            call(name = "also", baseIndentation = 1) {
-                                lambda {
+                        call(name = "doStuff") {
+                            argument { +"input" }
+                        }
+                        call(name = "also") {
+                            extensionFunction()
+                            lambda {
+                                statement {
                                     expression {
-                                        on({ propertyName("log") }) {
-                                            call(name = "log") {
-                                                argument {
-                                                    string("doing stuff to ")
-                                                    +" + input"
-                                                }
+                                        code { propertyName("log") }
+                                        call(name = "log") {
+                                            argument {
+                                                string("doing stuff to ")
+                                                +" + input"
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
                         }
                     }
                 }
@@ -823,8 +822,7 @@ fun functionalTesting(): DIV.() -> Unit = {
                                             packageFunction()
                                         }
                                     }) {
-                                        nullSafe()
-                                        call(name = "let", baseIndentation = 1) {
+                                        call(name = "let", baseIndentation = 1, nullSafe = true) {
                                             extensionFunction()
                                             lambda {
                                                 expression {
@@ -833,7 +831,6 @@ fun functionalTesting(): DIV.() -> Unit = {
                                                 }
                                             }
                                         }
-                                        standard()
                                         call("orElseEmpty") {
                                             extensionFunction()
                                         }
@@ -861,8 +858,7 @@ fun functionalTesting(): DIV.() -> Unit = {
                                 on({
                                     call(name = "readLine") {}
                                 }) {
-                                    nullSafe()
-                                    call(name = "let", baseIndentation = 1) {
+                                    call(name = "let", baseIndentation = 1, nullSafe = true) {
                                         extensionFunction()
                                         lambda {
                                             expression {
@@ -871,7 +867,6 @@ fun functionalTesting(): DIV.() -> Unit = {
                                             }
                                         }
                                     }
-                                    standard()
                                     call("orElseEmpty") {
                                         extensionFunction()
                                     }

@@ -34,7 +34,6 @@ class PLACE(val name: String,
             headerLevel(this@PLACE.level)(this, null) {
                 if (this@PLACE.level.value == 6) {
                     style = css {
-                        fontSize = .67.em
                         marginBottom = 1.em
                     }
                 }
@@ -67,11 +66,11 @@ class PLACE(val name: String,
                 style = css {
                     paddingLeft = this@PLACE.level.value.em
                 }
-                this@PLACE.places.forEach { place ->
-                    place(code)
+                this@PLACE.places.forEach {
+                    it(code)
                 }
-                this@PLACE.subAreas.forEach { subArea ->
-                    subArea(code)
+                this@PLACE.subAreas.forEach {
+                    it(code)
                 }
             }
         }

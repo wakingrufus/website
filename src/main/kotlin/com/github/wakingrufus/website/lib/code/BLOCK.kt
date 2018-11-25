@@ -34,6 +34,12 @@ class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
         }
     }
 
+    fun ifStatement(block: IF.() -> Unit){
+        statement {
+           inlineExpression {  IF(indentation = this@BLOCK.indentation).apply(block)(this) }
+        }
+    }
+
     fun assignment(modifier: String? = null,
                    name: String,
                    type: String? = null,

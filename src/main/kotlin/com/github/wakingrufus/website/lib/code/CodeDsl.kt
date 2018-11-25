@@ -86,7 +86,7 @@ fun CODE.constructor(name: String,
 }
 
 fun CODE.on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit = {}) {
-    SUBJECT(subject).apply(block)(this)
+    SUBJECT(subject = subject).apply(block)(this)
 }
 
 fun CODE.functionName(text: String) {
@@ -149,8 +149,8 @@ fun CODE.dataClass(name: String,
 }
 
 fun CODE.annotationClass(name: String,
-                   propsOnSeparateLines: Boolean = true,
-                   block: CLASS.() -> Unit = {}) {
+                         propsOnSeparateLines: Boolean = true,
+                         block: CLASS.() -> Unit = {}) {
     this.apply {
         CLASS(modifiers = listOf("annotation"), propsOnSeparateLines = propsOnSeparateLines, name = name)
                 .apply(block)(this)
@@ -174,6 +174,7 @@ fun CODE.declareFunction(name: String,
     }
 }
 
+//TODO: fix this up to create the block for you and use EXPRESSION instead of CODE
 fun CODE.declareFunctionExpression(name: String,
                                    returnType: String? = null,
                                    argsOnSeparateLines: Boolean = true,
