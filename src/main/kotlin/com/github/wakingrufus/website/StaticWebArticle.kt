@@ -202,23 +202,25 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
     }
     p { +"becomes" }
     sampleCode {
-        declareFunctionExpression("dsl", "String", false) {
-            on({
-                call(name = "stringDsl") {
-                    packageFunction()
-                    lambda(inline = false) {
-                        expression {
-                            on({
-                                call("append") {
-                                    argument {
-                                        string("content")
+        declareFunction("dsl", "String", false) {
+            expression {
+                on({
+                    call(name = "stringDsl") {
+                        packageFunction()
+                        lambda(inline = false) {
+                            expression {
+                                on({
+                                    call("append") {
+                                        argument {
+                                            string("content")
+                                        }
                                     }
-                                }
-                            })
+                                })
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
         }
     }
 }
@@ -308,47 +310,45 @@ fun codeReuse(): DIV.() -> Unit = {
     sampleCode {
         declareFunction(name = "sideNavBar", extentionOf = "BODY") {
             parameter(name = "block", type = "UL.() -> Unit")
-            body {
-                returns {
-                    call("div") {
-                        lambda {
-                            assignment(name = "classes", operator = "+=") {
-                                inlineExpression { string("navBar") }
-                            }
-                            assignment(name = "style") {
-                                call("css") {
-                                    lambda {
-                                        assignment(name = "verticalAlign") {
-                                            inlineExpression {
-                                                +"VerticalAlign.top"
-                                            }
+            expression {
+                call("div") {
+                    lambda {
+                        assignment(name = "classes", operator = "+=") {
+                            inlineExpression { string("navBar") }
+                        }
+                        assignment(name = "style") {
+                            call("css") {
+                                lambda {
+                                    assignment(name = "verticalAlign") {
+                                        inlineExpression {
+                                            +"VerticalAlign.top"
                                         }
                                     }
                                 }
                             }
-                            statement {
-                                call("ul") {
-                                    lambda {
-                                        assignment(name = "style") {
-                                            call(name = "css") {
-                                                lambda {
-                                                    assignment(name = "listStyleType") {
-                                                        inlineExpression {
-                                                            +"ListStyleType.none"
-                                                        }
+                        }
+                        statement {
+                            call("ul") {
+                                lambda {
+                                    assignment(name = "style") {
+                                        call(name = "css") {
+                                            lambda {
+                                                assignment(name = "listStyleType") {
+                                                    inlineExpression {
+                                                        +"ListStyleType.none"
                                                     }
-                                                    assignment(name = "color") {
-                                                        call(name = "Color") {
-                                                            argument { string("#9999EE") }
-                                                        }
+                                                }
+                                                assignment(name = "color") {
+                                                    call(name = "Color") {
+                                                        argument { string("#9999EE") }
                                                     }
                                                 }
                                             }
                                         }
-                                        statement {
-                                            call(name = "block") {
-                                                argument { keyword("this") }
-                                            }
+                                    }
+                                    statement {
+                                        call(name = "block") {
+                                            argument { keyword("this") }
                                         }
                                     }
                                 }
@@ -408,16 +408,18 @@ fun codeReuse(): DIV.() -> Unit = {
     }
     p { +"And use it in each page on my site:" }
     sampleCode {
-        declareFunctionExpression(name = "mainPage", returnType = "HTML.() -> Unit") {
-            block {
-                call(name = "head") {
-                    lambda { }
-                }
-                call(name = "body") {
-                    lambda {
-                        expression {
-                            call(name = "sideNav") {
-                                extensionFunction()
+        declareFunction(name = "mainPage", returnType = "HTML.() -> Unit") {
+            expression {
+                block {
+                    call(name = "head") {
+                        lambda { }
+                    }
+                    call(name = "body") {
+                        lambda {
+                            expression {
+                                call(name = "sideNav") {
+                                    extensionFunction()
+                                }
                             }
                         }
                     }
@@ -885,74 +887,76 @@ fun usage(): DIV.() -> Unit = {
     h2 { +"Usage" }
     p { +"We are ready to use our DSL extensions. An example usage could look like this:" }
     sampleCode {
-        declareFunctionExpression(name = "travel", returnType = "HTML.() -> Unit") {
-            block {
-                statement {
-                    call(name = "head") {
-                        lambda {
-                            call(name = "link") {
-                                argument(name = "href") {
-                                    string("styles.css")
+        declareFunction(name = "travel", returnType = "HTML.() -> Unit") {
+            expression {
+                block {
+                    statement {
+                        call(name = "head") {
+                            lambda {
+                                call(name = "link") {
+                                    argument(name = "href") {
+                                        string("styles.css")
+                                    }
+                                    argument(name = "rel") { string("stylesheet") }
                                 }
-                                argument(name = "rel") { string("stylesheet") }
                             }
                         }
                     }
-                }
-                statement {
-                    call(name = "body") {
-                        lambda {
-                            call(name = "h1") {
-                                lambda(inline = true) {
-                                    statement {
-                                        inlineExpression {
-                                            +"+"
-                                            string("Travel")
+                    statement {
+                        call(name = "body") {
+                            lambda {
+                                call(name = "h1") {
+                                    lambda(inline = true) {
+                                        statement {
+                                            inlineExpression {
+                                                +"+"
+                                                string("Travel")
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            statement {
-                                call(name = "sideNav")
-                            }
-                            statement {
-                                call(name = "content") {
-                                    lambda {
-                                        call(name = "area") {
-                                            argument { string("Large Area") }
-                                            lambda {
-                                                call(name = "subArea") {
-                                                    argument { string("example sub area") }
-                                                    lambda {
-                                                        assignment(name = "website", format = CODE::variablePropertyName) {
-                                                            inlineExpression { string("http://www.areawebsite.com") }
-                                                        }
-                                                        call(name = "description") {
-                                                            lambda(inline = true) {
-                                                                expression {
-                                                                    +"+"
-                                                                    string("subarea description")
-                                                                }
+                                statement {
+                                    call(name = "sideNav")
+                                }
+                                statement {
+                                    call(name = "content") {
+                                        lambda {
+                                            call(name = "area") {
+                                                argument { string("Large Area") }
+                                                lambda {
+                                                    call(name = "subArea") {
+                                                        argument { string("example sub area") }
+                                                        lambda {
+                                                            assignment(name = "website", format = CODE::variablePropertyName) {
+                                                                inlineExpression { string("http://www.areawebsite.com") }
                                                             }
-                                                        }
-                                                        call(name = "place") {
-                                                            argument(name = "name") {
-                                                                string("Place name")
-                                                            }
-                                                            argument(name = "website") {
-                                                                string("http://www.placewebsite.com")
-                                                            }
-                                                            lambda {
-                                                                assignment(name = "map") {
-                                                                    inlineExpression {
-                                                                        string("link to map")
+                                                            call(name = "description") {
+                                                                lambda(inline = true) {
+                                                                    expression {
+                                                                        +"+"
+                                                                        string("subarea description")
                                                                     }
                                                                 }
-                                                                call(name = "description") {
-                                                                    lambda(inline = true) {
-                                                                        expression {
-                                                                            +"+"
-                                                                            string("place description")
+                                                            }
+                                                            call(name = "place") {
+                                                                argument(name = "name") {
+                                                                    string("Place name")
+                                                                }
+                                                                argument(name = "website") {
+                                                                    string("http://www.placewebsite.com")
+                                                                }
+                                                                lambda {
+                                                                    assignment(name = "map") {
+                                                                        inlineExpression {
+                                                                            string("link to map")
+                                                                        }
+                                                                    }
+                                                                    call(name = "description") {
+                                                                        lambda(inline = true) {
+                                                                            expression {
+                                                                                +"+"
+                                                                                string("place description")
+                                                                            }
                                                                         }
                                                                     }
                                                                 }

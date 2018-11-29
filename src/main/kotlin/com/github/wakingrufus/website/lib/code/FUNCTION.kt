@@ -23,7 +23,10 @@ class FUNCTION(val operator: Boolean = false,
         body = { BLOCK(indentation = indentation, inline = false).apply(bodyText)(this) }
         expression = false
     }
-
+    fun expression2(value: EXPRESSION.() -> Unit) {
+        body = { EXPRESSION().apply(value)(this) }
+        expression = true
+    }
     fun expression(value: CODE.() -> Unit) {
         body = { value(this) }
         expression = true

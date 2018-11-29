@@ -69,7 +69,7 @@ class Website(private val baseDir: File) {
     }
 
     fun upload() = slideshows.flatMap(Slideshow::files).plus(files())
-            .forEach({ file -> uploaders.forEach({ u -> u.upload(baseDir, file) }) })
+            .forEach { file -> uploaders.forEach { u -> u.upload(baseDir, file) } }
 }
 
 fun website(baseDir: File, builder: Website.(baseDir: File) -> Unit): Website {

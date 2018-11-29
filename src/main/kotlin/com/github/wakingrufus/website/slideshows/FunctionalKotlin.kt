@@ -318,7 +318,7 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                     statement {
                         returns {
                             code {
-                                +" one.compareTo(two) == "
+                                +"one.compareTo(two) == "
                                 number(0)
                             }
                         }
@@ -326,17 +326,19 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                 }
             }
             +"\n"
-            declareFunctionExpression(
+            declareFunction(
                     name = "bigDecimalEquals",
                     returnType = "Boolean",
-                    parameters = listOf(
-                            PARAMETER(name = "one", type = "BigDecimal"),
-                            PARAMETER(name = "two", type = "BigDecimal")
-                    )) {
-                //inlineExpression {
-                +"one.compareTo(two) == "
-                number(0)
-                //    }
+                    argsOnSeparateLines = true
+            ) {
+                parameter(name = "one", type = "BigDecimal")
+                parameter(name = "two", type = "BigDecimal")
+              expression2 {
+                  code {
+                      +"one.compareTo(two) == "
+                      number(0)
+                  }
+              }
             }
             +"\n"
             declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
