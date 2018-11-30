@@ -35,11 +35,12 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
         slide(title = "First Class Functions", block = firstClassFunctions())
         slide(title = "Functions are Non-Imperative", subTitle = "Imperative == order dependant", block = functionsAreNonImperative())
         slide(title = "Higher Order Functions", block = higherOrderFunctions())
-        slide(title = "Kotlin Standard Functions", block = kotlinStandardFunctions())
+        slide(title = "Kotlin Standard Scoping Functions", block = kotlinStandardFunctions())
         slide(title = "let", block = let())
         slide(title = "apply", block = apply())
         slide(title = "also", block = also())
         slide(title = "run", block = run())
+        slide(title = "run (non-extension)", block = runNonExtension())
         slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers())
         slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm())
         slide(title = "Functional Testing", block = functionalTesting())
@@ -333,12 +334,12 @@ fun firstClassFunctions(): DIV.() -> Unit = {
             ) {
                 parameter(name = "one", type = "BigDecimal")
                 parameter(name = "two", type = "BigDecimal")
-              expression2 {
-                  code {
-                      +"one.compareTo(two) == "
-                      number(0)
-                  }
-              }
+                expression2 {
+                    code {
+                        +"one.compareTo(two) == "
+                        number(0)
+                    }
+                }
             }
             +"\n"
             declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
@@ -549,38 +550,37 @@ fun higherOrderFunctions(): DIV.() -> Unit = {
     }
 }
 
-
 fun kotlinStandardFunctions(): DIV.() -> Unit = {
     slideContent {
         slideTable {
-            headers(listOf("Function", "`this` or `it`", "Block return"))
+            headers(listOf("Function", "extension", "`this` or `it`", "Block return"))
             tbody {
-                row(listOf("let", "it", "yes"))
-                row(listOf("run", "this", "yes"))
-                row(listOf("with (not extension)", "this", "yes"))
-                row(listOf("apply", "this", "no"))
-                row(listOf("also", "it", "no"))
+                row(listOf("let", "yes", "it", "yes"))
+                row(listOf("run", "yes", "this", "yes"))
+                row(listOf("run", "no", "--", "yes"))
+                row(listOf("with", "no", "this", "yes"))
+                row(listOf("apply", "yes", "this", "no"))
+                row(listOf("also", "yes", "it", "no"))
             }
         }
     }
 }
-
 
 fun let(): DIV.() -> Unit = {
     slideContent {
         slideList {
             li { +"let" }
             ul {
+                li { +"Apply a transform" }
+                li { +"Restrict scope" }
                 li { +"Idiomatic 'if not null'" }
                 li { +"Map nullable value if not null" }
             }
-
         }
         slideCode {
             dataClass(name = "Data", propsOnSeparateLines = false) {
                 property(modifier = "val", name = "value", type = "Int?")
             }
-            +"\n"
             declareFunction(name = "getFromDatabase", returnType = "Data?") {
                 body {
                     expression { +"..." }
@@ -604,7 +604,7 @@ fun let(): DIV.() -> Unit = {
                                     }
                                 }
                                 elvis {
-                                    on({+"BigDecimal"}){
+                                    on({ +"BigDecimal" }) {
                                         property(name = "ZERO")
                                     }
                                 }
@@ -722,6 +722,51 @@ fun run(): DIV.() -> Unit = {
                                 }
                             }
                             expression {
+                                call(name = "get") {
+                                    argument {
+                                        +"Calendar."
+                                        propertyName("DAY_OF_YEAR")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fun runNonExtension(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"run (no extension)" }
+            ul {
+                li { +"Restrict scope and transform" }
+            }
+        }
+        slideCode {
+            declareProperty(modifier = "val", name = "dayOfYear", type = "Int") {
+                call(name = "run") {
+                    lambda {
+                        assignment(modifier = "val", name = "cal") {
+                            on({ +"Calendar" }) {
+                                call(name = "getInstance")
+                            }
+                        }
+                        statement {
+                            on({ propertyName("cal") }) {
+                                call(name = "set") {
+                                    argument {
+                                        +"Calendar."
+                                        propertyName("YEAR")
+                                    }
+                                    argument { number(2030) }
+                                }
+                            }
+                        }
+                        statement {
+                            on({ propertyName("cal") }) {
                                 call(name = "get") {
                                     argument {
                                         +"Calendar."
