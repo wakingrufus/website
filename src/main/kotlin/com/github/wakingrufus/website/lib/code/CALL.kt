@@ -12,7 +12,7 @@ import kotlinx.html.style
 class CALL(val name: String,
            val baseIndentation: Int = 0,
            val argsOnDifferentLines: Boolean = true) {
-    var subject : SUBJECT? = null
+
     var arguments: List<ARGUMENT> = ArrayList()
     var lambdaBlock: BLOCK? = null
     var callType: (String) -> CODE.() -> Unit = ::functionCall

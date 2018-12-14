@@ -23,6 +23,13 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
         }
     }
 
+    fun callInvoke(block: CALL.() -> Unit = {}){
+        calls+= {
+            CALL(name = "", argsOnDifferentLines = false, baseIndentation =  this@SUBJECT.baseIndentation)
+                    .apply(block)(this)
+        }
+    }
+
     fun property(name: String, nullSafe: Boolean = false) {
         calls += {
             if (nullSafe) {
@@ -40,19 +47,28 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
         }
     }
 
+    fun index(expression: EXPRESSION.() -> Unit) {
+        calls += {
+            +"["
+            EXPRESSION().apply(expression)(this)
+            +"]"
+        }
+    }
+
     fun breakAndCall(name: String,
                      argsOnDifferentLines: Boolean = true,
-                     baseIndentation: Int = 0,
                      nullSafe: Boolean = false,
                      block: CALL.() -> Unit) {
         calls += {
             +"\n"
-            indent(baseIndentation + 2)
+            indent(this@SUBJECT.baseIndentation + 2)
             if (nullSafe) {
                 +"?"
             }
             +"."
-            CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
+            CALL(name = name,
+                    argsOnDifferentLines = argsOnDifferentLines,
+                    baseIndentation = this@SUBJECT.baseIndentation + 2)
                     .apply(block)(this)
         }
     }

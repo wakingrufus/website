@@ -9,7 +9,7 @@ class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
     var body: List<CODE.() -> Unit> = ArrayList()
     var statements: List<STATEMENT> = listOf()
 
-    fun call(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit) {
+    fun call(name: String, argsOnDifferentLines: Boolean = false, call: CALL.() -> Unit = {}) {
         statement{
             call(name = name, baseIndentation = indentation, argsOnDifferentLines = argsOnDifferentLines, call = call)
         }
@@ -40,8 +40,8 @@ class BLOCK(val indentation: Int = 0, var inline: Boolean = true) {
         }
     }
 
-    fun assignment(modifier: String? = null,
-                   name: String,
+    fun assignment(name: String,
+                   modifier: String? = null,
                    type: String? = null,
                    format: CODE.(String) -> Unit = CODE::propertyName,
                    operator: String = "=",
