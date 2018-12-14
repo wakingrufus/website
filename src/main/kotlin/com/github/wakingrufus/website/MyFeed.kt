@@ -1,5 +1,6 @@
 package com.github.wakingrufus.website
 
+import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.rss.content
 import com.github.wakingrufus.website.lib.rss.entries
 import com.github.wakingrufus.website.lib.rss.entry
@@ -59,6 +60,34 @@ val allEntries = entries {
                 ZoneOffset.ofHours(-5)
         ).toInstant())
         content("I have a new page where I recommend places to visit while travelling based on my own travels.")
+    }
+    entry {
+        title = "Static Web with Kotlin DSLs"
+        author = "wakingrufus"
+        categories = listOf(siteUpdates)
+        link = "https://wakingrufus.neocities.org/" + Paths.STATIC_WEB_ARTICLE_PATH
+        publishedDate = Date.from(ZonedDateTime.of(
+                LocalDate.of(2018, Month.DECEMBER, 14),
+                LocalTime.of(17, 0, 0),
+                ZoneOffset.ofHours(-6)
+        ).toInstant())
+        content{
+            body {
+                div {
+                    introToStaticWeb()(this)
+                    lambdaAsFinalParameter()(this)
+                    lambdaWithReceiver()(this)
+                    dslMarker()(this)
+                    htmlDsl()(this)
+                    codeReuse()(this)
+                    dslExtension()(this)
+                    usage()(this)
+                    conclusion()(this)
+                    additionalResources()(this)
+                }
+            }
+        }
+
     }
 }
 

@@ -1015,4 +1015,9 @@ fun additionalResources(): DIV.() -> Unit = {
     p { +"If you are interested in learning more about the static web, check out the following links:" }
     p { a(href = "https://www.coredna.com/blogs/the-web-is-broken") { +"The Web is Broken" } }
     p { a(href = "https://speedcurve.com/blog/javascript-growth/") { +"JavaScript growth and third parties" } }
+    p {
+        +"Discuss this post on "
+        a(href = "https://mastodon.technology/web/statuses/101241850991374660") { +"Mastodon" }
+        +"."
+    }
 }
