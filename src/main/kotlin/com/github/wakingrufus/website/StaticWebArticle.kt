@@ -498,35 +498,35 @@ fun dslExtension(): DIV.() -> Unit = {
     sampleCode {
         rolodexDslClass()(this)
         contactDslClass()(this)
-        declareFunction(name = "field", extentionOf = "DIV"){
-            parameter(name="name", type = "String")
+        declareFunction(name = "field", extentionOf = "DIV") {
+            parameter(name = "name", type = "String")
             parameter(name = "value", type = "SPAN.() -> Unit")
             body {
-                call("div"){
+                call("div") {
                     lambda {
-                        call("span"){
+                        call("span") {
                             lambda {
-                                assignment("style", format = CODE::variablePropertyName){
-                                    call("css"){
+                                assignment("style", format = CODE::variablePropertyName) {
+                                    call("css") {
                                         lambda {
                                             cssDisplayInlineBlock()
                                             cssWidth(6)
                                         }
                                     }
                                 }
-                                expression{+"+name"}
+                                expression { +"+name" }
                             }
                         }
-                        call("span"){
+                        call("span") {
                             lambda {
-                                assignment("style", format = CODE::variablePropertyName){
-                                    call("css"){
+                                assignment("style", format = CODE::variablePropertyName) {
+                                    call("css") {
                                         lambda {
                                             cssDisplayInlineBlock()
                                         }
                                     }
                                 }
-                                call("value"){
+                                call("value") {
                                     argument { keyword("this") }
                                 }
                             }
@@ -898,6 +898,7 @@ fun BLOCK.cssHeight(em: Number) {
         }
     }
 }
+
 fun BLOCK.cssWidth(em: Number) {
     assignment(format = CODE::variablePropertyName,
             name = "width") {
@@ -906,6 +907,7 @@ fun BLOCK.cssWidth(em: Number) {
         }
     }
 }
+
 fun BLOCK.cssMaxHeight(em: Number) {
     assignment(format = CODE::variablePropertyName,
             name = "maxHeight") {
@@ -1008,6 +1010,11 @@ fun conclusion(): DIV.() -> Unit = {
 
 fun additionalResources(): DIV.() -> Unit = {
     h2 { +"Additional Resources" }
+    p {
+        +"This article was first posted on "
+        a(href = "https://codetown.com/group/kotlin/forum/topics/kotlin-thursdays-static-web-with-kotlin-dsls-with-john-burns") { +"Kotlin Town" }
+        +" along with a video demo of this code in action"
+    }
     p { +"If you are interested in learning more about Kotlin DSLs, check out the following links:" }
     p { a(href = "https://proandroiddev.com/auto-generate-kotlin-dsl-f63342434154s") { +"AutoDSL" } }
     p { a(href = "https://zsmb.co/kotlin-dsl-design-with-village-dsl/") { +"Kotlin DSL Design" } }
