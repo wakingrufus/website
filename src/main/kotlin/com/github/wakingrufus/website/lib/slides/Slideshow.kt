@@ -16,7 +16,7 @@ class Slideshow(val baseDir: File,
 
     fun files(): List<File> {
         return slides.mapIndexed { index, slide ->
-            File(baseDir, index.toString() + ".html").apply {
+            File(baseDir, "$index.html").apply {
                 logger.info("creating file: " + this.canonicalPath)
                 writeHtmlPage(FileWriter(this),
                         slide.template(rootCss.path, slide.title, slide.subTitle, index, slides.size, slide.content))

@@ -89,6 +89,18 @@ val allEntries = entries {
         }
 
     }
+    entry {
+        title = "Recipes"
+        author = "wakingrufus"
+        categories = listOf(siteUpdates)
+        link = "https://wakingrufus.neocities.org/" + Paths.RECIPE_PAGE
+        publishedDate = Date.from(ZonedDateTime.of(
+                LocalDate.of(2019, Month.JANUARY, 29),
+                LocalTime.of(18, 0, 0),
+                ZoneOffset.ofHours(-6)
+        ).toInstant())
+        content("I have a new page where I collect recipes using my new recipe DSL")
+    }
 }
 
 fun siteUpdateFeed(): SyndFeed = rss {

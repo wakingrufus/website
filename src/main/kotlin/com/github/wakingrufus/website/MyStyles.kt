@@ -6,6 +6,7 @@ import kotlinx.css.*
 class MyStyles {
     companion object {
         val BACKGROUND_COLOR: Color = Color("#111111")
+        val LIGHT_BACKGROUND_COLOR: Color = Color("#333333")
         val FONT_COLOR: Color = Color("#EEEEEE")
         val FONT_COLOR_WEAK: Color = Color("#999999")
         val TITLE_FONT_COLOR: Color = Color("#9999FF")

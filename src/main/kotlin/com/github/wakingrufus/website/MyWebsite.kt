@@ -1,6 +1,12 @@
 package com.github.wakingrufus.website
 
+import com.github.wakingrufus.website.cooking.allRecipes
+import com.github.wakingrufus.website.cooking.chickPeaCurry
+import com.github.wakingrufus.website.cooking.recipeIndex
 import com.github.wakingrufus.website.lib.*
+import com.github.wakingrufus.website.lib.cooking.RECIPE
+import com.github.wakingrufus.website.lib.cooking.Recipe
+import com.github.wakingrufus.website.lib.cooking.html
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import kotlinx.html.*
@@ -17,6 +23,7 @@ object Paths {
     val RSS_PATH = "rss.xml"
     val SITE_UPDATES_RSS_PATH = "site-updates.xml"
     val FEEDS_PAGE = "feeds.html"
+    val RECIPE_PAGE = "recipes.html"
     val STATIC_WEB_SLIDESHOW_BASE_NAME = "static-web"
     val TRAVEL_PATH = "travel.html"
 }
@@ -31,6 +38,7 @@ fun BODY.sideNav() {
             li { a(href = Paths.ANTIPATTERNS_PATH) { +"Antipatterns" } }
             li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
             li { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Static Web" } }
+            li { a(href = Paths.RECIPE_PAGE){+"Recipes"}}
             li { a(href = Paths.FEEDS_PAGE) { +"Feeds" } }
         }
     }
@@ -47,6 +55,10 @@ class MyWebsite {
             htmlPage(path = Paths.ANTIPATTERNS_PATH, builder = antipatterns())
             htmlPage(path = Paths.STATIC_WEB_ARTICLE_PATH, builder = staticweb())
             htmlPage(path = Paths.TRAVEL_PATH, builder = travel())
+            htmlPage(path = Paths.RECIPE_PAGE, builder = recipeIndex())
+            allRecipes.forEach {
+                htmlPage(it.name.replace(" ","")+".html", it.invoke().recipePage())
+            }
             rssFeed(path = Paths.RSS_PATH, feedContents = feed())
             //    rssFeed(path = Paths.SITE_UPDATES_RSS_PATH, feedContents = siteUpdateFeed())
             apply(functionalKotlinSlideshow())
@@ -124,6 +136,34 @@ fun feeds(): HTML.() -> Unit = {
                 li { a(href = "rss/" + Paths.RSS_PATH) { +"All Updates" } }
                 //   li { a(href = "rss/"+Paths.SITE_UPDATES_RSS_PATH) { +"Site Updates" } }
             }
+
+        }
+    }
+}
+
+fun Recipe.recipePage(): HTML.() -> Unit = {
+    head {
+        link(href = Paths.CSS_PATH, rel = "stylesheet")
+    }
+    body {
+        pageTitle(this@recipePage.name)
+        sideNav()
+        content {
+            this@body.apply (this@recipePage.html())
+
+        }
+    }
+}
+
+fun recipes(): HTML.() -> Unit = {
+    head {
+        link(href = Paths.CSS_PATH, rel = "stylesheet")
+    }
+    body {
+        pageTitle("Recipes")
+        sideNav()
+        content {
+            this@body.apply (chickPeaCurry().html())
 
         }
     }
