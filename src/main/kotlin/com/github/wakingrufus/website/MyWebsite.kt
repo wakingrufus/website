@@ -4,7 +4,6 @@ import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.cooking.chickPeaCurry
 import com.github.wakingrufus.website.cooking.recipeIndex
 import com.github.wakingrufus.website.lib.*
-import com.github.wakingrufus.website.lib.cooking.RECIPE
 import com.github.wakingrufus.website.lib.cooking.Recipe
 import com.github.wakingrufus.website.lib.cooking.html
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
@@ -26,6 +25,7 @@ object Paths {
     val RECIPE_PAGE = "recipes.html"
     val STATIC_WEB_SLIDESHOW_BASE_NAME = "static-web"
     val TRAVEL_PATH = "travel.html"
+    val DEVELOPMENT_PATH = "development.html"
 }
 
 fun BODY.sideNav() {
@@ -33,12 +33,9 @@ fun BODY.sideNav() {
         sideNavBar {
             li { a(href = Paths.INDEX_PATH) { +"Home" } }
             li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
-            li { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Functional Kotlin" } }
-     //       li { a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Static Web Slides" } }
-            li { a(href = Paths.ANTIPATTERNS_PATH) { +"Antipatterns" } }
+            li { a(href = Paths.DEVELOPMENT_PATH) { +"Development" } }
             li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
-            li { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Static Web" } }
-            li { a(href = Paths.RECIPE_PAGE){+"Recipes"}}
+            li { a(href = Paths.RECIPE_PAGE) { +"Recipes" } }
             li { a(href = Paths.FEEDS_PAGE) { +"Feeds" } }
         }
     }
@@ -56,8 +53,9 @@ class MyWebsite {
             htmlPage(path = Paths.STATIC_WEB_ARTICLE_PATH, builder = staticweb())
             htmlPage(path = Paths.TRAVEL_PATH, builder = travel())
             htmlPage(path = Paths.RECIPE_PAGE, builder = recipeIndex())
+            htmlPage(path = Paths.DEVELOPMENT_PATH, builder = development())
             allRecipes.forEach {
-                htmlPage(it.name.replace(" ","")+".html", it.invoke().recipePage())
+                htmlPage(it.name.replace(" ", "") + ".html", it.invoke().recipePage())
             }
             rssFeed(path = Paths.RSS_PATH, feedContents = feed())
             //    rssFeed(path = Paths.SITE_UPDATES_RSS_PATH, feedContents = siteUpdateFeed())
@@ -103,6 +101,25 @@ fun mainPage(): HTML.() -> Unit = {
     }
 }
 
+fun development(): HTML.() -> Unit = {
+    head {
+        link(href = Paths.CSS_PATH, rel = "stylesheet")
+    }
+    body {
+        pageTitle("mastodon-jfx")
+        sideNav()
+        content {
+            p { +"This page contains a collection of various articles and presentations about software development I have authored." }
+            h3 { +"Static Web development and Kotlin DSLs" }
+            p { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Article" } }
+            p { a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+            h3 { +"Functional Kotlin" }
+            p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+            h3 { +"Software Development Antipatterns" }
+            p { a(href = Paths.ANTIPATTERNS_PATH + "#refactoring") { +"Refactoring" } }
+        }
+    }
+}
 
 fun mastodonJfx(): HTML.() -> Unit = {
     head {
@@ -149,7 +166,7 @@ fun Recipe.recipePage(): HTML.() -> Unit = {
         pageTitle(this@recipePage.name)
         sideNav()
         content {
-            this@body.apply (this@recipePage.html())
+            this@body.apply(this@recipePage.html())
 
         }
     }
@@ -163,7 +180,7 @@ fun recipes(): HTML.() -> Unit = {
         pageTitle("Recipes")
         sideNav()
         content {
-            this@body.apply (chickPeaCurry().html())
+            this@body.apply(chickPeaCurry().html())
 
         }
     }

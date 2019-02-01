@@ -6,4 +6,4 @@ open class Ingredient(val name: String) {
     }
 }
 
-class ModifiedIngredient(ingredient: Ingredient, modification: String) : Ingredient(ingredient.name)
+class ModifiedIngredient(ingredient: Ingredient,val modification: String) : Ingredient(ingredient.name)

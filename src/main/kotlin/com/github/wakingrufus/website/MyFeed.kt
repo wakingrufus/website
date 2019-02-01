@@ -1,6 +1,5 @@
 package com.github.wakingrufus.website
 
-import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.rss.content
 import com.github.wakingrufus.website.lib.rss.entries
 import com.github.wakingrufus.website.lib.rss.entry
@@ -71,7 +70,7 @@ val allEntries = entries {
                 LocalTime.of(17, 0, 0),
                 ZoneOffset.ofHours(-6)
         ).toInstant())
-        content{
+        content {
             body {
                 div {
                     introToStaticWeb()(this)

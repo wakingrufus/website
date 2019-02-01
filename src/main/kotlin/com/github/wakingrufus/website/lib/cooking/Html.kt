@@ -6,10 +6,6 @@ import kotlinx.css.BorderStyle
 import kotlinx.css.em
 import kotlinx.html.*
 
-
-
-
-
 fun Recipe.html(): BODY.() -> Unit = {
     div {
         style = css {
@@ -23,7 +19,12 @@ fun Recipe.html(): BODY.() -> Unit = {
         h3 { +"Ingredients" }
         ul {
             ingredients.forEach {
-                li { +"${it.quantity} ${it.unit} ${it.ingredient.name}" }
+                val ingredient = it.ingredient
+                li { +"${it.quantity} ${it.unit} ${it.ingredient.name}"
+                +when(ingredient){
+                    is ModifiedIngredient -> " (${ingredient.modification})"
+                    else -> ""
+                }}
             }
         }
         h3 { +"Instructions" }

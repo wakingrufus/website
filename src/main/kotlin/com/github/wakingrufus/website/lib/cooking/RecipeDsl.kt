@@ -34,11 +34,3 @@ infix fun Number.medium(ingredient: Ingredient): RecipeIngredient {
 infix fun Number.lbs(ingredient: Ingredient): RecipeIngredient{
     return RecipeIngredient(this, MeasureUnit.LBS, ingredient)
 }
-
-infix fun Ingredient.chopped(unit: Unit): ModifiedIngredient{
-    return ModifiedIngredient(this, "chopped")
-}
-
-infix fun Number.ea(name: String): RecipeIngredient {
-    return RecipeIngredient(this, MeasureUnit.EA, Ingredient(name))
-}

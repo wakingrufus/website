@@ -4,16 +4,12 @@ import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.lib.CssStringPage
 import com.github.wakingrufus.website.lib.Website
-import com.github.wakingrufus.website.lib.code.call
-import com.github.wakingrufus.website.lib.code.number
-import com.github.wakingrufus.website.lib.code.string
-import com.github.wakingrufus.website.lib.code.variablePropertyName
+import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.slides.*
 import kotlinx.css.Color
 import kotlinx.css.em
 import kotlinx.html.*
-
 
 fun staticWebSlideshow(): Website.() -> Unit = {
     slideshow(
@@ -22,9 +18,14 @@ fun staticWebSlideshow(): Website.() -> Unit = {
         titleSlide(title = "Static Web", subTitle = "With Kotlin and DSLs", block = staticWebTitleSlide())
         slide(title = "Documents, not Apps", block = staticWebNotApps())
         slide(title = "Advantages", block = staticWebAdvantages())
+        slide(title = "Disadvantages", block = staticWebDisadvantages())
         slide(title = "Generators", block = staticWebGenerators())
+        slide(title = "Lambda as Final Parameter", block = lambdaAsFinalParameter())
+        slide(title = "Lambda with Receiver", block = lambdaWithReceiver())
+        slide(title = "DslMarker", block = dslMarker())
         slide(title = "HTML DSL", block = staticWebKotlinHtml())
-        slide(title = "Kotlin to the rescue", block = staticWebKotlinCss())
+        slide(title = "CSS DSL", block = staticWebKotlinCss())
+        slide(title = "Code Reuse", block = staticWebKotlinReuse())
     }
 }
 
@@ -82,6 +83,120 @@ fun staticWebGenerators(): DIV.() -> Unit = {
         }
     }
 }
+
+fun lambdaAsFinalParameter(): DIV.() -> Unit = {
+    slideContent {
+        splitSlide(leftBlock = {
+            slideCode {
+                declareFunction("f") {
+                    parameter("lambda", type = "(Int) -> String")
+                }
+                declareProperty(modifier = "val", name = "s") {
+                    call("f") {
+                        argument(name = "lambda") {
+                            block {
+                                expression {
+                                    on({ it() }) {
+                                        call(name = "toString")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }) {
+            slideCode {
+                declareProperty(modifier = "val", name = "s") {
+                    call("f") {
+                        lambda {
+                            expression {
+                                on({ it() }) {
+                                    call(name = "toString")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fun lambdaWithReceiver(): DIV.() -> Unit = {
+    slideContent {
+        slideCode {
+            declareFunction("builder", "String", false) {
+                body {
+                    returns {
+                        on({
+                            call("StringBuilder")
+                        }) {
+                            call(name = "append") {
+                                argument {
+                                    string("content")
+                                }
+                            }
+                            call("build")
+                        }
+                    }
+                }
+            }
+            declareFunction("stringDsl", "String", false) {
+                parameter(name = "receiver", type = "StringBuilder.() -> Unit")
+                body {
+                    expression {
+                        on({
+                            call("StringBuilder") {}
+                        }) {
+                            call(name = "apply") {
+                                extensionFunction()
+                                argument { +"receiver" }
+                            }
+                            call("build")
+                        }
+                    }
+                }
+            }
+            declareFunction("dsl", "String", false) {
+                expression {
+                    on({
+                        call(name = "stringDsl") {
+                            packageFunction()
+                            lambda(inline = false) {
+                                expression {
+                                    on({
+                                        call("append") {
+                                            argument {
+                                                string("content")
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+}
+
+fun dslMarker(): DIV.() -> Unit = {
+    slideContent {
+        splitSlide(leftBlock = {
+            slideCode {
+                keyword("@DslMarker")
+                +"\n"
+                annotationClass("HtmlTagMarker")
+            }
+        }) {
+
+        }
+    }
+
+}
+
 
 fun staticWebKotlinHtml(): DIV.() -> Unit = {
     slideContent {
@@ -177,22 +292,122 @@ fun staticWebKotlinCss(): DIV.() -> Unit = {
 
 fun staticWebKotlinReuse(): DIV.() -> Unit = {
     slideContent {
-        slideList {
-            li { +"html dsl" }
-            li { +"css dsl" }
-            li { +"resuse via functions" }
-            li { +"DSL extensions" }
-        }
-    }
-}
-
-fun staticWebKotlinExtensions(): DIV.() -> Unit = {
-    slideContent {
-        slideList {
-            li { +"html dsl" }
-            li { +"css dsl" }
-            li { +"resuse via functions" }
-            li { +"DSL extensions" }
+        splitSlide(leftBlock = {
+            slideCode {
+                declareFunction(name = "sideNavBar", extentionOf = "BODY") {
+                    parameter(name = "block", type = "UL.() -> Unit")
+                    expression {
+                        call("div") {
+                            lambda {
+                                assignment(name = "classes", operator = "+=") {
+                                    inlineExpression { string("navBar") }
+                                }
+                                assignment(name = "style") {
+                                    call("css") {
+                                        lambda {
+                                            assignment(name = "verticalAlign") {
+                                                inlineExpression {
+                                                    +"VerticalAlign.top"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                statement {
+                                    call("ul") {
+                                        lambda {
+                                            assignment(name = "style") {
+                                                call(name = "css") {
+                                                    lambda {
+                                                        assignment(name = "listStyleType") {
+                                                            inlineExpression {
+                                                                +"ListStyleType.none"
+                                                            }
+                                                        }
+                                                        assignment(name = "color") {
+                                                            call(name = "Color") {
+                                                                argument { string("#9999EE") }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            statement {
+                                                call(name = "block") {
+                                                    argument { keyword("this") }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }) {
+            slideCode {
+                declareFunction(name = "sideNav", extentionOf = "BODY") {
+                    body {
+                        call(name = "apply") {
+                            lambda {
+                                call(name = "sideNavBar") {
+                                    lambda {
+                                        call(name = "li") {
+                                            lambda(inline = true) {
+                                                call(name = "a") {
+                                                    argument(name = "href") { string("index.html") }
+                                                    lambda(inline = true) {
+                                                        statement {
+                                                            inlineExpression {
+                                                                +"+"
+                                                                string("Home")
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        call(name = "li") {
+                                            lambda(inline = true) {
+                                                call(name = "a") {
+                                                    argument(name = "href") { string("travel.html") }
+                                                    lambda(inline = true) {
+                                                        statement {
+                                                            inlineExpression {
+                                                                +"+"
+                                                                string("Travel Guide")
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                declareFunction(name = "mainPage", returnType = "HTML.() -> Unit") {
+                    expression {
+                        block {
+                            call(name = "head") {
+                                lambda { }
+                            }
+                            call(name = "body") {
+                                lambda {
+                                    expression {
+                                        call(name = "sideNav") {
+                                            extensionFunction()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
