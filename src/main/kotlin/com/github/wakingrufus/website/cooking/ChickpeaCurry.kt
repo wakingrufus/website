@@ -6,7 +6,6 @@ import java.time.temporal.ChronoUnit.MINUTES
 val chickPeaCurry = recipe("Butter Chickpea Curry") {
     servings = 4
     ingredients(
-        1 cup yogurt,
         12 oz chickpeas,
         2 tbs canolaOil,
         1 tbs butter,

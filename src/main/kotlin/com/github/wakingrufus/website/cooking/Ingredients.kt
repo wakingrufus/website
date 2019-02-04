@@ -3,7 +3,6 @@ package com.github.wakingrufus.website.cooking
 import com.github.wakingrufus.website.lib.cooking.Ingredient
 import com.github.wakingrufus.website.lib.cooking.ModifiedIngredient
 
-val yogurt = Ingredient("yogurt")
 val chickpeas = Ingredient("chickpeas")
 val canolaOil = Ingredient("canola oil")
 val yellowOnion = Ingredient("yellow onion")
@@ -12,10 +11,7 @@ val garamMasala = Ingredient("garam masala")
 val ginger = Ingredient("ginger")
 val cumin = Ingredient("cumin")
 val salt = Ingredient("salt")
-fun yogurt(style: String, flavor: String): ModifiedIngredient {
-    return ModifiedIngredient(Ingredient("yogurt"), "$flavor $style")
-}
-
+fun yogurt(style: String, flavor: String) = Ingredient("yogurt")("$flavor $style")
 val tomatoPaste = Ingredient("tomato paste")
 val crushedTomatoes = Ingredient("crushed tomatoes")
 val butter = Ingredient("butter")
