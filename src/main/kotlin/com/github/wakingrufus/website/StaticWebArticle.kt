@@ -1000,7 +1000,7 @@ fun conclusion(): DIV.() -> Unit = {
         If this approach interests you, I encourage to check out the source code for my
     """.trimIndent()
         +" "
-        a(href = "https://neocities.org/wakingrufus") { +"Website" }
+        a(href = "https://wakingrufus.neocities.org/") { +"Website" }
         +" on "
         a(href = "https://github.com/wakingrufus/website") { +"GitHub" }
         +", which is built entirely in Kotlin using DSLs."
