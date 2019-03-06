@@ -74,23 +74,48 @@ fun introToStaticWeb(): DIV.() -> Unit = {
         +", a concept critical to accessibility on the web, especially for people who rely on screen readers."
     }
     p {
-        +"""
-            Some sites should be webapps, such as eCommerce sites, or web interfaces to applications (think gmail, etc).
+        +"""Some sites should be webapps, such as eCommerce sites, or web interfaces to applications (think gmail, etc).
             But most websites are just serving up static content, such as news websites and blogs.
-            There is no reason these types of sites need to carry all the baggage that comes with a webapp.
-            With todays technologies, static websites can be extremely fast and reliable.
-            There is a new static webhost called
             """.trimIndent()
-        +" "
-        a(href = "http://neocites.org") { +"Neocities" }
-        +", a name which is an homage to the defunct Geocities, where many people are building static sites."
+    }
+    p { +"Sites which are delivered as static web pages can enjoy the following benefits:" }
+    h3 {
+        +"Speed"
+    }
+    p {
+        +"""
+        Because no javascript needs to be executed, and static content can be cached,
+        loading times can be incredibly fast, even in bandwidth-restricted environments.
+        These sites will also use far less memory in the browser.
+    """.trimIndent()
+    }
+    h3 { +"Simplicity" }
+    p {
+        +"""Because there is no dynamic code, there are many fewer points of failure.
+            |The code is a lot easier to check for errors and maintain.""".trimMargin()
+    }
+    h3 { +"Portabilty" }
+    p {
+        +"Any webhost can host a static site. Some sites, such as "
+        a(href = "http://neocities.org") { +"Neocities" }
+        +" (a play on the old Geocities) are specifically designed to do this very cheaply with generous free tiers."
+    }
+    h3 { +"Accessibility" }
+    p { +"Semantically written static sites work on screen readers out of the box, and can be printed very nicely." }
+    p { +"There are a few disadvantages to static sites:" }
+    h3 { +"Limited features" }
+    p { +"Hand-coding HTML and CSS is tedious enough, but hand-coding the XML for an RSS feed would be out of the question." }
+    h3 { +"Code Maintenance" }
+    p { +"Hand-coded HTML will require a lot of copy and pasting and code duplication" }
+    p {
+        +"""Static site generators such as Jekyll and Hugo help solve these two disadvantages, and are great for non-technical folks.
+            However, they come with their own restrictions.
+            Using Kotlin DSL's, we can get the same benefits as a static site generator, without the restrictions.
+            """.trimIndent()
     }
     p {
         +"""
             I decided to build myself a personal website in order to avoid places like Medium, Twitter, or various slideshow services.
-            Anyone who has built a site by hand in HTML knows that this is very tedious.
-            There are some frameworks for generating static sites, such as Jekyll and Hugo, which are great for most people.
-            But I am a programmer, and I'd like the control I get from programming, with the benefits of using a framework as well.
             In this example, instead of using a template engine such as Jekyll or Hugo, I will be using a "Domain-Specific Language", or DSL.
             A DSL is a simplified programming language designed for a specific use case, and typically have a declarative style.
             This is where Kotlin comes in.
@@ -1016,12 +1041,13 @@ fun additionalResources(): DIV.() -> Unit = {
         +" along with a video demo of this code in action"
     }
     p { +"If you are interested in learning more about Kotlin DSLs, check out the following links:" }
-    p { a(href = "https://proandroiddev.com/auto-generate-kotlin-dsl-f63342434154s") { +"AutoDSL" } }
+    p { a(href = "https://proandroiddev.com/auto-generate-kotlin-dsl-f63342434154") { +"AutoDSL" } }
     p { a(href = "https://zsmb.co/kotlin-dsl-design-with-village-dsl/") { +"Kotlin DSL Design" } }
     p { a(href = "https://kotlinexpertise.com/create-dsl-with-kotlin/") { +"Create a DSL in Kotlin" } }
     p { +"If you are interested in learning more about the static web, check out the following links:" }
     p { a(href = "https://www.coredna.com/blogs/the-web-is-broken") { +"The Web is Broken" } }
     p { a(href = "https://speedcurve.com/blog/javascript-growth/") { +"JavaScript growth and third parties" } }
+    p { a(href = "https://chriswere.neocities.org/blog.html#blog-experiment") { +"Chris Were's static blog" } }
     p {
         +"Discuss this post on "
         a(href = "https://mastodon.technology/web/statuses/101241850991374660") { +"Mastodon" }

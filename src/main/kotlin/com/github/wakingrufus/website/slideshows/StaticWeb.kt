@@ -57,9 +57,11 @@ fun staticWebAdvantages(): DIV.() -> Unit = {
         slideList {
             li { +"Security" }
             li { +"Reliability" }
-            li { +"Speed" }
-            li { +"Hosting" }
-            li { +"Scalability" }
+            li { +"Speed: Fast loading times and rendering" }
+            li { +"Portability: Can be served by any host" }
+            li { +"Scalability: " }
+            li { +"Accessibility: Screen readers and printing" }
+            li { +"Simplicity/Maintenance" }
         }
     }
 }
@@ -69,6 +71,7 @@ fun staticWebDisadvantages(): DIV.() -> Unit = {
         slideList {
             li { +"Verbose" }
             li { +"Duplication" }
+            li { +"Extensions (RSS, etc)" }
         }
     }
 }

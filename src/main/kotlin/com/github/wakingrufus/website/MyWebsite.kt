@@ -86,6 +86,7 @@ fun mainPage(): HTML.() -> Unit = {
                         }
                     }
                     li {
+                        // TODO: add rel="me"
                         a(href = "https://mastodon.technology/@wakingrufus") {
                             +"mastodon.technology"
                         }
