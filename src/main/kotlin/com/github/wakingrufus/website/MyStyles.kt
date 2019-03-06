@@ -11,7 +11,7 @@ class MyStyles {
         val FONT_COLOR_WEAK: Color = Color("#999999")
         val TITLE_FONT_COLOR: Color = Color("#9999FF")
         val FOOTER_FONT_COLOR: Color = Color("#999999")
-        val LINK_COLOR: Color = Color("#9999EE")
+        val LINK_COLOR: Color = Color("#00FF77")
         val BORDER_COLOR: Color = Color("#FFFFFF")
     }
 
@@ -26,6 +26,15 @@ class MyStyles {
             a {
                 color = LINK_COLOR
             }
+            h1 {
+                color = Color("#FFFFFF")
+            }
+            h2 {
+                color = Color("#DDDDDD")
+            }
+            h3 {
+                color = Color("#BBBBBB")
+            }
             (".page-content") {
                 display = Display.inlineBlock
                 maxWidth = 79.pct
@@ -38,7 +47,7 @@ class MyStyles {
             }
             media("screen and (min-resolution: 192dpi)") {
                 body {
-                    fontSize = 2.em
+                    fontSize = 1.75.em
                 }
             }
 

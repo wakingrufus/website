@@ -51,6 +51,8 @@ fun slideshowTitleSlide(mainCssPath: String,
         title { +title }
     }
     body {
+        val nextSlideUrl = if (slideNumber < totalSlides - 1) "${slideNumber + 1}.html" else "../" + Paths.INDEX_PATH
+        onClick = "document.location='$nextSlideUrl'"
         slide {
             slideshowTitle { +title }
             subTitle?.let {
@@ -68,7 +70,7 @@ fun slideshowTitleSlide(mainCssPath: String,
                     +"Home"
                 }
                 +" "
-                a(href = if (slideNumber < totalSlides - 1) "${slideNumber + 1}.html" else "../" + Paths.INDEX_PATH) {
+                a(href = nextSlideUrl) {
                     tabIndex = "1"
                     +"Next"
                 }
@@ -90,6 +92,8 @@ fun slideTemplate(mainCssPath: String,
         title { +title }
     }
     body {
+        val nextSlideUrl = if (slideNumber < totalSlides - 1) "${slideNumber + 1}.html" else "../" + Paths.INDEX_PATH
+        onClick = "document.location='$nextSlideUrl'"
         slide {
             slideTitle { +title }
             slideSubTitle { +subTitle.orEmpty() }
@@ -105,7 +109,7 @@ fun slideTemplate(mainCssPath: String,
                     +"Home"
                 }
                 +" "
-                a(href = if (slideNumber < totalSlides - 1) "${slideNumber + 1}.html" else "../" + Paths.INDEX_PATH) {
+                a(href = nextSlideUrl) {
                     tabIndex = "1"
                     +"Next"
                 }
