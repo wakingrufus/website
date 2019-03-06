@@ -8,13 +8,13 @@ import java.io.Writer
 class HtmlPage(val path: String, val builder: HTML.() -> Unit) {
     fun writeHtmlPage(writer: Writer) {
         writer.use {
-            it.appendHTML().html(builder)
+            it.appendHTML().html(block = builder)
         }
     }
 }
 
 fun writeHtmlPage(writer: Writer, builder: HTML.() -> Unit) {
     writer.use {
-        it.appendHTML().html(builder)
+        it.appendHTML().html(block = builder)
     }
 }
