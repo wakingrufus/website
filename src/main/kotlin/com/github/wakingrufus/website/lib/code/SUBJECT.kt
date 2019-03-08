@@ -14,18 +14,23 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
              nullSafe: Boolean = false,
              block: CALL.() -> Unit = {}) {
         calls += {
+            val call = CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
+                    .apply(block)
             if (nullSafe) {
                 +"?"
             }
-            +"."
-            CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
-                    .apply(block)(this)
+            if (call.isInfix) {
+                +" "
+            } else {
+                +"."
+            }
+            call(this)
         }
     }
 
-    fun callInvoke(block: CALL.() -> Unit = {}){
-        calls+= {
-            CALL(name = "", argsOnDifferentLines = false, baseIndentation =  this@SUBJECT.baseIndentation)
+    fun callInvoke(block: CALL.() -> Unit = {}) {
+        calls += {
+            CALL(name = "", argsOnDifferentLines = false, baseIndentation = this@SUBJECT.baseIndentation)
                     .apply(block)(this)
         }
     }
@@ -52,6 +57,12 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
             +"["
             EXPRESSION().apply(expression)(this)
             +"]"
+        }
+    }
+
+    fun index(number: Number) {
+        calls += {
+            number(number)
         }
     }
 

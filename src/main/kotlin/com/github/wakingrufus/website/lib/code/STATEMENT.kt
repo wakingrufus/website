@@ -25,9 +25,7 @@ class STATEMENT(val indentation: Int = 0) {
     }
 
     fun inlineExpression(block: CODE.() -> Unit) {
-        body += {
-            block(this)
-        }
+        body += {block(this)}
     }
 
     fun expression(block: EXPRESSION.() -> Unit) {

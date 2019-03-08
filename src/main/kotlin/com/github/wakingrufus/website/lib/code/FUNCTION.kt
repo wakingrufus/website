@@ -11,6 +11,8 @@ class FUNCTION(val operator: Boolean = false,
                val indentation: Int = 0,
                val paramsOnSeparateLines: Boolean = true,
                val extensionOf: String? = null) {
+   var isInfix = false
+    var genericType: String? = null
     var parameters: List<PARAMETER> = ArrayList()
     var body: (CODE.() -> Unit)? = null
     var expression: Boolean = false
@@ -52,8 +54,14 @@ class FUNCTION(val operator: Boolean = false,
             if (this@FUNCTION.operator) {
                 keyword("operator ")
             }
+            if (this@FUNCTION.isInfix) {
+                keyword("infix ")
+            }
             keyword("fun")
             +" "
+            this@FUNCTION.genericType?.also {
+                +"$it "
+            }
             this@FUNCTION.extensionOf?.let {
                 +it
                 +"."

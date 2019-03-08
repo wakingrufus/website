@@ -20,6 +20,7 @@ fun staticWebSlideshow(): Website.() -> Unit = {
         slide(title = "Advantages", block = staticWebAdvantages())
         slide(title = "Disadvantages", block = staticWebDisadvantages())
         slide(title = "Generators", block = staticWebGenerators())
+        slide(title = "Infix functions", block = infixFunction())
         slide(title = "Lambda as Final Parameter", block = lambdaAsFinalParameter())
         slide(title = "Lambda with Receiver", block = lambdaWithReceiver())
         slide(title = "DslMarker", block = dslMarker())
@@ -82,6 +83,46 @@ fun staticWebGenerators(): DIV.() -> Unit = {
             li { +"Hugo" }
             li { +"Concise and reusable elements" }
             li { +"Limited features" }
+        }
+    }
+}
+
+fun infixFunction(): DIV.() -> Unit = {
+    slideContent {
+        splitSlide(leftBlock = {
+            slideList {
+                li { +"for simple binary operators, eliminate '.()' ceremony for more natural language" }
+            }
+            slideCode {
+                declareClass(name = "Pair") {
+                    genericTypes = listOf("A", "B")
+                    property(modifier = "val", name = "first", type = "A")
+                    property(modifier = "val", name = "second", type = "B")
+                }
+            }
+        }) {
+            slideCode {
+                declareFunction(name = "", extentionOf = "A", returnType = "Pair<A, B>") {
+                    isInfix = true
+                    genericType = "<A, B>"
+                    parameter("that", "B")
+                    expression {
+                        call("Pair") {
+                            argument { keyword("this") }
+                            argument { +"that" }
+                        }
+                    }
+                }
+                declareProperty(modifier = "val", name = "pair", type = "Pair<String, String>") {
+                    on({ string("") }) {
+                        call("to") {
+                            extensionFunction()
+                            infix()
+                            argument { string("") }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -351,36 +392,32 @@ fun staticWebKotlinReuse(): DIV.() -> Unit = {
             slideCode {
                 declareFunction(name = "sideNav", extentionOf = "BODY") {
                     body {
-                        call(name = "apply") {
+                        call(name = "sideNavBar") {
                             lambda {
-                                call(name = "sideNavBar") {
-                                    lambda {
-                                        call(name = "li") {
+                                call(name = "li") {
+                                    lambda(inline = true) {
+                                        call(name = "a") {
+                                            argument(name = "href") { string("index.html") }
                                             lambda(inline = true) {
-                                                call(name = "a") {
-                                                    argument(name = "href") { string("index.html") }
-                                                    lambda(inline = true) {
-                                                        statement {
-                                                            inlineExpression {
-                                                                +"+"
-                                                                string("Home")
-                                                            }
-                                                        }
+                                                statement {
+                                                    inlineExpression {
+                                                        +"+"
+                                                        string("Home")
                                                     }
                                                 }
                                             }
                                         }
-                                        call(name = "li") {
+                                    }
+                                }
+                                call(name = "li") {
+                                    lambda(inline = true) {
+                                        call(name = "a") {
+                                            argument(name = "href") { string("travel.html") }
                                             lambda(inline = true) {
-                                                call(name = "a") {
-                                                    argument(name = "href") { string("travel.html") }
-                                                    lambda(inline = true) {
-                                                        statement {
-                                                            inlineExpression {
-                                                                +"+"
-                                                                string("Travel Guide")
-                                                            }
-                                                        }
+                                                statement {
+                                                    inlineExpression {
+                                                        +"+"
+                                                        string("Travel Guide")
                                                     }
                                                 }
                                             }
@@ -413,3 +450,4 @@ fun staticWebKotlinReuse(): DIV.() -> Unit = {
         }
     }
 }
+

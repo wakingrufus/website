@@ -16,13 +16,14 @@ class CALL(val name: String,
     var arguments: List<ARGUMENT> = ArrayList()
     var lambdaBlock: BLOCK? = null
     var callType: (String) -> CODE.() -> Unit = ::functionCall
+    var isInfix = false
 
     fun argument(name: String? = null, value: (CODE.() -> Unit)) {
         arguments += ARGUMENT(name = name, valueBlock = value)
     }
 
     fun argumentExp(name: String? = null, value: (EXPRESSION.() -> Unit)) {
-        arguments += ARGUMENT(name = name, valueBlock = {EXPRESSION().apply(value)(this)})
+        arguments += ARGUMENT(name = name, valueBlock = { EXPRESSION().apply(value)(this) })
     }
 
     fun lambda(inline: Boolean = false, indentation: Int = baseIndentation, value: (BLOCK.() -> Unit)) {
@@ -37,12 +38,20 @@ class CALL(val name: String,
         callType = ::packageFunctionCall
     }
 
+    fun infix() {
+        isInfix = true
+    }
+
     operator fun invoke(code: CODE) {
         code.apply {
             this@CALL.callType(this@CALL.name)(this)
             //  if (this@CALL.name[0].isLowerCase()) functionCall(this@CALL.name) else +this@CALL.name
             if (this@CALL.arguments.isNotEmpty() || this@CALL.lambdaBlock == null) {
-                +"("
+                if (this@CALL.isInfix) {
+                    +" "
+                } else {
+                    +"("
+                }
                 this@CALL.arguments.forEachIndexed { i, a ->
                     if (this@CALL.argsOnDifferentLines) {
                         +"\n"
@@ -56,7 +65,9 @@ class CALL(val name: String,
                         }
                     }
                 }
-                +")"
+                if (!this@CALL.isInfix) {
+                    +")"
+                }
             }
             this@CALL.lambdaBlock?.let {
                 +" "

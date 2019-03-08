@@ -13,6 +13,7 @@ class CLASS(val modifiers: List<String> = emptyList(),
     var properties: List<PROPERTY> = ArrayList()
     var functions: List<FUNCTION> = ArrayList()
     var companionObject: (CODE.() -> Unit)? = null
+    var genericTypes: List<String> = ArrayList()
 
     fun value(name: String, type: String, inConstructor: Boolean = true, valueBlock: (CODE.() -> Unit)? = null) {
         property(modifier = "val", name = name, type = type, inConstructor = inConstructor, valueBlock = valueBlock)
@@ -55,6 +56,11 @@ class CLASS(val modifiers: List<String> = emptyList(),
                     keyword("$it ")
                 }
                 +it.name
+                if(this@CLASS.genericTypes.isNotEmpty()){
+                    +"<"
+                    +this@CLASS.genericTypes.joinToString(", ")
+                    +">"
+                }
                 +"("
                 it.constructorProperties.forEach {
                     if (this@CLASS.propsOnSeparateLines) {

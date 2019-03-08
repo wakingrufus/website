@@ -29,16 +29,15 @@ object Paths {
 }
 
 fun BODY.sideNav() {
-    apply {
-        sideNavBar {
-            li { a(href = Paths.INDEX_PATH) { +"Home" } }
-            li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
-            li { a(href = Paths.DEVELOPMENT_PATH) { +"Development" } }
-            li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
-            li { a(href = Paths.RECIPE_PAGE) { +"Recipes" } }
-            li { a(href = Paths.FEEDS_PAGE) { +"Feeds" } }
-        }
+    sideNavBar {
+        li { a(href = Paths.INDEX_PATH) { +"Home" } }
+        li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
+        li { a(href = Paths.DEVELOPMENT_PATH) { +"Development" } }
+        li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
+        li { a(href = Paths.RECIPE_PAGE) { +"Recipes" } }
+        li { a(href = Paths.FEEDS_PAGE) { +"Feeds" } }
     }
+
 }
 
 class MyWebsite {

@@ -1,17 +1,17 @@
 package com.github.wakingrufus.website.lib.code
 
 import kotlinx.html.CODE
+import kotlinx.html.HtmlTagMarker
 
+@HtmlTagMarker
 class EXPRESSION(val indentation: Int = 0) {
     var body: List<CODE.() -> Unit> = listOf()
     fun block(block: BLOCK.() -> Unit) {
-        body += { BLOCK(indentation).apply(block)(this) }
+        body += { BLOCK(this@EXPRESSION.indentation).apply(block)(this) }
     }
 
-    // TODO: eliminate
-    @Deprecated(message = "try more specific expression builders", replaceWith = ReplaceWith("block"))
-    fun code(code: CODE.() -> Unit) {
-        body += code
+    fun inline(block: CODE.() -> Unit) {
+        body += block
     }
 
     fun whenExpression(indentation: Int = 0, whenBlock: WHEN.() -> Unit) {

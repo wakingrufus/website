@@ -288,8 +288,7 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
                 body {
                     statement {
                         returns {
-                            code {
-                                +"messages."
+                            on({ +"messages" }) {
                                 call(name = "plus", argsOnDifferentLines = false) {
                                     argument { +"newMessage" }
                                 }
@@ -318,9 +317,14 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                 body {
                     statement {
                         returns {
-                            code {
-                                +"one.compareTo(two) == "
-                                number(0)
+                            on({ +"one" }) {
+                                call(name = "compareTo") {
+                                    argument { +"two" }
+                                }
+                                call("==") {
+                                    infix()
+                                    argument { number(0) }
+                                }
                             }
                         }
                     }
@@ -335,9 +339,14 @@ fun firstClassFunctions(): DIV.() -> Unit = {
                 parameter(name = "one", type = "BigDecimal")
                 parameter(name = "two", type = "BigDecimal")
                 expression2 {
-                    code {
-                        +"one.compareTo(two) == "
-                        number(0)
+                    on({ +"one" }) {
+                        call(name = "compareTo") {
+                            argument { +"two" }
+                        }
+                        call("==") {
+                            infix()
+                            argument { number(0) }
+                        }
                     }
                 }
             }
@@ -469,9 +478,7 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
                         }
                     }
                     returns {
-                        code {
-                            +"fixedMessages"
-                        }
+                        on({ +"fixedMessages" }) {}
                     }
                 }
             }
@@ -590,23 +597,21 @@ fun let(): DIV.() -> Unit = {
             declareFunction(name = "getValue", returnType = "BigDecimal") {
                 body {
                     returns {
-                        code {
-                            on(subject = {
-                                call(name = "getFromDatabase")
-                            }) {
-                                call("let", baseIndentation = 1, nullSafe = true) {
-                                    lambda {
-                                        expression {
-                                            on({ +"it" }) {
-                                                call(name = "toBigDecimal")
-                                            }
+                        on(subject = {
+                            call(name = "getFromDatabase")
+                        }) {
+                            call("let", baseIndentation = 1, nullSafe = true) {
+                                lambda {
+                                    expression {
+                                        on({ +"it" }) {
+                                            call(name = "toBigDecimal")
                                         }
                                     }
                                 }
-                                elvis {
-                                    on({ +"BigDecimal" }) {
-                                        property(name = "ZERO")
-                                    }
+                            }
+                            elvis {
+                                on({ +"BigDecimal" }) {
+                                    property(name = "ZERO")
                                 }
                             }
                         }
@@ -631,20 +636,18 @@ fun apply(): DIV.() -> Unit = {
             declareFunction("buildObject", returnType = "Calendar") {
                 body {
                     returns {
-                        code {
-                            on({ +"Calendar" }) {
-                                call(name = "getInstance") {}
-                                call(name = "apply", argsOnDifferentLines = false, baseIndentation = 1) {
-                                    lambda {
-                                        expression {
-                                            call(name = "set", argsOnDifferentLines = false) {
-                                                argument { number(2017) }
-                                                argument { number(3) }
-                                                argument { number(1) }
-                                                argument { number(4) }
-                                                argument { number(56) }
-                                                argument { number(34) }
-                                            }
+                        on({ +"Calendar" }) {
+                            call(name = "getInstance") {}
+                            call(name = "apply", argsOnDifferentLines = false, baseIndentation = 1) {
+                                lambda {
+                                    expression {
+                                        call(name = "set", argsOnDifferentLines = false) {
+                                            argument { number(2017) }
+                                            argument { number(3) }
+                                            argument { number(1) }
+                                            argument { number(4) }
+                                            argument { number(56) }
+                                            argument { number(34) }
                                         }
                                     }
                                 }
@@ -679,11 +682,12 @@ fun also(): DIV.() -> Unit = {
                             lambda {
                                 statement {
                                     expression {
-                                        code { propertyName("log") }
-                                        call(name = "log") {
-                                            argument {
-                                                string("doing stuff to ")
-                                                +" + input"
+                                        on({ propertyName("log") }) {
+                                            call(name = "log") {
+                                                argument {
+                                                    string("doing stuff to ")
+                                                    +" + input"
+                                                }
                                             }
                                         }
                                     }

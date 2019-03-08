@@ -209,7 +209,7 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
         declareFunction("builder", "String", false) {
             body {
                 returns {
-                    code {
+
                         on({
                             call("StringBuilder")
                         }) {
@@ -220,7 +220,6 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
                             }
                             call("build")
                         }
-                    }
                 }
             }
         }
@@ -390,36 +389,32 @@ fun codeReuse(): DIV.() -> Unit = {
     sampleCode {
         declareFunction(name = "sideNav", extentionOf = "BODY") {
             body {
-                call(name = "apply") {
+                call(name = "sideNavBar") {
                     lambda {
-                        call(name = "sideNavBar") {
-                            lambda {
-                                call(name = "li") {
+                        call(name = "li") {
+                            lambda(inline = true) {
+                                call(name = "a") {
+                                    argument(name = "href") { string("index.html") }
                                     lambda(inline = true) {
-                                        call(name = "a") {
-                                            argument(name = "href") { string("index.html") }
-                                            lambda(inline = true) {
-                                                statement {
-                                                    inlineExpression {
-                                                        +"+"
-                                                        string("Home")
-                                                    }
-                                                }
+                                        statement {
+                                            inlineExpression {
+                                                +"+"
+                                                string("Home")
                                             }
                                         }
                                     }
                                 }
-                                call(name = "li") {
+                            }
+                        }
+                        call(name = "li") {
+                            lambda(inline = true) {
+                                call(name = "a") {
+                                    argument(name = "href") { string("travel.html") }
                                     lambda(inline = true) {
-                                        call(name = "a") {
-                                            argument(name = "href") { string("travel.html") }
-                                            lambda(inline = true) {
-                                                statement {
-                                                    inlineExpression {
-                                                        +"+"
-                                                        string("Travel Guide")
-                                                    }
-                                                }
+                                        statement {
+                                            inlineExpression {
+                                                +"+"
+                                                string("Travel Guide")
                                             }
                                         }
                                     }
@@ -641,11 +636,7 @@ fun rolodexDslClass(): CODE.() -> Unit = {
                                                                 call("last") {
                                                                     extensionFunction()
                                                                 }
-                                                                index {
-                                                                    code {
-                                                                        number(0)
-                                                                    }
-                                                                }
+                                                                index(0)
                                                             }
                                                         }
                                                     }
