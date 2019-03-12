@@ -600,7 +600,6 @@ fun backingObjects(): DIV.() -> Unit = {
                                             }
                                         }
                                     }
-                                    .call("test")
                         }
                     }
                 }
