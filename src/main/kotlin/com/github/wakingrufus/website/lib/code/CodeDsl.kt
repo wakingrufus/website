@@ -132,10 +132,9 @@ fun CODE.comment(text: String) {
 
 fun CODE.declareClass(modifiers: List<String> = emptyList(),
                       name: String,
-                      superClass: String? = null,
                       propsOnSeparateLines: Boolean = true,
                       block: CLASS.() -> Unit = {}) {
-    CLASS(modifiers = modifiers, name = name, superClass = superClass, propsOnSeparateLines = propsOnSeparateLines)
+    CLASS(modifiers = modifiers, name = name, propsOnSeparateLines = propsOnSeparateLines)
             .apply(block)(this)
 }
 

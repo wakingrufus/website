@@ -16,17 +16,19 @@ fun staticWebSlideshow(): Website.() -> Unit = {
             name = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME,
             rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())) {
         titleSlide(title = "Static Web", subTitle = "With Kotlin and DSLs", block = staticWebTitleSlide())
-        slide(title = "Documents, not Apps", block = staticWebNotApps())
-        slide(title = "Advantages", block = staticWebAdvantages())
-        slide(title = "Disadvantages", block = staticWebDisadvantages())
-        slide(title = "Generators", block = staticWebGenerators())
+        slide(title = "What is DSL?", block = fromOopToDsl())
         slide(title = "Infix functions", block = infixFunction())
         slide(title = "Lambda as Final Parameter", block = lambdaAsFinalParameter())
         slide(title = "Lambda with Receiver", block = lambdaWithReceiver())
         slide(title = "DslMarker", block = dslMarker())
+        slide(title = "Documents, not Apps", block = staticWebNotApps())
+        slide(title = "Advantages", block = staticWebAdvantages())
+        slide(title = "Disadvantages", block = staticWebDisadvantages())
+        slide(title = "Generators", block = staticWebGenerators())
         slide(title = "HTML DSL", block = staticWebKotlinHtml())
         slide(title = "CSS DSL", block = staticWebKotlinCss())
         slide(title = "Code Reuse", block = staticWebKotlinReuse())
+        slide(title = "Backing objects", block = backingObjects())
     }
 }
 
@@ -40,6 +42,19 @@ fun staticWebTitleSlide(): DIV.() -> Unit = {
         }
     }
 
+}
+
+fun fromOopToDsl(): DIV.() -> Unit = {
+    slideContent {
+        slideList {
+            li { +"Domain consists of structured data and interfaces" }
+            li { +"Extract common code and higher-order functions into 'interpreter'" }
+            li { +"All implementation-specific code and data is now input data to interpreter" }
+            li { +"Build backing objects to hold these inputs" }
+            li { +"DSLs allow you to build these data in a typesafe way." }
+            li { +"Kotlin allows us to build DSLs" }
+        }
+    }
 }
 
 fun staticWebNotApps(): DIV.() -> Unit = {
@@ -91,17 +106,16 @@ fun infixFunction(): DIV.() -> Unit = {
     slideContent {
         splitSlide(leftBlock = {
             slideList {
-                li { +"for simple binary operators, eliminate '.()' ceremony for more natural language" }
+                li { +"For simple binary operators" }
+                li { +"Eliminate '.()' ceremony for more natural language" }
             }
+        }) {
             slideCode {
-                declareClass(name = "Pair") {
+                declareClass(name = "Pair", propsOnSeparateLines = false) {
                     genericTypes = listOf("A", "B")
                     property(modifier = "val", name = "first", type = "A")
                     property(modifier = "val", name = "second", type = "B")
                 }
-            }
-        }) {
-            slideCode {
                 declareFunction(name = "", extentionOf = "A", returnType = "Pair<A, B>") {
                     isInfix = true
                     genericType = "<A, B>"
@@ -130,10 +144,16 @@ fun infixFunction(): DIV.() -> Unit = {
 fun lambdaAsFinalParameter(): DIV.() -> Unit = {
     slideContent {
         splitSlide(leftBlock = {
+            slideList {
+                li { +"Lift final lambda parameter out of ()" }
+                li { +"Make function calls look like built-in language blocks" }
+            }
+        }) {
             slideCode {
                 declareFunction("f") {
                     parameter("lambda", type = "(Int) -> String")
                 }
+                +"\n"
                 declareProperty(modifier = "val", name = "s") {
                     call("f") {
                         argument(name = "lambda") {
@@ -147,9 +167,7 @@ fun lambdaAsFinalParameter(): DIV.() -> Unit = {
                         }
                     }
                 }
-            }
-        }) {
-            slideCode {
+                +"\n\n"
                 declareProperty(modifier = "val", name = "s") {
                     call("f") {
                         lambda {
@@ -168,57 +186,60 @@ fun lambdaAsFinalParameter(): DIV.() -> Unit = {
 
 fun lambdaWithReceiver(): DIV.() -> Unit = {
     slideContent {
-        slideCode {
-            declareFunction("builder", "String", false) {
-                body {
-                    returns {
-                        on({
-                            call("StringBuilder")
-                        }) {
-                            call(name = "append") {
-                                argument {
-                                    string("content")
+        splitSlide({
+            slideList {
+                li { +"lambda that is invoked on an subject" }
+                li { +"like 'apply'" }
+            }
+        }) {
+            slideCode {
+                declareFunction("builder", "String", false) {
+                    body {
+                        returns {
+                            on({
+                                call("StringBuilder")
+                            }) {
+                                call(name = "append") {
+                                    argument { string("content") }
                                 }
+                                call("build")
                             }
-                            call("build")
                         }
                     }
                 }
-            }
-            declareFunction("stringDsl", "String", false) {
-                parameter(name = "receiver", type = "StringBuilder.() -> Unit")
-                body {
+                declareFunction("stringDsl", "String", false) {
+                    parameter(name = "receiver", type = "StringBuilder.() -> Unit")
+                    body {
+                        expression {
+                            on({
+                                call("StringBuilder") {}
+                            }) {
+                                call(name = "apply") {
+                                    extensionFunction()
+                                    argument { +"receiver" }
+                                }
+                                call("build")
+                            }
+                        }
+                    }
+                }
+                declareFunction("dsl", "String", false) {
                     expression {
                         on({
-                            call("StringBuilder") {}
-                        }) {
-                            call(name = "apply") {
-                                extensionFunction()
-                                argument { +"receiver" }
-                            }
-                            call("build")
-                        }
-                    }
-                }
-            }
-            declareFunction("dsl", "String", false) {
-                expression {
-                    on({
-                        call(name = "stringDsl") {
-                            packageFunction()
-                            lambda(inline = false) {
-                                expression {
-                                    on({
-                                        call("append") {
-                                            argument {
-                                                string("content")
+                            call(name = "stringDsl") {
+                                packageFunction()
+                                lambda(inline = false) {
+                                    expression {
+                                        on({
+                                            call("append") {
+                                                argument { string("content") }
                                             }
-                                        }
-                                    })
+                                        })
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }
@@ -228,13 +249,15 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
 fun dslMarker(): DIV.() -> Unit = {
     slideContent {
         splitSlide(leftBlock = {
-            slideCode {
-                keyword("@DslMarker")
-                +"\n"
-                annotationClass("HtmlTagMarker")
+            slideList {
+                li { +"Restricts scope" }
             }
         }) {
-
+            slideCode {
+                annotationClass("HtmlTagMarker") {
+                    annotation("DslMarker")
+                }
+            }
         }
     }
 
@@ -451,3 +474,73 @@ fun staticWebKotlinReuse(): DIV.() -> Unit = {
     }
 }
 
+
+fun backingObjects(): DIV.() -> Unit = {
+    splitSlide({
+        slideList {
+            li { +"For defining discrete objects of the domain" }
+        }
+    }) {
+        slideCode {
+            declareClass(name = "Entry") {
+                annotation("RssDsl")
+                superClass = "SyndEntryImpl"
+                function(name = "content", paramsOnSeparateLines = false) {
+                    parameter(name = "content", type = "String")
+                    body {
+                        assignment(name = "description", format = CODE::variablePropertyName) {
+                            constructor(className = "SyndContentImpl")
+                                    .call(name = "apply") {
+                                        extensionFunction()
+                                        lambda {
+                                            assignment("value") {
+                                                inlineExpression { +"content" }
+                                            }
+                                            assignment("type") {
+                                                inlineExpression { string("text/string") }
+                                            }
+                                        }
+                                    }
+                                    .call("test")
+                        }
+                    }
+                }
+                function(name = "content", paramsOnSeparateLines = false) {
+                    parameter(name = "block", type = "HTML.() -> Unit")
+                    body {
+                        assignment(name = "description", format = CODE::variablePropertyName) {
+                            constructor(className = "SyndContentImpl")
+                                    .call(name = "apply") {
+                                        extensionFunction()
+                                        lambda {
+                                            assignment("value") {
+                                                constructor(className = "StringWriter")
+                                                        .breakAndCall(name = "appendHTML", argsOnDifferentLines = false) {
+                                                            extensionFunction()
+                                                            argument("prettyPrint") {
+                                                                keyword("false")
+                                                            }
+                                                        }
+                                                        .breakAndCall("html") {
+                                                            extensionFunction()
+                                                            lambda {
+                                                                call("apply") {
+                                                                    extensionFunction()
+                                                                    argument { +"block" }
+                                                                }
+                                                            }
+                                                        }
+                                                        .call("toString")
+                                            }
+                                            assignment("type") {
+                                                inlineExpression { string("text/html") }
+                                            }
+                                        }
+                                    }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

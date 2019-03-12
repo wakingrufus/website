@@ -25,15 +25,23 @@ class STATEMENT(val indentation: Int = 0) {
     }
 
     fun inlineExpression(block: CODE.() -> Unit) {
-        body += {block(this)}
+        body += { block(this) }
     }
 
     fun expression(block: EXPRESSION.() -> Unit) {
         body += { EXPRESSION(indentation = this@STATEMENT.indentation).apply(block)(this) }
     }
 
-    fun on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit) {
-        body += { SUBJECT(baseIndentation = this@STATEMENT.indentation, subject = subject).apply(block)(this) }
+    fun constructor(className: String, call: CALL.() -> Unit = {}): SUBJECT {
+        val subject = on(subject = { call(className, block = call) }) {}
+       // body += { subject(this) }
+        return subject
+    }
+
+    fun on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit): SUBJECT {
+        val s = SUBJECT(baseIndentation = this@STATEMENT.indentation, subject = subject).apply(block)
+        body += { s(this) }
+        return s
     }
 
     fun call(name: String, argsOnDifferentLines: Boolean = false, baseIndentation: Int = indentation, call: CALL.() -> Unit = {}) {

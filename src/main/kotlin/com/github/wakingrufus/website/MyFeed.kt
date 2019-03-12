@@ -1,22 +1,18 @@
 package com.github.wakingrufus.website
 
-import com.github.wakingrufus.website.lib.rss.content
-import com.github.wakingrufus.website.lib.rss.entries
-import com.github.wakingrufus.website.lib.rss.entry
-import com.github.wakingrufus.website.lib.rss.rss
-import com.rometools.rome.feed.synd.SyndCategory
-import com.rometools.rome.feed.synd.SyndCategoryImpl
+import com.github.wakingrufus.website.lib.rss.*
 import com.rometools.rome.feed.synd.SyndFeed
 import kotlinx.html.body
 import kotlinx.html.div
 import java.time.*
 import java.util.*
 
-val siteUpdates: SyndCategory = SyndCategoryImpl().apply {
+val siteUpdates = rssCategory {
     name = "site-updates"
     taxonomyUri = Paths.SITE_UPDATES_RSS_PATH
 }
-val article: SyndCategory = SyndCategoryImpl().apply {
+
+val article = rssCategory {
     name = "article"
     taxonomyUri = Paths.RSS_PATH
 }

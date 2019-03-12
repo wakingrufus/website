@@ -6,14 +6,19 @@ import kotlinx.html.HtmlTagMarker
 @HtmlTagMarker
 class CLASS(val modifiers: List<String> = emptyList(),
             val name: String,
-            val superClass: String? = null,
             val propsOnSeparateLines: Boolean = true) {
     // TODO: class annotations
+    private var annotation: String? = null
+    var superClass: String? = null
     var constructorProperties: List<PROPERTY> = ArrayList()
     var properties: List<PROPERTY> = ArrayList()
-    var functions: List<FUNCTION> = ArrayList()
+    private var functions: List<FUNCTION> = ArrayList()
     var companionObject: (CODE.() -> Unit)? = null
     var genericTypes: List<String> = ArrayList()
+
+    fun annotation(annotation: String){
+        this.annotation = annotation
+    }
 
     fun value(name: String, type: String, inConstructor: Boolean = true, valueBlock: (CODE.() -> Unit)? = null) {
         property(modifier = "val", name = name, type = type, inConstructor = inConstructor, valueBlock = valueBlock)
@@ -52,29 +57,32 @@ class CLASS(val modifiers: List<String> = emptyList(),
     operator fun invoke(code: CODE) {
         this.let {
             code.apply {
+                it.annotation?.let{
+                    keyword("@$it")
+                    +"\n"
+                }
                 it.modifiers.plus("class").forEach {
                     keyword("$it ")
                 }
                 +it.name
-                if(this@CLASS.genericTypes.isNotEmpty()){
+                if(it.genericTypes.isNotEmpty()){
                     +"<"
-                    +this@CLASS.genericTypes.joinToString(", ")
+                    +it.genericTypes.joinToString(", ")
                     +">"
                 }
                 +"("
-                it.constructorProperties.forEach {
-                    if (this@CLASS.propsOnSeparateLines) {
+                it.constructorProperties.forEach {prop ->
+                    if (it.propsOnSeparateLines) {
                         +"\n"
                         indent(2)
                     } else {
                         +" "
                     }
-                    it(this)
+                    prop(this)
                 }
                 +") "
                 it.superClass?.let {
-                    +": "
-                    +it
+                    +": $it() "
                 }
 
                 if (it.companionObject != null || it.functions.isNotEmpty() || it.properties.isNotEmpty()) {

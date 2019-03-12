@@ -12,7 +12,7 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
              argsOnDifferentLines: Boolean = false,
              baseIndentation: Int = this@SUBJECT.baseIndentation,
              nullSafe: Boolean = false,
-             block: CALL.() -> Unit = {}) {
+             block: CALL.() -> Unit = {}) : SUBJECT {
         calls += {
             val call = CALL(name = name, argsOnDifferentLines = argsOnDifferentLines, baseIndentation = baseIndentation)
                     .apply(block)
@@ -26,6 +26,7 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
             }
             call(this)
         }
+        return this
     }
 
     fun callInvoke(block: CALL.() -> Unit = {}) {
@@ -69,7 +70,7 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
     fun breakAndCall(name: String,
                      argsOnDifferentLines: Boolean = true,
                      nullSafe: Boolean = false,
-                     block: CALL.() -> Unit) {
+                     block: CALL.() -> Unit) : SUBJECT {
         calls += {
             +"\n"
             indent(this@SUBJECT.baseIndentation + 2)
@@ -82,6 +83,7 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
                     baseIndentation = this@SUBJECT.baseIndentation + 2)
                     .apply(block)(this)
         }
+        return this
     }
 
     operator fun invoke(code: CODE) {
