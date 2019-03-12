@@ -9,6 +9,7 @@ import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.TextDecorationLine
 import kotlinx.html.*
 
+@HtmlTagMarker
 fun DIV.sampleCode(block: CODE.() -> Unit) {
     return pre {
         code {
@@ -59,10 +60,12 @@ fun CODE.number(value: Number) {
     }
 }
 
+@HtmlTagMarker
 fun CODE.block(indentation: Int = 0, inline: Boolean = false, code: BLOCK.() -> Unit) {
     BLOCK(indentation = indentation, inline = inline).apply(code)(this)
 }
 
+@HtmlTagMarker
 fun CODE.call(name: String,
               argsOnDifferentLines: Boolean = false,
               baseIndentation: Int = 0,
@@ -75,6 +78,7 @@ fun CODE.call(name: String,
     }
 }
 
+@HtmlTagMarker
 fun CODE.constructor(name: String,
                      argsOnDifferentLines: Boolean = false,
                      baseIndentation: Int = 0,
@@ -85,6 +89,7 @@ fun CODE.constructor(name: String,
     }
 }
 
+@HtmlTagMarker
 fun CODE.on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit = {}) {
     SUBJECT(subject = subject).apply(block)(this)
 }
@@ -120,7 +125,7 @@ fun CODE.variablePropertyName(text: String) {
     }
 }
 
-fun CODE.comment(text: String) {
+fun CODE.commentLine(text: String) {
     return span {
         style = css {
             color = Color("#808080")
@@ -130,6 +135,7 @@ fun CODE.comment(text: String) {
     }
 }
 
+@HtmlTagMarker
 fun CODE.declareClass(modifiers: List<String> = emptyList(),
                       name: String,
                       propsOnSeparateLines: Boolean = true,
@@ -138,6 +144,7 @@ fun CODE.declareClass(modifiers: List<String> = emptyList(),
             .apply(block)(this)
 }
 
+@HtmlTagMarker
 fun CODE.dataClass(name: String,
                    propsOnSeparateLines: Boolean = true,
                    block: CLASS.() -> Unit = {}) {
@@ -147,6 +154,7 @@ fun CODE.dataClass(name: String,
     }
 }
 
+@HtmlTagMarker
 fun CODE.annotationClass(name: String,
                          propsOnSeparateLines: Boolean = true,
                          block: CLASS.() -> Unit = {}) {
@@ -156,6 +164,7 @@ fun CODE.annotationClass(name: String,
     }
 }
 
+@HtmlTagMarker
 fun CODE.declareFunction(name: String,
                          returnType: String? = null,
                          argsOnSeparateLines: Boolean = false,
@@ -174,6 +183,7 @@ fun CODE.declareFunction(name: String,
 }
 
 //TODO: fix this up to create the block for you and use EXPRESSION instead of CODE
+@HtmlTagMarker
 fun CODE.declareFunctionExpression(name: String,
                                    returnType: String? = null,
                                    argsOnSeparateLines: Boolean = true,
@@ -206,6 +216,7 @@ fun CODE.scope(text: String) {
     }
 }
 
+@HtmlTagMarker
 fun CODE.declareProperty(modifier: String? = null, name: String, type: String? = null, value: (CODE.() -> Unit)? = null) {
     PROPERTY(modifier = modifier, name = name, type = type)
             .apply { value?.let { value(it) } }
@@ -214,80 +225,4 @@ fun CODE.declareProperty(modifier: String? = null, name: String, type: String? =
 
 fun CODE.indent(level: Int) {
     +"  ".repeat(level)
-}
-
-
-/**
- * raw kotlin formatting
- */
-
-val keywords = listOf("var", "val", "return", "fun")
-
-fun CODE.kotlinLine(line: String) {
-    if (line.trimStart().startsWith("fun ")) {
-        line.trimStart().removePrefix("fun ").let {
-            keyword("fun ")
-            it.substringBefore("{").substringBefore("(").let { functionName ->
-                functionName(functionName)
-                it.removePrefix(functionName).let {
-                    if (it.startsWith("(")) {
-                        functionParams(it.substringAfter("(").substringBefore(")"))
-                    }
-                    +it.substringAfter(")")
-                }
-
-            }
-
-        }
-    } else if (line.trimStart().startsWith("val")) {
-        line.trimStart().removePrefix("val ").let {
-            keyword("val ")
-
-        }
-    }
-//                line.split(" ").map {
-//                    if (keywords.contains(it)) keyword(it) else +it
-//                }
-    +"\n"
-}
-
-fun CODE.functionParams(params: String) {
-    +"("
-    if (params.length > 80) {
-        +"\n"
-        +" ".repeat(4)
-    }
-    +params
-    if (params.length > 80) {
-        +"\n"
-    }
-    +")"
-}
-
-fun CODE.functionBody(body: String) {
-    +"{\n"
-
-    +"}"
-}
-
-fun CODE.rawKotlin(raw: String) {
-    if (raw.contains("fun ")) {
-        rawKotlin(raw.substringBefore("fun "))
-        keyword("fun ")
-        rawKotlin(raw.substringAfter("fun "))
-    } else {
-        +raw
-    }
-}
-
-fun DIV.kotlin(code: String) {
-    return pre {
-        code {
-            style = css {
-                fontSize = 1.2.em
-                fontWeight = FontWeight.bold
-            }
-            rawKotlin(code)
-        }
-    }
 }

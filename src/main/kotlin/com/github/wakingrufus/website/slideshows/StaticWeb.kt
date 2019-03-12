@@ -29,6 +29,7 @@ fun staticWebSlideshow(): Website.() -> Unit = {
         slide(title = "CSS DSL", block = staticWebKotlinCss())
         slide(title = "Code Reuse", block = staticWebKotlinReuse())
         slide(title = "Backing objects", block = backingObjects())
+        slide(title = "Go forth and DSL All the Things", block = theEnd())
     }
 }
 
@@ -251,16 +252,114 @@ fun dslMarker(): DIV.() -> Unit = {
         splitSlide(leftBlock = {
             slideList {
                 li { +"Restricts scope" }
+                this@splitSlide.slideCode {
+                    annotationClass("MyDsl") {
+                        annotation("DslMarker")
+                    }
+                }
             }
         }) {
             slideCode {
-                annotationClass("HtmlTagMarker") {
-                    annotation("DslMarker")
+                declareFunction(name = "c1", returnType = "Class1") {
+                    parameter(name = "a1", type = "Class1.() -> Unit")
+                    body {
+                        returns {
+                            inline {
+                                on({ +"Class1" }) {
+                                    callInvoke().call(name = "apply") {
+                                        extensionFunction()
+                                        argument(value = { +"a1" })
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                +"\n"
+                declareClass(name = "Class1") {
+                    annotation("MyDsl")
+                    property(modifier = "var", name = "a2", type = "Class2?") {
+                        keyword("null")
+                    }
+                    property(modifier = "var", name = "prop1", type = "String?") {
+                        keyword("null")
+                    }
+                    function(name = "c2", paramsOnSeparateLines = false) {
+                        parameter(name = "c2", type = "Class2.() -> Unit")
+                        body {
+                            assignment(name = "a2", format = CODE::variablePropertyName) {
+                                expression {
+                                    on({ +"Class2" }) {
+                                        callInvoke().call(name = "apply") {
+                                            extensionFunction()
+                                            argument(value = { +"a2" })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                declareClass(name = "Class2", propsOnSeparateLines = false) {
+                    annotation("MyDsl")
+                    property(modifier = "var", name = "prop2", type = "String?") {
+                        keyword("null")
+                    }
+                }
+                call(name = "c1") {
+                    lambda {
+                        call(name = "c2") {
+                            lambda {
+                                assignment(name = "prop2", format = CODE::variablePropertyName) {
+                                    inlineExpression { string("value") }
+                                }
+                                //TODO: refactor
+                                statement {
+                                    on({
+                                        keyword("this")
+                                        scope("@c1")
+                                    }) {
+                                        property("prop1")
+                                    }
+                                    inlineExpression {
+                                        +" = "
+                                        string("value")
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
+}
+
+
+@DslMarker
+annotation class MyDsl
+
+fun c1(a1: Class1.() -> Unit): Class1 {
+    return Class1().apply(a1)
+}
+
+@MyDsl
+class Class1(var prop1: String? = null) {
+    private var a2: Class2? = null
+    fun c2(c2: Class2.() -> Unit) {
+        a2 = Class2().apply(c2)
+    }
+}
+
+@MyDsl
+class Class2(var prop2: String? = null)
+
+val a = c1 {
+    c2 {
+        prop2 = "value"
+        this@c1.prop1 = "value"
+    }
 }
 
 
@@ -540,6 +639,27 @@ fun backingObjects(): DIV.() -> Unit = {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+
+fun theEnd(): DIV.() -> Unit = {
+    slideContent {
+        splitSlide(leftBlock = {
+            slidePicture("x-all-the-things.jpg", alt = "All the things!") {
+            }
+        }) {
+            slideList {
+                li { +"HTML" }
+                li { +"CSS" }
+                li { +"Android Views" }
+                li { +"JavaFx (TornadoFx)" }
+                li { +"Recipes" }
+                li { +"Slideshows" }
+                li { +"Blog" }
+                li { +"What ideas can you think of?" }
             }
         }
     }

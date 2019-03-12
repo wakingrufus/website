@@ -578,9 +578,8 @@ fun dslExtension(): DIV.() -> Unit = {
 }
 
 fun rolodexDslClass(): CODE.() -> Unit = {
-    keyword("@HtmlTagMarker")
-    +"\n"
     declareClass(name = "ROLODEX") {
+        annotation("HtmlTagMarker")
         variable(inConstructor = false, name = "contactList", type = "List<CONTACT>") {
             call(name = "listOf")
         }
@@ -731,9 +730,8 @@ fun rolodexDslClass(): CODE.() -> Unit = {
 }
 
 fun contactDslClass(): CODE.() -> Unit = {
-    keyword("@HtmlTagMarker")
-    +"\n"
     declareClass(name = "CONTACT") {
+        annotation("HtmlTagMarker")
         variable(inConstructor = false, name = "picture", type = "String") { string("") }
         variable(inConstructor = false, name = "name", type = "String") { string("") }
         variable(inConstructor = false, name = "email", type = "String") { string("") }

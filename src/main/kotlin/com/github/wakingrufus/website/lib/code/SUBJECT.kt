@@ -29,11 +29,18 @@ class SUBJECT(val baseIndentation: Int = 0, val subject: CODE.() -> Unit) {
         return this
     }
 
-    fun callInvoke(block: CALL.() -> Unit = {}) {
+    fun assignment(name: String,assignment: ASSIGNMENT.() ->Unit){
+        calls += {
+            ASSIGNMENT(name = name).apply(assignment)(this)
+        }
+    }
+
+    fun callInvoke(block: CALL.() -> Unit = {}): SUBJECT {
         calls += {
             CALL(name = "", argsOnDifferentLines = false, baseIndentation = this@SUBJECT.baseIndentation)
                     .apply(block)(this)
         }
+        return this
     }
 
     fun property(name: String, nullSafe: Boolean = false) {
