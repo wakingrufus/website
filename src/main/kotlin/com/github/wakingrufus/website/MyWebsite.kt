@@ -106,13 +106,14 @@ fun development(): HTML.() -> Unit = {
         link(href = Paths.CSS_PATH, rel = "stylesheet")
     }
     body {
-        pageTitle("mastodon-jfx")
+        pageTitle("Software Development")
         sideNav()
         content {
             p { +"This page contains a collection of various articles and presentations about software development I have authored." }
             h3 { +"Static Web development and Kotlin DSLs" }
             p { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Article" } }
             p { a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+            p { a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Video" } }
             h3 { +"Functional Kotlin" }
             p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
             h3 { +"Software Development Antipatterns" }

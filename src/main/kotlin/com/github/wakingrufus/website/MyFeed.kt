@@ -96,6 +96,19 @@ val allEntries = entries {
         ).toInstant())
         content("I have a new page where I collect recipes using my new recipe DSL")
     }
+    entry {
+        title = "DSL talk video"
+        author = "wakingrufus"
+        categories = listOf(siteUpdates)
+        link = "https://wakingrufus.neocities.org/" + Paths.DEVELOPMENT_PATH
+        publishedDate = Date.from(ZonedDateTime.of(
+                LocalDate.of(2019, Month.MARCH, 14),
+                LocalTime.of(9, 0, 0),
+                ZoneOffset.ofHours(-5)
+        ).toInstant())
+        content("Happy π Day! I gave a talk about DSLs in Kotlin at the Chicago Kotlin User Group. " +
+                "I added a link to the video on archive.org on my development page")
+    }
 }
 
 fun siteUpdateFeed(): SyndFeed = rss {

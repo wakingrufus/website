@@ -28,7 +28,13 @@ fun staticWebSlideshow(): Website.() -> Unit = {
         slide(title = "HTML DSL", block = staticWebKotlinHtml())
         slide(title = "CSS DSL", block = staticWebKotlinCss())
         slide(title = "Code Reuse", block = staticWebKotlinReuse())
-        slide(title = "Backing objects", block = backingObjects())
+  //      slide("Custom DSL: Vision") {}
+    //    slide("Custom DSL: Before DSL") {}
+        slide(title = "Custom DSL: Backing objects", block = backingObjects())
+      //  slide("Custom DSL: Top Level Functions") {}
+      //  slide("Custom DSL: HTML interpreter") {}
+      //  slide("Custom DSL: Usage") {}
+      //  slide("Custom DSL: Final output") {}
         slide(title = "Go forth and DSL All the Things", block = theEnd())
     }
 }
@@ -105,36 +111,33 @@ fun staticWebGenerators(): DIV.() -> Unit = {
 
 fun infixFunction(): DIV.() -> Unit = {
     slideContent {
-        splitSlide(leftBlock = {
-            slideList {
-                li { +"For simple binary operators" }
-                li { +"Eliminate '.()' ceremony for more natural language" }
+        slideList {
+            li { +"For simple binary operators" }
+            li { +"Eliminate '.()' ceremony for more natural language" }
+        }
+        slideCode {
+            declareClass(name = "Pair", propsOnSeparateLines = false) {
+                genericTypes = listOf("A", "B")
+                property(modifier = "val", name = "first", type = "A")
+                property(modifier = "val", name = "second", type = "B")
             }
-        }) {
-            slideCode {
-                declareClass(name = "Pair", propsOnSeparateLines = false) {
-                    genericTypes = listOf("A", "B")
-                    property(modifier = "val", name = "first", type = "A")
-                    property(modifier = "val", name = "second", type = "B")
-                }
-                declareFunction(name = "", extentionOf = "A", returnType = "Pair<A, B>") {
-                    isInfix = true
-                    genericType = "<A, B>"
-                    parameter("that", "B")
-                    expression {
-                        call("Pair") {
-                            argument { keyword("this") }
-                            argument { +"that" }
-                        }
+            declareFunction(name = "to", extentionOf = "A", returnType = "Pair<A, B>") {
+                isInfix = true
+                genericType = "<A, B>"
+                parameter("that", "B")
+                expression {
+                    call("Pair") {
+                        argument { keyword("this") }
+                        argument { +"that" }
                     }
                 }
-                declareProperty(modifier = "val", name = "pair", type = "Pair<String, String>") {
-                    on({ string("") }) {
-                        call("to") {
-                            extensionFunction()
-                            infix()
-                            argument { string("") }
-                        }
+            }
+            declareProperty(modifier = "val", name = "pair", type = "Pair<String, String>") {
+                on({ string("") }) {
+                    call("to") {
+                        extensionFunction()
+                        infix()
+                        argument { string("") }
                     }
                 }
             }
