@@ -3,7 +3,10 @@ package com.github.wakingrufus.website.lib
 import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.lib.slides.Slideshow
 import com.rometools.rome.feed.synd.SyndFeed
-import kotlinx.css.*
+import kotlinx.css.CSSBuilder
+import kotlinx.css.ListStyleType
+import kotlinx.css.TextAlign
+import kotlinx.css.VerticalAlign
 import kotlinx.html.*
 import mu.KLogging
 import java.io.File
@@ -27,7 +30,11 @@ class Website(private val baseDir: File) {
     }
 
     fun htmlPage(path: String, builder: HTML.() -> Unit) {
-        htmlFiles += HtmlPage(path, builder)
+        htmlFiles += HtmlPage(path).apply { this.builder(builder) }
+    }
+
+    fun page(path: String, pageBuilder: HtmlPage.() -> Unit) {
+        htmlFiles += HtmlPage(path).apply (pageBuilder)
     }
 
     fun rssFeed(rssDir: String = "rss", path: String, feedContents: SyndFeed) {

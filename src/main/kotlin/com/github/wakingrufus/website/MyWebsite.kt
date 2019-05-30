@@ -1,19 +1,28 @@
 package com.github.wakingrufus.website
 
+import com.github.wakingrufus.website.articles.failAgile
 import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.cooking.chickPeaCurry
 import com.github.wakingrufus.website.cooking.recipeIndex
 import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.cooking.Recipe
 import com.github.wakingrufus.website.lib.cooking.html
+import com.github.wakingrufus.website.projects.filedb
+import com.github.wakingrufus.website.projects.libElo
+import com.github.wakingrufus.website.projects.mastodonJfx
+import com.github.wakingrufus.website.projects.tourney
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
+import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
 import kotlinx.html.*
 import java.io.File
 
 object Paths {
     val INDEX_PATH = "index.html"
     val MASTODON_JFX_PATH = "mastodon-jfx.html"
+    val LIBELO_PATH = "lib-elo.html"
+    val TOURNEY_PATH = "tourney.html"
+    val FILEDB_PATH = "filedb.html"
     val ANTIPATTERNS_PATH = "antipatterns.html"
     val STATIC_WEB_ARTICLE_PATH = "staticwebarticle.html"
     val CSS_PATH = "styles.css"
@@ -24,14 +33,24 @@ object Paths {
     val FEEDS_PAGE = "feeds.html"
     val RECIPE_PAGE = "recipes.html"
     val STATIC_WEB_SLIDESHOW_BASE_NAME = "static-web"
+    val FAIL_AGILE_SLIDESHOW_BASE_NAME = "fail-agile"
     val TRAVEL_PATH = "travel.html"
     val DEVELOPMENT_PATH = "development.html"
+    val FAIL_AGILE_BLOG = "fail-agile.html"
 }
 
 fun BODY.sideNav() {
     sideNavBar {
         li { a(href = Paths.INDEX_PATH) { +"Home" } }
-        li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
+        li {
+            +"Projects"
+            ul {
+                li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
+                li { a(href = Paths.TOURNEY_PATH) { +"Tourney" } }
+                li { a(href = Paths.LIBELO_PATH) { +"lib-elo" } }
+                li { a(href = Paths.FILEDB_PATH) { +"filedb" } }
+            }
+        }
         li { a(href = Paths.DEVELOPMENT_PATH) { +"Development" } }
         li { a(href = Paths.TRAVEL_PATH) { +"Travel Guide" } }
         li { a(href = Paths.RECIPE_PAGE) { +"Recipes" } }
@@ -46,13 +65,17 @@ class MyWebsite {
         return website(baseDir) {
             cssFile(path = Paths.CSS_PATH, cssString = MyStyles().styles())
             htmlPage(path = Paths.INDEX_PATH, builder = mainPage())
-            htmlPage(path = Paths.MASTODON_JFX_PATH, builder = mastodonJfx())
+            htmlPage(path = Paths.MASTODON_JFX_PATH, builder = mastodonJfx)
+            htmlPage(path = Paths.FILEDB_PATH, builder = filedb)
+            htmlPage(path = Paths.TOURNEY_PATH, builder = tourney)
+            htmlPage(path = Paths.LIBELO_PATH, builder = libElo)
             htmlPage(path = Paths.FEEDS_PAGE, builder = feeds())
             htmlPage(path = Paths.ANTIPATTERNS_PATH, builder = antipatterns())
             htmlPage(path = Paths.STATIC_WEB_ARTICLE_PATH, builder = staticweb())
             htmlPage(path = Paths.TRAVEL_PATH, builder = travel())
             htmlPage(path = Paths.RECIPE_PAGE, builder = recipeIndex())
             htmlPage(path = Paths.DEVELOPMENT_PATH, builder = development())
+            page(Paths.FAIL_AGILE_BLOG, failAgile)
             allRecipes.forEach {
                 htmlPage(it.name.replace(" ", "") + ".html", it.invoke().recipePage())
             }
@@ -60,6 +83,7 @@ class MyWebsite {
             //    rssFeed(path = Paths.SITE_UPDATES_RSS_PATH, feedContents = siteUpdateFeed())
             apply(functionalKotlinSlideshow())
             apply(staticWebSlideshow())
+            apply(whyDoesAgileFail())
         }
     }
 }
@@ -118,26 +142,6 @@ fun development(): HTML.() -> Unit = {
             p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
             h3 { +"Software Development Antipatterns" }
             p { a(href = Paths.ANTIPATTERNS_PATH + "#refactoring") { +"Refactoring" } }
-        }
-    }
-}
-
-fun mastodonJfx(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("mastodon-jfx")
-        sideNav()
-        content {
-
-            div {
-                p {
-                    +"mastodon-jfx is kotlin client for mastodon. See more at "
-                    a(href = "https://github.com/wakingrufus/mastodon-jfx") { +"GitHub" }
-                    +"."
-                }
-            }
         }
     }
 }

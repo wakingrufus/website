@@ -19,13 +19,18 @@ class Slideshow(val baseDir: File,
             File(baseDir, "$index.html").apply {
                 logger.info("creating file: " + this.canonicalPath)
                 writeHtmlPage(FileWriter(this),
-                        slide.template(rootCss.path, slide.title, slide.subTitle, index, slides.size, slide.content))
+                        slide.template(rootCss.path, slide.title
+                                ?: "", slide.subTitle, index, slides.size, slide.content))
             }
         }.plus(
                 File(baseDir, rootCss.path).apply {
                     rootCss.write(FileWriter(this))
                 }
         )
+    }
+
+    fun slide(config: SLIDE.() -> Unit) {
+        slides += SLIDE()(config)
     }
 
     fun slide(title: String, subTitle: String? = null, block: DIV.() -> Unit) {
