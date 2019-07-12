@@ -1,10 +1,10 @@
 package com.github.wakingrufus.website
 
-import com.github.wakingrufus.website.articles.failAgile
 import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.cooking.chickPeaCurry
 import com.github.wakingrufus.website.cooking.recipeIndex
 import com.github.wakingrufus.website.lib.*
+import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.Recipe
 import com.github.wakingrufus.website.lib.cooking.html
 import com.github.wakingrufus.website.projects.filedb
@@ -75,10 +75,17 @@ class MyWebsite {
             htmlPage(path = Paths.TRAVEL_PATH, builder = travel())
             htmlPage(path = Paths.RECIPE_PAGE, builder = recipeIndex())
             htmlPage(path = Paths.DEVELOPMENT_PATH, builder = development())
-            page(Paths.FAIL_AGILE_BLOG, failAgile)
+            page(path = Paths.FAIL_AGILE_BLOG) {
+                article("Why Does Agile Fail?") {
+                    nav { this.sideNav() }
+                    markdownContent(source = "fail-agile.md")
+                }
+            }
+
             allRecipes.forEach {
                 htmlPage(it.name.replace(" ", "") + ".html", it.invoke().recipePage())
             }
+
             rssFeed(path = Paths.RSS_PATH, feedContents = feed())
             //    rssFeed(path = Paths.SITE_UPDATES_RSS_PATH, feedContents = siteUpdateFeed())
             apply(functionalKotlinSlideshow())
@@ -142,6 +149,8 @@ fun development(): HTML.() -> Unit = {
             p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
             h3 { +"Software Development Antipatterns" }
             p { a(href = Paths.ANTIPATTERNS_PATH + "#refactoring") { +"Refactoring" } }
+//            h3 { +"Fail Agile" }
+//            p { a(href = Paths.FAIL_AGILE_BLOG) { +"Article" } }
         }
     }
 }

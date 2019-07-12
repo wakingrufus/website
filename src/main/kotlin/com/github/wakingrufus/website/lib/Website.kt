@@ -3,6 +3,8 @@ package com.github.wakingrufus.website.lib
 import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.lib.slides.Slideshow
 import com.rometools.rome.feed.synd.SyndFeed
+import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.css.CSSBuilder
 import kotlinx.css.ListStyleType
 import kotlinx.css.TextAlign
@@ -34,7 +36,7 @@ class Website(private val baseDir: File) {
     }
 
     fun page(path: String, pageBuilder: HtmlPage.() -> Unit) {
-        htmlFiles += HtmlPage(path).apply (pageBuilder)
+        htmlFiles += HtmlPage(path).apply(pageBuilder)
     }
 
     fun rssFeed(rssDir: String = "rss", path: String, feedContents: SyndFeed) {
@@ -92,6 +94,13 @@ fun BODY.content(block: DIV.() -> Unit) {
     return div {
         classes = setOf("page-content")
         block(this)
+    }
+}
+
+fun BODY.markdownContent(markdown: String, options: MutableDataSet = MutableDataSet()) {
+    return div {
+        classes = setOf("page-content")
+        this.unsafe { raw(HtmlRenderer.builder(options).build().render(com.vladsch.flexmark.parser.Parser.builder(options).build().parse(markdown))) }
     }
 }
 

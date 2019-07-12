@@ -1,16 +1,15 @@
 package com.github.wakingrufus.website.lib.article
 
 import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.HtmlPage
-import com.github.wakingrufus.website.lib.WebsiteDsl
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.lib.*
 import kotlinx.html.*
+import java.nio.charset.Charset
 
 @WebsiteDsl
 class ARTICLE(val title: String) {
     private var nav: BODY.() -> Unit = {}
     private var content: DIV.() -> Unit = {}
+    private var source: String? = null
 
     fun nav(nav: BODY.() -> Unit) {
         this.nav = nav
@@ -18,6 +17,10 @@ class ARTICLE(val title: String) {
 
     fun content(block: DIV.() -> Unit) {
         content = block
+    }
+
+    fun markdownContent(source: String) {
+        this.source = source
     }
 
     operator fun invoke(page: HTML) {
@@ -28,7 +31,11 @@ class ARTICLE(val title: String) {
             body {
                 pageTitle(this@ARTICLE.title)
                 this@ARTICLE.nav(this)
-                content(this@ARTICLE.content)
+                if (this@ARTICLE.source != null) {
+                    this@body.markdownContent(this::class.java.classLoader.getResourceAsStream(this@ARTICLE.source).readBytes().toString(Charset.defaultCharset()))
+                } else {
+                    content(this@ARTICLE.content)
+                }
             }
         }
     }
