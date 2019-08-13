@@ -47,11 +47,25 @@ In order to explain how agile principles should transform the way businesses sho
 
 ## Criticisms of Agile
 
-Like in the time of waterfall, most developers naturally sense that something is still very wrong in they way we are running software projects. The discussion about the failures of Agile has been far-reaching, but some of the Manifesto signatories have termed phrases such as "Dark Agile" or "Flaccid Agile" to describe attempted implementations of Agile which fail to live up to the ideals of the manifesto. Most analyses of Agile failure ultimately trace the failure back to a lack of buy-in. It is universally recognized that agile only works if you have buy-in across the entire organization, all the way to the top. This level of buy-in is almost never achieved, and this is usually what is blamed for the failings of Agile. Common wisdom amongst agile proponents attribute the lack of buy-in to the fact that management just don't truly understand agile, or they fail to internalize it. But the reason may actually be that management _does_ understand what it is, and rejects it outright. At the same time, developers mis-understand it, and therefore don't grasp why management refuses to buy in. So to understand what is really going on, we need to examine what the manifesto is addressing, and what it is *failing* to address in its critique of waterfall/taylorism.
+Like in the time of waterfall, most developers naturally sense that something is still very wrong in they way we are running software projects. The discussion about the failures of Agile has been far-reaching, but some of the Manifesto signatories have termed phrases such as "Dark Agile" or "Flaccid Agile" to describe attempted implementations of Agile which fail to live up to the ideals of the manifesto. Most analyses of Agile failure ultimately trace the failure back to a lack of buy-in. It is universally recognized that agile only works if you have buy-in across the entire organization, all the way to the top. This level of buy-in is almost never achieved, and this is usually what is blamed for the failings of Agile. 
 
-### Autonomy
-One of the main tenets of the manifesto is "Individuals and interactions over processes and tools". Because of this, any concrete framework, such as SCRUM, is inherently NOT agile. This statement is actually addressing autonomy in the workplace.
-If you place trust in your people, and give them the autonomy to execute on what they judge is best, you don't need strict processes and limiting tools to direct the work.
+
+
+Common wisdom amongst agile proponents attribute the lack of buy-in to the fact that management just don't truly understand agile, or they fail to internalize it. But the reason may actually be that management _does_ understand what it is, and rejects it outright. At the same time, developers mis-understand it, and therefore don't grasp why management refuses to buy in. So to understand what is really going on, we need to examine what the manifesto is addressing, and what it is *failing* to address in its critique of waterfall/taylorism.
+
+### Autonomy / Hierarchy
+
+> The best architectures, requirements, and designs emerge from self organizing teams
+
+One of the main tenets of the manifesto is "Individuals and interactions over processes and tools". Because of this, any concrete framework, such as SCRUM, is inherently NOT agile. Proponents of agile contend that the only to adapt to rapidly changing business conditions and requirements is to also be flexible in your process. They also recommend that finding motivated people and supporting them is a better approach than building a reproducible process. This statement is addressing autonomy in the workplace, and is directly opposed to Taylorism. If you place trust in your people, and give them the autonomy to execute on what they judge is best, you don't need strict processes and limiting tools to direct the work. 
+
+Despite this, management is still highly resistant to these ideas. Taylorism is still rooted very deeply in the mindset of people making up the managerial class. Risk averse companies will never want to place trust in individual people, or even teams, no matter how beneficial it can be.  While many companies will pay lip service to these ideas when trying to "do agile", they just can't help but put in top-down processes which determine how work is done. 
+
+The Agile Manifesto is intentionally vague on how these goals should be achieved, which is what leaves the opening for antithetical frameworks such as SCRUM and SAFe to offer answers to manange a growing organization, in a way that leaves existing management structures in tact.
+
+However, there is actually research into more concrete ways to achieve autonomy, and show the benefits of it. The best case is the Viable System Model (VSM) developed by Stafford Beer. The VSM states that as your organization becomes more complex, your  process will become inherently more complex. the only way to escape this is to build autonomous teams which perform the valuable work, and only report on what they are doing up to a meta-coordination function. 
+
+Underpinning these ideas in the VSM is the "Law of Requisite Variety". This principle states that in order to be a sustaining organization, you must maintain a equilibrium in variety. This means that if you allow for no freedom to try things differently to your teams, your organization will not be able to adjut to changing environmental conditions. If you allow too much variety, chaos will prevent you from moving forward. In order to maintain the control risk-adverse, hierarchal organizations require, companies will settle on a certain standard that will eventually fall on the rigid side of this equilibrium. Even moving the goal posts toward variety following best practices of something like SCRUM, you will still fall on the side of rigidity some of the time, as the point of equilibrium is always changing. The only way to stay at equilibrium is to give real autonomy to your value-producing teams, and support them with the information to know when to take more or less risks, but do not proscibe their actions beyond that.
 
 - customer collaboration over contract negotiation
 - business people and developers must work together daily throught the project"
@@ -60,11 +74,9 @@ If you place trust in your people, and give them the autonomy to execute on what
 - formalized in VSM, a non-taylorist management model
 
 ### Relationships
-the most efficient and effective method of conveying information to and within a development team is face to face conversation
+>  The most efficient and effective method of conveying information to and within a development team is face to face conversation
 
 
-### Hierarchy
-the best architectures, requirements, and designs emerge from self organizing teams
 
 ### Planning
 
@@ -80,30 +92,41 @@ The Manifesto has these principles to offer when thinking about how to plan a pr
 
 In other words, throw away your Gannt charts and roadmaps. Instead, delivery high value products continuously.
 
-In SCRUM, these principles are applied with the idea of Sprints. Each iteration (short, 1-2 weeks), work with the business to identify the most important things to do. Delivery them quickly, then repeat. This is an area where management will explicitly reject the agile principles. Most companies require longer term road maps with time estimates. Many even demand estimates on each individual ticket. In order to underscore how un-agile this is, the #noestimates movement has arisen, which highlights the fact that time spend estimating issues is, at best, not worth it, and at worst, counter-productive.  I personally have used JIRA ticket data (in the ten-thousands) to show that velocity projections would have been more accurate if every ticket was weighted the same rather than given a story point value. This was true for five out of the five times I calculated it for. But no matter how much you show that estimates are in accurate, and that the time spent on them is wasted, management will never accept eliminating them, because at the end of the day, they are still committed to Taylorism, and not willing to give up on this level of control over the workers.
+In SCRUM, these principles are applied with the idea of Sprints. Each iteration (short, 1-2 weeks), work with the business to identify the most important things to do. Delivery them quickly, then repeat. This is an area where management will explicitly reject the agile principles. Most companies require longer term road maps with time estimates. Many even demand estimates on each individual ticket. In order to underscore how un-agile this is, the #noestimates movement has arisen, which highlights the fact that time spent estimating issues is, at best, not worth it, and at worst, counter-productive.  I personally have used JIRA ticket data (in the ten-thousands) to show that velocity projections would have been more accurate if every ticket was weighted the same rather than given a story point value. This was true for five out of the five times I calculated it for. But no matter how much you show that estimates are in accurate, and that the time spent on them is wasted, management will never accept eliminating them, because at the end of the day, they are still committed to Taylorism, and not willing to give up on this level of control over the workers.
 
 ### Pace
 
 > Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant pace indefinitely.
 
-he agile manifesto advocates for a steady, sustainable work pace.
-It sells this idea on the principle that if you overwork developers, their output will be of a worse quality, and turnover will be high.
-Of course, this principle also offers protection to developers from miserable working conditions such as crunch time.
+The agile manifesto advocates for a steady, sustainable work pace. It sells this idea on the principle that if you overwork developers, their output will be of a worse quality, and turnover will be high. Of course, this principle also offers protection to developers from miserable working conditions such as crunch time.
 However, agile also promises:
 
 > Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.
 
-For profit corporations are always trying to optimise for growth.
-The wording of the above principle is close enough to 'go faster' that managers are happy to twist its meaning into that, and completely disregard all of the other language regarding sustainable pace.
-Sustianable pace and unbounded growth are incompatible concepts.
-            
+For profit corporations are always trying to optimize for growth. The wording of the above principle is close enough to 'go faster' that managers are happy to twist its meaning into that, and completely disregard all of the other language regarding sustainable pace. Sustainable pace and unbounded growth are incompatible concepts.
+
 ### Alienation
 
 This all adds up to a concept known as "Alienation".
 The theoretical basis of alienation within the capitalist mode of production is that the worker invariably loses the ability to determine life and destiny when deprived of the right to think (conceive) of themselves as the director of their own actions; to determine the character of said actions; to define relationships with other people; and to own those items of value from goods and services, produced by their own labour. Although the worker is an autonomous, self-realized human being, as an economic entity this worker is directed to goals and diverted to activities that are dictated by the bourgeoisie—who own the means of production—in order to extract from the worker the maximum amount of surplus value in the course of business competition among industrialists.
 
+### Ethics
+
+Ethics in software development has become a primary concern. The agile manifesto does not address this at all. As the public has noticed the need to establish ethics, many developers and "thought leaders" have been trying to come up with guidlines. but like the agile manifesto, companies will not adopt these ideas, unless it is to their benefit. But really, the authors knew this, deep down. This is why the authors were sure to state up front that the goal of the whole thing is to serve the business:
+
+> Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.
+
+This is a clever way to to frame the ideas in a light that could appeal to organization, and show how these ideas could benefit business and workers alike. But this hoodwink did not work, and this hints at the true reason for agile failing. It provides a critique of all the things that cause alienation and a lack of agency in an organization, but proposes a fix that aligns to the existing management and mode of production of the organization. but the only way to fix the issues called out by the manifesto is to attack the root cause. You must address the structure of a for-profit corporation within the capitalist mode of production. Trying to split the difference just falls flat. It is a proposal that both does not align to the true goals of a corporation, but also does not provie the workers with the ideas and tools they need to _force_ this change on organizations.
+
+When attending conferences featuring agile experts, many developer attendees are left thinking "This sounds great, but how can I do this?" The answer is you can't. 
+
 ## Going Forward
 
+So how can we finally achieve the goals of the manifesto? How can we give software developers agency to be successful, generate value for their compainies, AND develop software which interacts with our society in an ethical way? Developer anarchy.
+
+
+
 ## Additional Resources
+
 [Scientific Management](https://en.wikipedia.org/wiki/Scientific_management) (Taylorism)
 Discuss this post on [Mastodon](https://mastodon.technology/web/statuses/101241850991374660).
