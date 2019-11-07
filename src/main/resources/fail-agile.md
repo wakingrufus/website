@@ -116,6 +116,9 @@ When attending conferences featuring agile experts, many developer attendees are
 So how can we finally achieve the goals of the manifesto? How can we give software developers agency to be successful, generate value for their compainies, AND develop software which interacts with our society in an ethical way? Developer anarchy.
 
 ### VSM
+
+
+
 ### Collective Action
 In order to force organizations to change, we will need to use collective action. We will never convey the change we wnat to see with fidelity by laundering it through the MBA project management industry. These changes will need to be demanded directly.
 
