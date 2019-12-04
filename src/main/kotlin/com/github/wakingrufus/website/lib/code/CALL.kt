@@ -13,8 +13,9 @@ class CALL(val name: String,
            val baseIndentation: Int = 0,
            val argsOnDifferentLines: Boolean = true) {
 
+    var genericType: String? = null
     var arguments: List<ARGUMENT> = ArrayList()
-    var lambdaBlock: BLOCK? = null
+    private var lambdaBlock: BLOCK? = null
     var callType: (String) -> CODE.() -> Unit = ::functionCall
     var isInfix = false
 
@@ -43,8 +44,13 @@ class CALL(val name: String,
     }
 
     operator fun invoke(code: CODE) {
+        callType(name)(code)
+        genericType?.also {
+            code.apply {
+                +"<$it>"
+            }
+        }
         code.apply {
-            this@CALL.callType(this@CALL.name)(this)
             //  if (this@CALL.name[0].isLowerCase()) functionCall(this@CALL.name) else +this@CALL.name
             if (this@CALL.arguments.isNotEmpty() || this@CALL.lambdaBlock == null) {
                 if (this@CALL.isInfix) {
@@ -85,6 +91,12 @@ fun functionCall(text: String): CODE.() -> Unit {
             }
             +text
         }
+    }
+}
+
+fun annotationCall(text: String): CODE.() -> Unit {
+    return {
+        this.keyword(text)
     }
 }
 

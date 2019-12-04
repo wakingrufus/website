@@ -14,8 +14,16 @@ class EXPRESSION(val indentation: Int = 0) {
         body += block
     }
 
-    fun whenExpression(indentation: Int = 0, whenBlock: WHEN.() -> Unit) {
-        body += { WHEN(indentation = indentation).apply(whenBlock)(this) }
+    fun range(from: Int, to: Int){
+        body += {
+            number(from)
+            +".."
+            number(to)
+        }
+    }
+
+    fun whenExpression(whenBlock: WHEN.() -> Unit) {
+        body += { WHEN(indentation = this@EXPRESSION.indentation).apply(whenBlock)(this) }
     }
 
     fun on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit) {

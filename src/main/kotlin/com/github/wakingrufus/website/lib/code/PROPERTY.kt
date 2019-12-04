@@ -8,9 +8,14 @@ class PROPERTY(val modifier: String? = null,
                val name: String,
                val type: String?) {
     var value: (CODE.() -> Unit)? = null
+    var delegate : CALL? = null
 
     fun value(valueBlock: CODE.() -> Unit) {
         value = valueBlock
+    }
+
+    fun delegate(name: String, call: CALL.() -> Unit){
+       delegate = CALL(name).apply(call)
     }
 
     operator fun invoke(code: CODE) {
@@ -28,6 +33,10 @@ class PROPERTY(val modifier: String? = null,
                 property.value?.let {
                     +" = "
                     it.invoke(this)
+                }
+                property.delegate?.let{
+                    this.propertyName(" by ")
+                 it.invoke(this)
                 }
             }
         }

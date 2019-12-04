@@ -429,7 +429,7 @@ fun codeReuse(): DIV.() -> Unit = {
     p { +"And use it in each page on my site:" }
     sampleCode {
         declareFunction(name = "mainPage", returnType = "HTML.() -> Unit") {
-            expression {
+            expression2 {
                 block {
                     call(name = "head") {
                         lambda { }
@@ -936,7 +936,7 @@ fun usage(): DIV.() -> Unit = {
     p { +"We are ready to use our DSL extensions. An example usage could look like this:" }
     sampleCode {
         declareFunction(name = "rolodex", returnType = "HTML.() -> Unit") {
-            expression {
+            expression2 {
                 block {
                     statement {
                         call(name = "head") {

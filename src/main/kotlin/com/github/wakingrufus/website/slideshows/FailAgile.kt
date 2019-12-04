@@ -4,30 +4,30 @@ import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.lib.CssStringPage
 import com.github.wakingrufus.website.lib.Website
-import com.github.wakingrufus.website.lib.slides.*
-import kotlinx.html.DIV
+import com.github.wakingrufus.website.lib.slides.slide
+import com.github.wakingrufus.website.lib.slides.slideList
+import com.github.wakingrufus.website.lib.slides.slideshowTitleFooterLine
 import kotlinx.html.a
 import kotlinx.html.li
-
 
 fun whyDoesAgileFail(): Website.() -> Unit = {
     slideshow(
             name = Paths.FAIL_AGILE_SLIDESHOW_BASE_NAME,
             rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())) {
-        titleSlide(title = "Why Does Agile Fail?", block = failAgileTitleSlide())
-        slide(title = "Manifesto", block = functionalKotlinFunctionalProgramming())
+        titleSlide(title = "Why Does Agile Fail?", block = failAgileTitleSlide)
+        slide(title = "Manifesto", block = functionalKotlinFunctionalProgramming)
 
-        slide(title = "Alienation", block = functionalKotlinImmutableDataStory())
-        slide(title = "Ownership", block = functionalKotlinImmutableData())
-        slide(title = "Product owners", block = functionalKotlinDeterministicStory())
-        slide(anarchy())
-        slide(pace())
+        slide(title = "Alienation", block = functionalKotlinImmutableDataStory)
+        slide(title = "Ownership", block = functionalKotlinImmutableData)
+        slide(title = "Product owners", block = functionalKotlinDeterministicStory)
+        slide(title = "Hierarchy vs Anarchy", block = anarchy)
+        slide(title = "Pace", block = pace)
 
     }
 }
 
-fun failAgileTitleSlide(): DIV.() -> Unit = {
-    slideshowTitleFooter {
+val failAgileTitleSlide = slide {
+    titleFooter {
         slideshowTitleFooterLine { +"John Burns" }
         slideshowTitleFooterLine { +"wakingrufus@gmail.com" }
         slideshowTitleFooterLine {
@@ -37,7 +37,7 @@ fun failAgileTitleSlide(): DIV.() -> Unit = {
 }
 
 
-fun manifesto(): DIV.() -> Unit = {
+val manifesto = slide {
     slideContent {
         slideList {
             li { +"individuals and interactions of processes and tools" }
@@ -54,11 +54,11 @@ fun manifesto(): DIV.() -> Unit = {
     }
 }
 
-fun additionalDiscussion(): SLIDE.() -> Unit = {
+val additionalDiscussion = slide {
     title = "Additional Discussion"
 }
 
-fun alienation(): DIV.() -> Unit = {
+val alienation = slide {
     slideContent {
         slideList {
             a(href = "https://twitter.com/allenholub/status/1125107686201151488") { +"Allan Holub on Managers" }
@@ -73,25 +73,19 @@ fun alienation(): DIV.() -> Unit = {
     }
 }
 
-fun anarchy(): SLIDE.() -> Unit = {
-    title = "Hierarchy vs Anarchy"
-    content {
-        slideContent {
-            slideList {
-                li { +"individuals and interactions of processes and tools" }
-            }
+val anarchy = slide {
+    slideContent {
+        slideList {
+            li { +"individuals and interactions of processes and tools" }
         }
     }
 }
 
-fun pace(): SLIDE.() -> Unit = {
-    title = "Pace"
-    content {
-        slideContent {
-            slideList {
-                li { +"Business inevitly asks for more" }
-                li { +"Agile interpreted to mean 'go faster'" }
-            }
+val pace = slide {
+    slideContent {
+        slideList {
+            li { +"Business inevitly asks for more" }
+            li { +"Agile interpreted to mean 'go faster'" }
         }
     }
 }

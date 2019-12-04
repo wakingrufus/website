@@ -6,7 +6,10 @@ import com.github.wakingrufus.website.lib.CssStringPage
 import com.github.wakingrufus.website.lib.Website
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.slides.*
-import kotlinx.html.*
+import kotlinx.html.a
+import kotlinx.html.li
+import kotlinx.html.tbody
+import kotlinx.html.ul
 
 /**
  * Abstract:
@@ -23,44 +26,43 @@ fun functionalKotlinSlideshow(): Website.() -> Unit = {
     slideshow(
             name = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME,
             rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())) {
-        titleSlide(title = "Functional Kotlin", subTitle = "And How to Test it", block = functionalKotlinTitleSlide())
-        slide(title = "Functional Programming", block = functionalKotlinFunctionalProgramming())
-        slide(title = "Immutable Data", block = functionalKotlinImmutableDataStory())
-        slide(title = "Immutable Data", block = functionalKotlinImmutableData())
-        slide(title = "Pure Functions - Deterministic", block = functionalKotlinDeterministicStory())
-        slide(title = "Pure Functions - Non-Deterministic", block = functionalKotlinNonDeterministic())
-        slide(title = "Pure Functions - Deterministic", block = functionalKotlinDeterministic())
-        slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsStory())
-        slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsCode())
-        slide(title = "First Class Functions", block = firstClassFunctions())
-        slide(title = "Functions are Non-Imperative", subTitle = "Imperative == order dependant", block = functionsAreNonImperative())
-        slide(title = "Higher Order Functions", block = higherOrderFunctions())
-        slide(title = "Kotlin Standard Scoping Functions", block = kotlinStandardFunctions())
-        slide(title = "let", block = let())
-        slide(title = "apply", block = apply())
-        slide(title = "also", block = also())
-        slide(title = "run", block = run())
-        slide(title = "run (non-extension)", block = runNonExtension())
-        slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers())
-        slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm())
-        slide(title = "Functional Testing", block = functionalTesting())
-        slide(title = "Recap", block = recap())
-        slide(title = "More Resources", block = moreResources())
+        titleSlide(title = "Functional Kotlin", subTitle = "And How to Test it", block = functionalKotlinTitleSlide)
+        slide(title = "Functional Programming", block = functionalKotlinFunctionalProgramming)
+        slide(title = "Immutable Data", block = functionalKotlinImmutableDataStory)
+        slide(title = "Immutable Data", block = functionalKotlinImmutableData)
+        slide(title = "Pure Functions - Deterministic", block = functionalKotlinDeterministicStory)
+        slide(title = "Pure Functions - Non-Deterministic", block = functionalKotlinNonDeterministic)
+        slide(title = "Pure Functions - Deterministic", block = functionalKotlinDeterministic)
+        slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsStory)
+        slide(title = "Pure Functions - Side Effects", block = functionalKotlinSideEffectsCode)
+        slide(title = "First Class Functions", block = firstClassFunctions)
+        slide(title = "Functions are Non-Imperative", subTitle = "Imperative == order dependant", block = functionsAreNonImperative)
+        slide(title = "Higher Order Functions", block = higherOrderFunctions)
+        slide(title = "Kotlin Standard Scoping Functions", block = kotlinStandardFunctions)
+        slide(title = "let", block = let)
+        slide(title = "apply", block = apply)
+        slide(title = "also", block = also)
+        slide(title = "run", block = run)
+        slide(title = "run (non-extension)", block = runNonExtension)
+        slide(title = "Function Literals with Receivers", block = functionLiteralsWithReceivers)
+        slide(title = "Kotlin is Multi-Paradigm", block = kotlinIsMultiParadigm)
+        slide(title = "Functional Testing", block = functionalTesting)
+        slide(title = "Recap", block = recap)
+        slide(title = "More Resources", block = moreResources)
     }
 }
 
-fun functionalKotlinTitleSlide(): DIV.() -> Unit = {
-    slideshowTitleFooter {
+val functionalKotlinTitleSlide = slide {
+    titleFooter {
         slideshowTitleFooterLine { +"John Burns" }
         slideshowTitleFooterLine { +"wakingrufus@gmail.com" }
         slideshowTitleFooterLine {
             a(href = "http://wakingrufus.neocities.org") { +"http://wakingrufus.neocities.org" }
         }
     }
-
 }
 
-fun functionalKotlinFunctionalProgramming(): DIV.() -> Unit = {
+val functionalKotlinFunctionalProgramming = slide {
     slideContent {
         slideList {
             li { +"Data is immutable" }
@@ -88,7 +90,7 @@ fun functionalKotlinFunctionalProgramming(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinImmutableDataStory(): DIV.() -> Unit = {
+val functionalKotlinImmutableDataStory = slide {
     slideContent {
         slidePicture(name = "groceries.png", alt = "Grocery List") {
             caption { +"Groceries" }
@@ -96,7 +98,7 @@ fun functionalKotlinImmutableDataStory(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinImmutableData(): DIV.() -> Unit = {
+val functionalKotlinImmutableData = slide {
     slideContent {
         slideList {
             li { +"Thread safe" }
@@ -155,7 +157,7 @@ fun functionalKotlinImmutableData(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinDeterministicStory(): DIV.() -> Unit = {
+val functionalKotlinDeterministicStory = slide {
     slideContent {
         slidePicture("latte.jpg", alt = "Latte") {
             caption {
@@ -170,7 +172,7 @@ fun functionalKotlinDeterministicStory(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
+val functionalKotlinNonDeterministic = slide {
     slideContent {
         slideCode {
             dataClass(name = "ChatMessage") {
@@ -206,7 +208,7 @@ fun functionalKotlinNonDeterministic(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinDeterministic(): DIV.() -> Unit = {
+val functionalKotlinDeterministic = slide {
     slideContent {
         slideCode {
             dataClass(name = "ChatMessage") {
@@ -240,14 +242,14 @@ fun functionalKotlinDeterministic(): DIV.() -> Unit = {
     }
 }
 
-fun functionalKotlinSideEffectsStory(): DIV.() -> Unit = {
+val functionalKotlinSideEffectsStory = slide {
     slideContent {
         slidePicture("sideeffects.png", alt = "Medicine Bottle") {
         }
     }
 }
 
-fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
+val functionalKotlinSideEffectsCode = slide {
     slideContent {
         slideCode {
             declareFunction(name = "addNewMessageSideEffect") {
@@ -301,7 +303,7 @@ fun functionalKotlinSideEffectsCode(): DIV.() -> Unit = {
     }
 }
 
-fun firstClassFunctions(): DIV.() -> Unit = {
+val firstClassFunctions = slide {
     slideContent {
         slideList {
             li { +"Classes are nouns" }
@@ -359,7 +361,7 @@ fun firstClassFunctions(): DIV.() -> Unit = {
     }
 }
 
-fun functionsAreNonImperative(): DIV.() -> Unit = {
+val functionsAreNonImperative = slide {
     slideContent {
         slideCode {
             declareFunction(
@@ -524,7 +526,7 @@ fun functionsAreNonImperative(): DIV.() -> Unit = {
     }
 }
 
-fun higherOrderFunctions(): DIV.() -> Unit = {
+val higherOrderFunctions = slide {
     slideContent {
         slideList {
             li { +"Higher order functions can take function as a parameter" }
@@ -557,7 +559,7 @@ fun higherOrderFunctions(): DIV.() -> Unit = {
     }
 }
 
-fun kotlinStandardFunctions(): DIV.() -> Unit = {
+val kotlinStandardFunctions = slide {
     slideContent {
         slideTable {
             headers(listOf("Function", "extension", "`this` or `it`", "Block return"))
@@ -573,7 +575,7 @@ fun kotlinStandardFunctions(): DIV.() -> Unit = {
     }
 }
 
-fun let(): DIV.() -> Unit = {
+val let = slide {
     slideContent {
         slideList {
             li { +"let" }
@@ -623,7 +625,7 @@ fun let(): DIV.() -> Unit = {
 }
 
 
-fun apply(): DIV.() -> Unit = {
+val apply = slide {
     slideContent {
         slideList {
             li { +"apply" }
@@ -661,7 +663,7 @@ fun apply(): DIV.() -> Unit = {
 }
 
 
-fun also(): DIV.() -> Unit = {
+val also = slide {
     slideContent {
         slideList {
             li { +"also" }
@@ -702,7 +704,7 @@ fun also(): DIV.() -> Unit = {
 }
 
 
-fun run(): DIV.() -> Unit = {
+val run = slide {
     slideContent {
         slideList {
             li { +"run" }
@@ -741,7 +743,7 @@ fun run(): DIV.() -> Unit = {
     }
 }
 
-fun runNonExtension(): DIV.() -> Unit = {
+val runNonExtension = slide {
     slideContent {
         slideList {
             li { +"run (no extension)" }
@@ -786,7 +788,7 @@ fun runNonExtension(): DIV.() -> Unit = {
     }
 }
 
-fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
+val functionLiteralsWithReceivers = slide {
     slideContent {
         slideList {
             li { +"Can be used similar to apply" }
@@ -834,7 +836,7 @@ fun functionLiteralsWithReceivers(): DIV.() -> Unit = {
     }
 }
 
-fun kotlinIsMultiParadigm(): DIV.() -> Unit = {
+val kotlinIsMultiParadigm = slide {
     slideContent {
         slideList {
             li { +"No program is 100% pure functional" }
@@ -856,7 +858,7 @@ fun sayHello(printFn: (String) -> Unit = System.out::println,
     }.orEmpty())
 }
 
-fun functionalTesting(): DIV.() -> Unit = {
+val functionalTesting = slide {
     slideContent {
         slideCode {
             declareFunction(name = "sayHello") {
@@ -967,7 +969,7 @@ fun functionalTesting(): DIV.() -> Unit = {
     }
 }
 
-fun recap(): DIV.() -> Unit = {
+val recap = slide {
     slideContent {
         slideList {
             li { +"Principles of functional programming" }
@@ -991,7 +993,7 @@ fun recap(): DIV.() -> Unit = {
     }
 }
 
-fun moreResources(): DIV.() -> Unit = {
+val moreResources = slide {
     slideContent {
         slideList {
             li {

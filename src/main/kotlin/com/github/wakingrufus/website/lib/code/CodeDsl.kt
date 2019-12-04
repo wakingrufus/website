@@ -1,5 +1,6 @@
 package com.github.wakingrufus.website.lib.code
 
+import com.github.wakingrufus.website.lib.WebsiteDsl
 import com.github.wakingrufus.website.lib.css
 import kotlinx.css.Color
 import kotlinx.css.FontStyle
@@ -93,6 +94,18 @@ fun CODE.constructor(name: String,
 fun CODE.on(subject: CODE.() -> Unit, block: SUBJECT.() -> Unit = {}) {
     SUBJECT(subject = subject).apply(block)(this)
 }
+@HtmlTagMarker
+fun CODE.on(subject: SUBJECT, block: SUBJECT.() -> Unit = {}) {
+    subject.apply(block)(this)
+}
+
+fun CODE.plain(text: String) {
+    return span {
+        style = css {
+        }
+        +text
+    }
+}
 
 fun CODE.functionName(text: String) {
     return span {
@@ -170,7 +183,7 @@ fun CODE.declareFunction(name: String,
                          argsOnSeparateLines: Boolean = false,
                          indentation: Int = 0,
                          extentionOf: String? = null,
-                         block: FUNCTION.() -> Unit) {
+                         block: FUNCTION.() -> Unit) : SUBJECT {
     this.apply {
         FUNCTION(name = name,
                 returnType = returnType,
@@ -180,6 +193,7 @@ fun CODE.declareFunction(name: String,
                 .apply(block)(this)
         +"\n"
     }
+    return SUBJECT(baseIndentation = indentation,subject = {+name})
 }
 
 //TODO: fix this up to create the block for you and use EXPRESSION instead of CODE

@@ -1,9 +1,9 @@
 package com.github.wakingrufus.website.lib.code
 
+import com.github.wakingrufus.website.lib.WebsiteDsl
 import kotlinx.html.CODE
-import kotlinx.html.HtmlTagMarker
 
-@HtmlTagMarker
+@WebsiteDsl
 class STATEMENT(val indentation: Int = 0) {
     var assignment: ASSIGNMENT? = null
     var isReturn: Boolean = false
@@ -34,7 +34,7 @@ class STATEMENT(val indentation: Int = 0) {
 
     fun constructor(className: String, call: CALL.() -> Unit = {}): SUBJECT {
         val subject = on(subject = { call(className, block = call) }) {}
-       // body += { subject(this) }
+        // body += { subject(this) }
         return subject
     }
 
@@ -62,6 +62,26 @@ class STATEMENT(val indentation: Int = 0) {
                     .apply(block)(this)
         }
 
+    }
+
+    fun forLoop(iterator: String, collection: String, loopLogic: BLOCK.() -> Unit) {
+        body += {
+            keyword("for")
+            +"("
+            +iterator
+            keyword(" in ")
+            +collection
+            +") "
+            block(indentation = indentation + 1) {
+                loopLogic(this)
+            }
+        }
+    }
+
+    fun comment(comment: String) {
+        body += {
+            commentLine(comment)
+        }
     }
 
     operator fun invoke(code: CODE) {

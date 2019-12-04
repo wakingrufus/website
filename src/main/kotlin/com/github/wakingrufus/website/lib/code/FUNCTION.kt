@@ -11,11 +11,12 @@ class FUNCTION(val operator: Boolean = false,
                val indentation: Int = 0,
                val paramsOnSeparateLines: Boolean = true,
                val extensionOf: String? = null) {
-   var isInfix = false
+    var isInfix = false
     var genericType: String? = null
     var parameters: List<PARAMETER> = ArrayList()
     var body: (CODE.() -> Unit)? = null
     var expression: Boolean = false
+    var annotation: CALL? = null
 
     fun parameter(name: String, type: String?, value: (CODE.() -> Unit)? = null) {
         parameters += PARAMETER(name = name, type = type).apply { value?.let { value(it) } }
@@ -25,10 +26,12 @@ class FUNCTION(val operator: Boolean = false,
         body = { BLOCK(indentation = indentation, inline = false).apply(bodyText)(this) }
         expression = false
     }
+
     fun expression2(value: EXPRESSION.() -> Unit) {
         body = { EXPRESSION().apply(value)(this) }
         expression = true
     }
+
     fun expression(value: CODE.() -> Unit) {
         body = { value(this) }
         expression = true
@@ -48,8 +51,18 @@ class FUNCTION(val operator: Boolean = false,
         }
     }
 
+    fun annotation(name: String, call: CALL.() -> Unit) {
+        annotation = CALL(name = name, baseIndentation = indentation, argsOnDifferentLines = false).apply(call).apply {
+            this.callType = ::annotationCall
+        }
+    }
+
     operator fun invoke(code: CODE) {
+        annotation?.let {
+            it(code)
+        }
         code.apply {
+            +"\n"
             indent(this@FUNCTION.indentation)
             if (this@FUNCTION.operator) {
                 keyword("operator ")
@@ -60,7 +73,7 @@ class FUNCTION(val operator: Boolean = false,
             keyword("fun")
             +" "
             this@FUNCTION.genericType?.also {
-                +"$it "
+                +"<$it> "
             }
             this@FUNCTION.extensionOf?.let {
                 +it

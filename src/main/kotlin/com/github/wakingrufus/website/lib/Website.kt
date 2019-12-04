@@ -14,6 +14,7 @@ import mu.KLogging
 import java.io.File
 import java.io.FileWriter
 
+@WebsiteDsl
 class Website(private val baseDir: File) {
     companion object : KLogging()
 

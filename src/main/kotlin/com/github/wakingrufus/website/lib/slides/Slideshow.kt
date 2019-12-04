@@ -2,46 +2,54 @@ package com.github.wakingrufus.website.lib.slides
 
 import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.lib.CssPage
+import com.github.wakingrufus.website.lib.WebsiteDsl
 import com.github.wakingrufus.website.lib.writeHtmlPage
 import kotlinx.html.*
 import mu.KLogging
 import java.io.File
 import java.io.FileWriter
 
+@WebsiteDsl
 class Slideshow(val baseDir: File,
                 val rootCss: CssPage) {
     companion object : KLogging()
 
-    var slides: List<Slide> = ArrayList()
+    var slides: List<SLIDE> = ArrayList()
 
     fun files(): List<File> {
-        return slides.mapIndexed { index, slide ->
-            File(baseDir, "$index.html").apply {
-                logger.info("creating file: " + this.canonicalPath)
-                writeHtmlPage(FileWriter(this),
-                        slide.template(rootCss.path, slide.title
-                                ?: "", slide.subTitle, index, slides.size, slide.content))
-            }
-        }.plus(
-                File(baseDir, rootCss.path).apply {
-                    rootCss.write(FileWriter(this))
-                }
-        )
+        return slides
+                .map { it() }
+                .mapIndexed { index, slide ->
+                    File(baseDir, "$index.html").apply {
+                        logger.info("creating file: " + this.canonicalPath)
+                        writeHtmlPage(FileWriter(this),
+                                slide.template(rootCss.path, slide.title
+                                        ?: "", slide.subTitle, index, slides.size, slide.content))
+                    }
+                }.plus(
+                        File(baseDir, rootCss.path).apply {
+                            rootCss.write(FileWriter(this))
+                        }
+                )
     }
 
     fun slide(config: SLIDE.() -> Unit) {
-        slides += SLIDE()(config)
+        slides += SLIDE().apply(config)
     }
 
-    fun slide(title: String, subTitle: String? = null, block: DIV.() -> Unit) {
-        slides += Slide(title = title, subTitle = subTitle, template = ::slideTemplate, content = block)
+    fun slide(title: String, subTitle: String? = null, block: SLIDE.() -> Unit) {
+        slides += SLIDE().apply {
+            this.title = title
+            this.subTitle = subTitle
+        }.apply(block)
     }
 
-    fun titleSlide(title: String, subTitle: String? = null, block: DIV.() -> Unit) {
-        slides += Slide(title = title,
-                subTitle = subTitle,
-                template = ::slideshowTitleSlide,
-                content = block)
+    fun titleSlide(title: String, subTitle: String? = null, block: SLIDE.() -> Unit) {
+        slides += SLIDE().apply {
+            this.title = title
+            this.subTitle = subTitle
+            template(::slideshowTitleSlide)
+        }.apply(block)
     }
 }
 

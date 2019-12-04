@@ -15,43 +15,42 @@ fun staticWebSlideshow(): Website.() -> Unit = {
     slideshow(
             name = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME,
             rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())) {
-        titleSlide(title = "Static Web", subTitle = "With Kotlin and DSLs", block = staticWebTitleSlide())
-        slide(title = "What is DSL?", block = fromOopToDsl())
-        slide(title = "Infix functions", block = infixFunction())
-        slide(title = "Lambda as Final Parameter", block = lambdaAsFinalParameter())
-        slide(title = "Lambda with Receiver", block = lambdaWithReceiver())
-        slide(title = "DslMarker", block = dslMarker())
-        slide(title = "Documents, not Apps", block = staticWebNotApps())
-        slide(title = "Advantages", block = staticWebAdvantages())
-        slide(title = "Disadvantages", block = staticWebDisadvantages())
-        slide(title = "Generators", block = staticWebGenerators())
-        slide(title = "HTML DSL", block = staticWebKotlinHtml())
-        slide(title = "CSS DSL", block = staticWebKotlinCss())
-        slide(title = "Code Reuse", block = staticWebKotlinReuse())
-  //      slide("Custom DSL: Vision") {}
-    //    slide("Custom DSL: Before DSL") {}
-        slide(title = "Custom DSL: Backing objects", block = backingObjects())
-      //  slide("Custom DSL: Top Level Functions") {}
-      //  slide("Custom DSL: HTML interpreter") {}
-      //  slide("Custom DSL: Usage") {}
-      //  slide("Custom DSL: Final output") {}
-        slide(title = "Go forth and DSL All the Things", block = theEnd())
+        titleSlide(title = "Static Web", subTitle = "With Kotlin and DSLs", block = staticWebTitleSlide)
+        slide(title = "What is DSL?", block = fromOopToDsl)
+        slide(title = "Infix functions", block = infixFunction)
+        slide(title = "Lambda as Final Parameter", block = lambdaAsFinalParameter)
+        slide(title = "Lambda with Receiver", block = lambdaWithReceiver)
+        slide(title = "DslMarker", block = dslMarker)
+        slide(title = "Documents, not Apps", block = staticWebNotApps)
+        slide(title = "Advantages", block = staticWebAdvantages)
+        slide(title = "Disadvantages", block = staticWebDisadvantages)
+        slide(title = "Generators", block = staticWebGenerators)
+        slide(title = "HTML DSL", block = staticWebKotlinHtml)
+        slide(title = "CSS DSL", block = staticWebKotlinCss)
+        slide(title = "Code Reuse", block = staticWebKotlinReuse)
+        //      slide("Custom DSL: Vision") {}
+        //    slide("Custom DSL: Before DSL") {}
+        slide(title = "Custom DSL: Backing objects", block = backingObjects)
+        //  slide("Custom DSL: Top Level Functions") {}
+        //  slide("Custom DSL: HTML interpreter") {}
+        //  slide("Custom DSL: Usage") {}
+        //  slide("Custom DSL: Final output") {}
+        slide(title = "Go forth and DSL All the Things", block = theEnd)
     }
 }
 
 
-fun staticWebTitleSlide(): DIV.() -> Unit = {
-    slideshowTitleFooter {
+val staticWebTitleSlide = slide {
+    titleFooter {
         slideshowTitleFooterLine { +"John Burns" }
         slideshowTitleFooterLine { +"wakingrufus@gmail.com" }
         slideshowTitleFooterLine {
             a(href = "http://wakingrufus.neocities.org") { +"http://wakingrufus.neocities.org" }
         }
     }
-
 }
 
-fun fromOopToDsl(): DIV.() -> Unit = {
+val fromOopToDsl = slide {
     slideContent {
         slideList {
             li { +"Domain consists of structured data and interfaces" }
@@ -64,7 +63,7 @@ fun fromOopToDsl(): DIV.() -> Unit = {
     }
 }
 
-fun staticWebNotApps(): DIV.() -> Unit = {
+val staticWebNotApps = slide {
     slideContent {
         slideList {
             li { +"Web 2.0 is a hack" }
@@ -75,7 +74,7 @@ fun staticWebNotApps(): DIV.() -> Unit = {
 }
 
 
-fun staticWebAdvantages(): DIV.() -> Unit = {
+val staticWebAdvantages = slide {
     slideContent {
         slideList {
             li { +"Security" }
@@ -88,7 +87,7 @@ fun staticWebAdvantages(): DIV.() -> Unit = {
     }
 }
 
-fun staticWebDisadvantages(): DIV.() -> Unit = {
+val staticWebDisadvantages = slide {
     slideContent {
         slideList {
             li { +"Verbose" }
@@ -98,7 +97,7 @@ fun staticWebDisadvantages(): DIV.() -> Unit = {
     }
 }
 
-fun staticWebGenerators(): DIV.() -> Unit = {
+val staticWebGenerators = slide {
     slideContent {
         slideList {
             li { +"Jekyll (GH pages)" }
@@ -109,7 +108,7 @@ fun staticWebGenerators(): DIV.() -> Unit = {
     }
 }
 
-fun infixFunction(): DIV.() -> Unit = {
+val infixFunction = slide {
     slideContent {
         slideList {
             li { +"For simple binary operators" }
@@ -123,7 +122,7 @@ fun infixFunction(): DIV.() -> Unit = {
             }
             declareFunction(name = "to", extentionOf = "A", returnType = "Pair<A, B>") {
                 isInfix = true
-                genericType = "<A, B>"
+                genericType = "A, B"
                 parameter("that", "B")
                 expression {
                     call("Pair") {
@@ -145,7 +144,7 @@ fun infixFunction(): DIV.() -> Unit = {
     }
 }
 
-fun lambdaAsFinalParameter(): DIV.() -> Unit = {
+val lambdaAsFinalParameter = slide {
     slideContent {
         splitSlide(leftBlock = {
             slideList {
@@ -188,7 +187,7 @@ fun lambdaAsFinalParameter(): DIV.() -> Unit = {
     }
 }
 
-fun lambdaWithReceiver(): DIV.() -> Unit = {
+val lambdaWithReceiver = slide {
     slideContent {
         splitSlide({
             slideList {
@@ -250,7 +249,7 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
     }
 }
 
-fun dslMarker(): DIV.() -> Unit = {
+val dslMarker = slide {
     slideContent {
         splitSlide(leftBlock = {
             slideList {
@@ -336,7 +335,6 @@ fun dslMarker(): DIV.() -> Unit = {
             }
         }
     }
-
 }
 
 
@@ -366,7 +364,7 @@ val a = c1 {
 }
 
 
-fun staticWebKotlinHtml(): DIV.() -> Unit = {
+val staticWebKotlinHtml = slide {
     slideContent {
         splitSlide(leftBlock = {
             slideCode {
@@ -415,11 +413,9 @@ fun staticWebKotlinHtml(): DIV.() -> Unit = {
             }
         }
     }
-
 }
 
-
-fun staticWebKotlinCss(): DIV.() -> Unit = {
+val staticWebKotlinCss = slide {
     slideContent {
         splitSlide(leftBlock = {
             slideCode {
@@ -458,7 +454,7 @@ fun staticWebKotlinCss(): DIV.() -> Unit = {
     }
 }
 
-fun staticWebKotlinReuse(): DIV.() -> Unit = {
+val staticWebKotlinReuse = slide {
     slideContent {
         splitSlide(leftBlock = {
             slideCode {
@@ -577,7 +573,7 @@ fun staticWebKotlinReuse(): DIV.() -> Unit = {
 }
 
 
-fun backingObjects(): DIV.() -> Unit = {
+val backingObjects = slide {
     splitSlide({
         slideList {
             li { +"For defining discrete objects of the domain" }
@@ -647,7 +643,7 @@ fun backingObjects(): DIV.() -> Unit = {
 }
 
 
-fun theEnd(): DIV.() -> Unit = {
+val theEnd = slide {
     slideContent {
         splitSlide(leftBlock = {
             slidePicture("x-all-the-things.jpg", alt = "All the things!") {

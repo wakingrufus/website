@@ -12,6 +12,7 @@ import com.github.wakingrufus.website.projects.libElo
 import com.github.wakingrufus.website.projects.mastodonJfx
 import com.github.wakingrufus.website.projects.tourney
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
+import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
 import kotlinx.html.*
@@ -28,6 +29,7 @@ object Paths {
     val CSS_PATH = "styles.css"
     val SLIDESHOW_CSS_PATH = "slideshow_styles.css"
     val FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME = "functional-kotlin-slideshow"
+    val KOTLIN_2019_SLIDESHOW_BASE_NAME = "kotlin-2019"
     val RSS_PATH = "rss.xml"
     val SITE_UPDATES_RSS_PATH = "site-updates.xml"
     val FEEDS_PAGE = "feeds.html"
@@ -91,6 +93,7 @@ class MyWebsite {
             apply(functionalKotlinSlideshow())
             apply(staticWebSlideshow())
             apply(whyDoesAgileFail())
+            apply(kotlin2019Slideshow())
         }
     }
 }
@@ -151,6 +154,8 @@ fun development(): HTML.() -> Unit = {
             p { a(href = Paths.ANTIPATTERNS_PATH + "#refactoring") { +"Refactoring" } }
 //            h3 { +"Fail Agile" }
 //            p { a(href = Paths.FAIL_AGILE_BLOG) { +"Article" } }
+            h3 { +"Kotlin in 2019" }
+            p { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
         }
     }
 }
