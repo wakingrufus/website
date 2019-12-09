@@ -1,8 +1,12 @@
 # The Failures of Agile Software Development
 
+If you work in software development, you have likely heard of Agile or Scrum. You might have heard someone talking about Agile at a conference, where they outline how great and empowering agile is, and you come away sold. But when you go to work, either management has no interest in it, or they say they do it, but it just becomes story points, Jira tickets, sprints, and other annoyances that get in the way of doing your job. If you are wondering why Agile in the workplace never measures up to the promise offered by its proponents, you are not alone. Even the authors of the manifesto seem consistently frustrated and confused by the refusal of companies to internalize the principles of agile software development. Many people blame the failure of Agile on flawed implementations, but I offer a deeper critique of the premise of Agile.
+
 ## Background
 
-The [Agile Manifesto](https://agilemanifesto.org/) was published in 2001 and has inspired a number of new software development methodologies. Now, nearly all software development shops claim to be agile to some degree. However, in almost every organization which attempts to adopt it, the implementation falls short of the promise offered by the approach. A whole industry of consultants and speakers have emerged trying to pin down how companies can implement agile correctly, yet still, it almost never works. Even the authors of the manifesto seem consistently frustrated and confused by the refusal of companies to internalize the principles of agile software development. This may be due to a mass misunderstanding of what the Agile Manifesto really means. Although it explicitly critiques the specific methods of waterfall-style development, the criticisms are implicitly critiquing something deeper.
+The [Agile Manifesto](https://agilemanifesto.org/) was published in 2001 and has inspired a number of new software development methodologies. Now, nearly all software development shops claim to be agile to some degree. However, in almost every organization which attempts to adopt it, the implementation falls short of the promise offered by the approach. A whole industry of consultants and speakers have emerged trying to pin down how companies can implement agile correctly, yet still, it almost never works.  Perhaps there is more wrong than just the way we implement it. Perhaps even its proponents misunderstand what the Agile Manifesto really means. Although it explicitly critiques the specific methods of waterfall-style development, the criticisms are implicitly critiquing something deeper. 
+
+To get at the root of this, we first need to understand why agile came about in the first place.
 
 ### Waterfall
 The term "waterfall" is used to refer a traditional model of development that has been taught for decades, but is rarely actually implemented with fidelity. The way it works is a linear progression:
@@ -103,29 +107,37 @@ The theoretical basis of alienation within the capitalist mode of production is 
 
 ### Ethics
 
-Ethics in software development has become a primary concern. The agile manifesto does not address this at all. As the public has noticed the need to establish ethics, many developers and "thought leaders" have been trying to come up with guidlines. but like the agile manifesto, companies will not adopt these ideas, unless it is to their benefit. But really, the authors knew this, deep down. This is why the authors were sure to state up front that the goal of the whole thing is to serve the business:
+Ethics in software development has become a primary concern. The agile manifesto does not address this at all. As the public has noticed the need to establish ethics, many developers and "thought leaders" have been trying to come up with guidlines. But like the Agile Manifesto, companies will not adopt these ideas, unless it is to their benefit. But really, the authors knew this, deep down. This is why the authors were sure to state up front that the goal of the whole thing is to serve the business:
 
 > Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.
 
-This is a clever way to to frame the ideas in a light that could appeal to organizations, and show how these ideas could benefit business and workers alike. But this hoodwink did not work, and this hints at the true reason for agile failing. It provides a critique of all the things that cause alienation and a lack of agency in an organization, but proposes a fix that aligns to the existing management and mode of production of the organization. but the only way to fix the issues called out by the manifesto is to attack the root cause. You must address the structure of a for-profit corporation within the capitalist mode of production. Trying to split the difference just falls flat. It is a proposal that both does not align to the true goals of a corporation, but also does not provide the workers with the ideas and tools they need to _force_ this change on organizations.
+This is a clever way to to frame agile ideas in a light that could appeal to organizations, and show how these ideas could benefit business and workers alike. But this hoodwink did not work, and this hints at the true reason for agile failing. It provides a critique of all the things that cause alienation and a lack of agency in an organization, but proposes a fix that aligns to the existing management and mode of production of the organization. But the only way to fix the issues called out by the manifesto is to attack the root cause. You must address the structure of a for-profit corporation within the capitalist mode of production. Trying to split the difference just falls flat. It is a proposal that both does not align to the true goals of a corporation, but also does not provide the workers with the ideas and tools they need to _force_ this change on organizations.
 
-When attending conferences featuring agile experts, many developer attendees are left thinking "This sounds great, but how can I do this?" The answer is you can't. 
+When attending conferences featuring agile experts, many developer attendees are left thinking "This sounds great, but how can I do this?" The answer is you can't. Individual workers  are not empowered to help define how they work.
 
 ## Going Forward
+So how can we finally achieve the goals of the manifesto? How can we give software developers agency to be successful, generate value for their compainies, AND develop software which interacts with our society in an ethical way? There are 2 aspects we need to consider when forming a solution. First, we need a vision of what the technical solution should be. If waterfall and agile don't provide the system we want to see, we need to figure out a framework that does meet our goals. But just coming up with a good technical solution is not enough. There needs to be a social solution to enact change in our industry to implement this solution. So first, let's think about what a technical soultion might look like.
 
-So how can we finally achieve the goals of the manifesto? How can we give software developers agency to be successful, generate value for their compainies, AND develop software which interacts with our society in an ethical way? Developer anarchy.
+### Viable System Model
+The Viable System Model (aka VSM) is a system of organization developed by cybernetition Stafford Beer in the 1970's. It emphasizes autonomy among the workers providing the value to the company, with feedback loops going upward into meta systems for coordination, rather than top-down prescriptive management. This model fundamentally upends traditional relationships in the workplace. There is a lot of evidence that the model works very well, especially in industries that have rapidly changing environmental conditions, but has not seen wide adoption, probably because of the threat it poses to traditional mangagment systems. 
 
-### VSM
-
+### Worker Owned Co-ops
+A worker-owned co-op is a company organized under different rules than a privately or publicly held for-profit or non-profit organization. Ownership is held by the workers. There are no other owners. Worker Co-ops also are governed by some form of democratic process, in which all workers, and no one else participate.  In tech, co-ops are usually small consulting firms, but the model could apply to other types of organizations as well.  A worker co-op structurally removes the incentives for fast deadlines and hierarchical management, and get them out of the way of running a successful software project.
 
 
 ### Collective Action
-In order to force organizations to change, we will need to use collective action. We will never convey the change we wnat to see with fidelity by laundering it through the MBA project management industry. These changes will need to be demanded directly.
+VSM and worker co-ops are two very different, but promising models of how we can enable teams to be successful and have agency in their work. But traditional companies will not voluntarily reorganize along these lines. Watering down these solutions to sell them as "productivity solutions", like has been done with agile, would cause them to lose the essence of what they are. If they are to be adopted, they will need to be embraced whole-heatedly. The only way to force organizations to change in a way that is contrary to the traditional "fiduciary duty to shareholders" incentives of companies, it will need to come from the workers themselves. We will never convey the change we want to see with fidelity by laundering it through the MBA project management industry. These changes will need to be demanded directly and collectively by all of us.  It is sometimes said that tech workers don't need unions because we are well paid, have good benefits, and good working conditions. But unions are not just for increasing pay and benefits. They are a vehicle for any type of push back from the workers to a company, to make changes that will benefit the workers, and sometimes the company its self. A formal union is not even always needed to make these types of demands, but formal unions do provide protection against retaliation from the company on these types of activities. There is been a wave of tech organization lately, around a variety of issues, including pushing back on tech companies collaborating with oppressive government agencies, and terrible project management practices such as "crunch time". Organization in the tech industry is possible, it is happening, and it is a way to enact real change in our industry, including changing the way we work.
 
 ## Additional Resources
 
 [Scientific Management](https://en.wikipedia.org/wiki/Scientific_management) (Taylorism)
 
 [Taylorism](http://www.businessdictionary.com/definition/Taylorism.html)
+
+[Podcast about VSM](http://generalintellectunit.net/e/038-the-viable-system-model/)
+[The VSM Guide](https://www.esrad.org.uk/resources/vsmg_3/screen.php)
+
+[CoTech](https://www.coops.tech/) A tech coop network
+[Tech Co-op Network](https://www.techworker.coop/) A North American Coop Network
 
 Discuss this post on [Mastodon](https://mastodon.technology/web/statuses/101241850991374660).

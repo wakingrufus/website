@@ -1,6 +1,5 @@
 package com.github.wakingrufus.website.lib.code
 
-import com.github.wakingrufus.website.lib.WebsiteDsl
 import com.github.wakingrufus.website.lib.css
 import kotlinx.css.Color
 import kotlinx.css.FontStyle
