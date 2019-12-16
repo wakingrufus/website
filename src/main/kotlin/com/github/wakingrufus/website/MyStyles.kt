@@ -40,6 +40,12 @@ class MyStyles {
                 maxWidth = 79.pct
             }
 
+            (".page-content blockquote") {
+                paddingLeft = 10.px
+                borderLeftStyle = BorderStyle.solid
+                borderLeftWidth = 5.px
+            }
+
             media("screen and (min-resolution: 120dpi)") {
                 body {
                     fontSize = 1.5.em
@@ -56,7 +62,7 @@ class MyStyles {
                     display = Display.block
                     paddingBottom = 2.em
                     borderBottomStyle = BorderStyle.solid
-                    borderBottomColor = MyStyles.BORDER_COLOR
+                    borderBottomColor = BORDER_COLOR
 
                 }
                 (".navBar li") {
@@ -71,7 +77,7 @@ class MyStyles {
                     display = Display.inlineBlock
                     paddingRight = 2.pct
                     borderRightStyle = BorderStyle.solid
-                    borderRightColor = MyStyles.BORDER_COLOR
+                    borderRightColor = BORDER_COLOR
                     maxWidth = 18.pct
                 }
             }
