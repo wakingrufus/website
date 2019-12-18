@@ -7,10 +7,7 @@ import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.Recipe
 import com.github.wakingrufus.website.lib.cooking.html
-import com.github.wakingrufus.website.projects.filedb
-import com.github.wakingrufus.website.projects.libElo
-import com.github.wakingrufus.website.projects.mastodonJfx
-import com.github.wakingrufus.website.projects.tourney
+import com.github.wakingrufus.website.projects.*
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
@@ -24,6 +21,7 @@ object Paths {
     val LIBELO_PATH = "lib-elo.html"
     val TOURNEY_PATH = "tourney.html"
     val FILEDB_PATH = "filedb.html"
+    val WEBSITE_PATH = "website.html"
     val ANTIPATTERNS_PATH = "antipatterns.html"
     val STATIC_WEB_ARTICLE_PATH = "staticwebarticle.html"
     val CSS_PATH = "styles.css"
@@ -47,6 +45,7 @@ fun BODY.sideNav() {
         li {
             +"Projects"
             ul {
+                li { a(href = Paths.WEBSITE_PATH) { +"This Website" } }
                 li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
                 li { a(href = Paths.TOURNEY_PATH) { +"Tourney" } }
                 li { a(href = Paths.LIBELO_PATH) { +"lib-elo" } }
@@ -71,6 +70,7 @@ class MyWebsite {
             htmlPage(path = Paths.FILEDB_PATH, builder = filedb)
             htmlPage(path = Paths.TOURNEY_PATH, builder = tourney)
             htmlPage(path = Paths.LIBELO_PATH, builder = libElo)
+            htmlPage(path = Paths.WEBSITE_PATH, builder = personalSite)
             htmlPage(path = Paths.FEEDS_PAGE, builder = feeds())
             htmlPage(path = Paths.ANTIPATTERNS_PATH, builder = antipatterns())
             htmlPage(path = Paths.STATIC_WEB_ARTICLE_PATH, builder = staticweb())
