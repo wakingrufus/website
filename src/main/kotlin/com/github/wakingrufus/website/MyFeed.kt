@@ -1,7 +1,9 @@
 package com.github.wakingrufus.website
 
 import com.github.wakingrufus.website.articles.*
-import com.github.wakingrufus.website.lib.rss.*
+import com.github.wakingrufus.website.lib.rss.entries
+import com.github.wakingrufus.website.lib.rss.rss
+import com.github.wakingrufus.website.lib.rss.rssCategory
 import com.rometools.rome.feed.synd.SyndFeed
 import kotlinx.html.body
 import kotlinx.html.div
@@ -33,14 +35,14 @@ val allEntries = entries {
         title = "Antipatterns: Refactoring as a Separate Ticket"
         author = "wakingrufus"
         categories = listOf(article)
-        link = "https://wakingrufus.neocities.org/" + Paths.ANTIPATTERNS_PATH + "#refactoring"
+        link = "https://wakingrufus.neocities.org/" + antipatterns.path + "#refactoring"
         publishedDate = Date.from(ZonedDateTime.of(LocalDate.of(2018, Month.JUNE, 22),
                 LocalTime.of(8, 0, 0),
                 ZoneOffset.ofHours(-5)).toInstant())
         content {
             body {
                 div {
-                    this.apply(com.github.wakingrufus.website.refactoring())
+                    this.apply(refactoring)
                 }
             }
         }
@@ -61,7 +63,7 @@ val allEntries = entries {
         title = "Static Web with Kotlin DSLs"
         author = "wakingrufus"
         categories = listOf(siteUpdates)
-        link = "https://wakingrufus.neocities.org/" + Paths.STATIC_WEB_ARTICLE_PATH
+        link = "https://wakingrufus.neocities.org/" + staticWeb.path
         publishedDate = Date.from(ZonedDateTime.of(
                 LocalDate.of(2018, Month.DECEMBER, 14),
                 LocalTime.of(17, 0, 0),
@@ -79,7 +81,7 @@ val allEntries = entries {
                     dslExtension()(this)
                     usage()(this)
                     conclusion()(this)
-                    additionalResources()(this)
+                    staticWebAdditionalResources(this)
                 }
             }
         }
@@ -89,7 +91,7 @@ val allEntries = entries {
         title = "Recipes"
         author = "wakingrufus"
         categories = listOf(siteUpdates)
-        link = "https://wakingrufus.neocities.org/" + Paths.RECIPE_PAGE
+        link = "https://wakingrufus.neocities.org/index.html#recipes"
         publishedDate = Date.from(ZonedDateTime.of(
                 LocalDate.of(2019, Month.JANUARY, 29),
                 LocalTime.of(18, 0, 0),
@@ -101,7 +103,7 @@ val allEntries = entries {
         title = "DSL talk video"
         author = "wakingrufus"
         categories = listOf(siteUpdates)
-        link = "https://wakingrufus.neocities.org/" + Paths.DEVELOPMENT_PATH
+        link = "https://wakingrufus.neocities.org/index.html#development"
         publishedDate = Date.from(ZonedDateTime.of(
                 LocalDate.of(2019, Month.MARCH, 14),
                 LocalTime.of(9, 0, 0),

@@ -1,17 +1,21 @@
-package com.github.wakingrufus.website
+package com.github.wakingrufus.website.articles
 
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.lib.article.article
+import com.github.wakingrufus.website.lib.htmlPage
+import com.github.wakingrufus.website.lib.sideNavBar
+import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
 
-
-fun antipatterns(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("Anti-Patterns")
-        content {
+val antipatterns = htmlPage("antipatterns.html") {
+    article("Software Development Anti-Patterns") {
+        nav {
+            sideNavBar {
+                li { a(href = "#intro") { +"Introduction" } }
+                li { a(href = "#refactoring") { +"Refactoring as a Separate Ticket" } }
+            }
+        }
+        htmlSection {
+            a { id = "intro" }
             p {
                 +"There are a lot of ways to develop software, and there is no one best way. "
                 +"For this reason, there is much literature about how to develop software. "
@@ -23,15 +27,15 @@ fun antipatterns(): HTML.() -> Unit = {
                 em { +"how" }
                 +" we develop software."
             }
-            a { id = "refactoring" }
-            this.apply(refactoring())
         }
-        footer { myFooter() }
+        htmlSection(refactoring)
+        footer(myFooter)
     }
 }
 
-fun refactoring(): DIV.() -> Unit = {
+val refactoring: DIV.() -> Unit = {
     h2 { +"Refactoring as a Separate Ticket" }
+    a { id = "refactoring" }
     p {
         +"""
         Refactoring is an important part of software development.

@@ -1,19 +1,17 @@
 package com.github.wakingrufus.website.projects
 
 import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
-import com.github.wakingrufus.website.sideNav
-import kotlinx.html.*
+import com.github.wakingrufus.website.lib.article.article
+import com.github.wakingrufus.website.lib.htmlPage
+import com.github.wakingrufus.website.myFooter
+import kotlinx.html.a
+import kotlinx.html.div
+import kotlinx.html.p
 
-val filedb: HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("Filedb")
-        sideNav()
-        content {
+
+val filedb = htmlPage(Paths.FILEDB_PATH) {
+    article("Filedb") {
+        htmlSection {
             div {
                 p {
                     +"filedb is kotlin library which allow you to use a file sync service "
@@ -23,5 +21,6 @@ val filedb: HTML.() -> Unit = {
                 }
             }
         }
+        footer(myFooter)
     }
 }

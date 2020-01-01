@@ -30,14 +30,16 @@ class Website(private val baseDir: File) {
         cssFiles += CssStringPage(path, cssString)
     }
 
-    fun htmlPage(path: String, builder: HTML.() -> Unit) {
+    fun htmlPageBuilder(path: String, builder: HTML.() -> Unit) {
         htmlFiles += HtmlPage(path).apply { this.builder(builder) }
     }
 
     fun page(path: String, pageBuilder: HtmlPage.() -> Unit) {
         htmlFiles += HtmlPage(path).apply(pageBuilder)
     }
-
+    fun page(htmlPage: HtmlPage) {
+        htmlFiles += htmlPage
+    }
     fun rssFeed(rssDir: String = "rss", path: String, feedContents: SyndFeed) {
         rssFeeds += RssFeedBuilder(
                 file = File(baseDir, rssDir).let {
@@ -96,7 +98,7 @@ fun BODY.content(block: DIV.() -> Unit) {
     }
 }
 
-fun DIV.dashboard(dash: Dashboard.() -> Unit){
+fun DIV.dashboard(dash: Dashboard.() -> Unit) {
     return div {
         style = css {
             paddingLeft = 1.em
@@ -135,4 +137,8 @@ fun BODY.pageTitle(title: String) {
         }
         +title
     }
+}
+
+fun htmlPage(path: String, builder: HtmlPage.() -> Unit): HtmlPage {
+    return HtmlPage(path).apply(builder)
 }
