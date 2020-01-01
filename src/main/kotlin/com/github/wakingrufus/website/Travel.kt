@@ -13,7 +13,6 @@ fun travel(): HTML.() -> Unit = {
     }
     body {
         pageTitle("Travel")
-        sideNav()
         content {
             ul {
                 li { a(href = "#colorado") { +"Colorado" } }
@@ -24,6 +23,7 @@ fun travel(): HTML.() -> Unit = {
                 subArea("Frisco", frisco())
             }
         }
+        footer { myFooter() }
     }
 }
 

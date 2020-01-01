@@ -11,7 +11,6 @@ fun antipatterns(): HTML.() -> Unit = {
     }
     body {
         pageTitle("Anti-Patterns")
-        sideNav()
         content {
             p {
                 +"There are a lot of ways to develop software, and there is no one best way. "
@@ -27,6 +26,7 @@ fun antipatterns(): HTML.() -> Unit = {
             a { id = "refactoring" }
             this.apply(refactoring())
         }
+        footer { myFooter() }
     }
 }
 

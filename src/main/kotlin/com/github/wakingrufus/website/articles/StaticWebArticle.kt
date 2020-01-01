@@ -1,8 +1,11 @@
-package com.github.wakingrufus.website
+package com.github.wakingrufus.website.articles
 
+import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.myFooter
+import com.github.wakingrufus.website.sideNav
 import kotlinx.html.*
 
 
@@ -23,8 +26,9 @@ fun staticweb(): HTML.() -> Unit = {
             dslExtension()(this)
             usage()(this)
             conclusion()(this)
-            additionalResources()(this)
+            staticWebAdditionalResources(this)
         }
+        footer { myFooter() }
     }
 }
 
@@ -1021,8 +1025,7 @@ fun conclusion(): DIV.() -> Unit = {
     }
 }
 
-
-fun additionalResources(): DIV.() -> Unit = {
+val staticWebAdditionalResources: DIV.() -> Unit = {
     h2 { +"Additional Resources" }
     p {
         +"This article was first posted on "

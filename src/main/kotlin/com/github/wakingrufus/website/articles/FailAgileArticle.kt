@@ -2,6 +2,7 @@ package com.github.wakingrufus.website.articles
 
 import com.github.wakingrufus.website.lib.HtmlPage
 import com.github.wakingrufus.website.lib.article.article
+import com.github.wakingrufus.website.myFooter
 import com.github.wakingrufus.website.sideNav
 import kotlinx.html.*
 
@@ -19,6 +20,7 @@ val failAgile: HtmlPage.() -> Unit = {
             alienation(this)
             additionalResources()(this)
         }
+        footer(myFooter)
     }
 }
 

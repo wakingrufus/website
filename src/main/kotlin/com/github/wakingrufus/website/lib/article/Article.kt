@@ -8,6 +8,7 @@ import java.nio.charset.Charset
 @WebsiteDsl
 class ARTICLE(val title: String) {
     private var nav: BODY.() -> Unit = {}
+    private var footer: FOOTER.() -> Unit = {}
     private var content: DIV.() -> Unit = {}
     private var source: String? = null
 
@@ -36,8 +37,14 @@ class ARTICLE(val title: String) {
                 } else {
                     content(this@ARTICLE.content)
                 }
+                footer { this@body.footer() }
             }
+
         }
+    }
+
+    fun footer(footer: FOOTER.() -> Unit){
+        this.footer = footer
     }
 
 }
