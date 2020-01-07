@@ -1,14 +1,12 @@
 package com.github.wakingrufus.website.lib
 
 import com.github.wakingrufus.website.MyStyles
+import com.github.wakingrufus.website.lib.dashboard.Dashboard
 import com.github.wakingrufus.website.lib.slides.Slideshow
 import com.rometools.rome.feed.synd.SyndFeed
 import com.vladsch.flexmark.html.HtmlRenderer
 import com.vladsch.flexmark.util.data.MutableDataSet
-import kotlinx.css.CSSBuilder
-import kotlinx.css.ListStyleType
-import kotlinx.css.TextAlign
-import kotlinx.css.VerticalAlign
+import kotlinx.css.*
 import kotlinx.html.*
 import mu.KLogging
 import java.io.File
@@ -95,6 +93,16 @@ fun BODY.content(block: DIV.() -> Unit) {
     return div {
         classes = setOf("page-content")
         block(this)
+    }
+}
+
+fun DIV.dashboard(dash: Dashboard.() -> Unit){
+    return div {
+        style = css {
+            paddingLeft = 1.em
+            paddingRight = 1.em
+        }
+        Dashboard().apply(dash)(this)
     }
 }
 

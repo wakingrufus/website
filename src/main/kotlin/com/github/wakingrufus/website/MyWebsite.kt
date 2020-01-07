@@ -1,5 +1,6 @@
 package com.github.wakingrufus.website
 
+import com.github.wakingrufus.website.articles.staticweb
 import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.cooking.chickPeaCurry
 import com.github.wakingrufus.website.cooking.recipeIndex
@@ -12,6 +13,7 @@ import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
+import kotlinx.css.Display
 import kotlinx.html.*
 import java.io.File
 
@@ -37,6 +39,17 @@ object Paths {
     val TRAVEL_PATH = "travel.html"
     val DEVELOPMENT_PATH = "development.html"
     val FAIL_AGILE_BLOG = "fail-agile.html"
+}
+
+val myFooter: FOOTER.() -> Unit = {
+    div {
+        style = css {
+            display = Display.block
+        }
+        a(href = Paths.INDEX_PATH) { +"Home" }
+        +" - "
+        a(href = Paths.FEEDS_PAGE) { +"Feeds" }
+    }
 }
 
 fun BODY.sideNav() {
@@ -79,8 +92,8 @@ class MyWebsite {
             htmlPage(path = Paths.DEVELOPMENT_PATH, builder = development())
             page(path = Paths.FAIL_AGILE_BLOG) {
                 article("Why Does Agile Fail?") {
-                    nav { this.sideNav() }
                     markdownContent(source = "fail-agile.md")
+                    footer(myFooter)
                 }
             }
 
@@ -107,7 +120,6 @@ fun mainPage(): HTML.() -> Unit = {
     }
     body {
         pageTitle("wakingrufus")
-        sideNav()
         content {
             div {
                 p { +"I am a software developer working on open source projects in kotlin. " }
@@ -129,6 +141,47 @@ fun mainPage(): HTML.() -> Unit = {
                             +"Twitter"
                         }
                     }
+                }
+                p {
+                    +"My "
+                    a(href = Paths.TRAVEL_PATH) { +"Travel Guide" }
+                }
+            }
+            myDashboard()
+        }
+        footer { myFooter() }
+    }
+}
+
+val myDashboard: DIV.() -> Unit = {
+    dashboard {
+        panel("Projects") {
+            ul {
+                li { a(href = Paths.WEBSITE_PATH) { +"This Website" } }
+                li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
+                li { a(href = Paths.TOURNEY_PATH) { +"Tourney" } }
+                li { a(href = Paths.LIBELO_PATH) { +"lib-elo" } }
+                li { a(href = Paths.FILEDB_PATH) { +"filedb" } }
+            }
+        }
+        panel("Software Development") {
+            h3 { +"Static Web development and Kotlin DSLs" }
+            p { a(href = Paths.STATIC_WEB_ARTICLE_PATH) { +"Article" } }
+            p { a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+            p { a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Video" } }
+            h3 { +"Functional Kotlin" }
+            p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+            h3 { +"Software Development Antipatterns" }
+            p { a(href = Paths.ANTIPATTERNS_PATH + "#refactoring") { +"Refactoring" } }
+//            h3 { +"Fail Agile" }
+//            p { a(href = Paths.FAIL_AGILE_BLOG) { +"Article" } }
+            h3 { +"Kotlin in 2019" }
+            p { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+        }
+        panel("Recipes") {
+            ul {
+                allRecipes.forEach { recipe ->
+                    li { a(href = recipe.name.replace(" ", "") + ".html") { +recipe.name } }
                 }
             }
         }
@@ -166,7 +219,6 @@ fun feeds(): HTML.() -> Unit = {
     }
     body {
         pageTitle("Feeds")
-        sideNav()
         content {
             ul {
                 li { a(href = "rss/" + Paths.RSS_PATH) { +"All Updates" } }
@@ -174,6 +226,7 @@ fun feeds(): HTML.() -> Unit = {
             }
 
         }
+        footer { myFooter() }
     }
 }
 
@@ -183,11 +236,11 @@ fun Recipe.recipePage(): HTML.() -> Unit = {
     }
     body {
         pageTitle(this@recipePage.name)
-        sideNav()
         content {
             this@body.apply(this@recipePage.html())
 
         }
+        footer { myFooter() }
     }
 }
 
