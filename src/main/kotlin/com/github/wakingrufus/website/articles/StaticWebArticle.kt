@@ -1,38 +1,42 @@
 package com.github.wakingrufus.website.articles
 
 import com.github.wakingrufus.website.Paths
+import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.code.*
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.lib.htmlPage
+import com.github.wakingrufus.website.lib.sideNavBar
 import com.github.wakingrufus.website.myFooter
-import com.github.wakingrufus.website.sideNav
 import kotlinx.html.*
 
-
-fun staticweb(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("Static Web with Kotlin DSLs")
-        sideNav()
-        content {
-            introToStaticWeb()(this)
-            lambdaAsFinalParameter()(this)
-            lambdaWithReceiver()(this)
-            dslMarker()(this)
-            htmlDsl()(this)
-            codeReuse()(this)
-            dslExtension()(this)
-            usage()(this)
-            conclusion()(this)
-            staticWebAdditionalResources(this)
+val staticWeb = htmlPage("staticwebarticle.html") {
+    article("Static Web with Kotlin DSLs") {
+        nav {
+            sideNavBar {
+                li { a(href = "#intro") { +"Intro" } }
+                li { a(href = "#documents") { +"Documents, not Apps" } }
+                li { a(href = "#lambdaparameter") { +"Lambda as final parameter" } }
+                li { a(href = "#lambdareceiver") { +"Lambda with receiver" } }
+                li { a(href = "#dslmarker") { +"DSL Marker" } }
+                li { a(href = "#htmldsl") { +"HTML DSL" } }
+                li { a(href = "#reuse") { +"Code Reuse" } }
+            }
         }
-        footer { myFooter() }
+        htmlSection(introToStaticWeb())
+        htmlSection(lambdaAsFinalParameter())
+        htmlSection(lambdaWithReceiver())
+        htmlSection(dslMarker())
+        htmlSection(htmlDsl())
+        htmlSection(codeReuse())
+        htmlSection(dslExtension())
+        htmlSection(usage())
+        htmlSection(conclusion())
+        htmlSection(staticWebAdditionalResources)
+        footer(myFooter)
     }
 }
 
 fun introToStaticWeb(): DIV.() -> Unit = {
+    a { id = "intro" }
     p {
         +"""The term "static web" refers to a style of web development that might seem out of place in today's
             |modern scene of Javascript frameworks.
@@ -44,7 +48,9 @@ fun introToStaticWeb(): DIV.() -> Unit = {
             |some of the benefits of dynamic web programming to the static web world.
             """.trimMargin()
     }
+    a { id = "documents" }
     h2 { +"Documents, not Apps" }
+
     p {
         +"""
             The Web was designed to provide documents.
@@ -137,6 +143,7 @@ fun introToStaticWeb(): DIV.() -> Unit = {
 }
 
 fun lambdaAsFinalParameter(): DIV.() -> Unit = {
+    a { id = "lambdaparameter" }
     h2 { +"Lambda as final parameter" }
     p {
         +"""In Kotlin, if the last parameter of a function is a lambda,
@@ -182,6 +189,7 @@ fun lambdaAsFinalParameter(): DIV.() -> Unit = {
 }
 
 fun lambdaWithReceiver(): DIV.() -> Unit = {
+    a { id = "lambdareceiver" }
     h2 { +"Lambda with receiver" }
     p { +"A lambda parameter with receiver looks like this:" }
     sampleCode {
@@ -214,16 +222,16 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
             body {
                 returns {
 
-                        on({
-                            call("StringBuilder")
-                        }) {
-                            call(name = "append") {
-                                argument {
-                                    string("content")
-                                }
+                    on({
+                        call("StringBuilder")
+                    }) {
+                        call(name = "append") {
+                            argument {
+                                string("content")
                             }
-                            call("build")
                         }
+                        call("build")
+                    }
                 }
             }
         }
@@ -254,6 +262,7 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
 }
 
 fun dslMarker(): DIV.() -> Unit = {
+    a { id = "dslmarker" }
     h2 { +"@DslMarker" }
     p {
         +"""DSL markers help in DSLs when you are nesting multiple receiver calls.
@@ -277,6 +286,7 @@ fun dslMarker(): DIV.() -> Unit = {
 }
 
 fun htmlDsl(): DIV.() -> Unit = {
+    a { id = "htmldsl" }
     h2 { +"HTML DSL" }
     p {
         +"The Jetbrains team as created a DSL for HTML which serves as a prime example of how to write DSLs in Kotlin"
@@ -326,6 +336,7 @@ fun htmlDsl(): DIV.() -> Unit = {
 }
 
 fun codeReuse(): DIV.() -> Unit = {
+    a { id = "reuse" }
     h2 { +"Code reuse" }
     p {
         +"""One of the first benefits of using a programming language over raw HTML we want to leverage is code reuse.
@@ -454,6 +465,7 @@ fun codeReuse(): DIV.() -> Unit = {
 }
 
 fun dslExtension(): DIV.() -> Unit = {
+    a { id = "extension" }
     p {
         +"""Next, instead of strict code reuse, I want to be able to easily replicate a pattern of usage of the DSL.
             |For this example, I will create a DSL for building a rolodex page.

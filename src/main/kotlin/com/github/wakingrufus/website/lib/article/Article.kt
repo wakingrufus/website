@@ -10,10 +10,19 @@ class ARTICLE(val title: String) {
     private var nav: BODY.() -> Unit = {}
     private var footer: FOOTER.() -> Unit = {}
     private var content: DIV.() -> Unit = {}
+    private val sections: MutableList<Section> = mutableListOf()
     private var source: String? = null
 
     fun nav(nav: BODY.() -> Unit) {
         this.nav = nav
+    }
+
+    fun htmlSection(content: DIV.() -> Unit ){
+        sections.add(HtmlSection(content))
+    }
+
+    fun markdownSection(path: String ){
+        sections.add(MarkdownSection(path))
     }
 
     fun content(block: DIV.() -> Unit) {
@@ -32,12 +41,19 @@ class ARTICLE(val title: String) {
             body {
                 pageTitle(this@ARTICLE.title)
                 this@ARTICLE.nav(this)
-                if (this@ARTICLE.source != null) {
-                    this@body.markdownContent(this::class.java.classLoader.getResourceAsStream(this@ARTICLE.source).readBytes().toString(Charset.defaultCharset()))
-                } else {
-                    content(this@ARTICLE.content)
+                content {
+                    //                if (this@ARTICLE.source != null) {
+//                    this@body.markdownContent(this::class.java.classLoader.getResourceAsStream(this@ARTICLE.source).readBytes().toString(Charset.defaultCharset()))
+//                } else {
+//                    content(this@ARTICLE.content)
+//                }
+                    sections.forEach {
+                        div {
+                            this.apply(it.content)
+                        }
+                    }
                 }
-                footer { this@body.footer() }
+                footer { this.footer() }
             }
 
         }

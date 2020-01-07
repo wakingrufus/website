@@ -3,7 +3,7 @@ package com.github.wakingrufus.website.projects
 import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.pageTitle
-import com.github.wakingrufus.website.sideNav
+import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
 
 val tourney: HTML.() -> Unit = {
@@ -12,7 +12,6 @@ val tourney: HTML.() -> Unit = {
     }
     body {
         pageTitle("Tourney")
-        sideNav()
         content {
             div {
                 p {
@@ -22,5 +21,6 @@ val tourney: HTML.() -> Unit = {
                 }
             }
         }
+        footer { myFooter() }
     }
 }
