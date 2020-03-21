@@ -10,7 +10,7 @@ import kotlinx.html.a
 import kotlinx.html.p
 
 val adhocPolymorphism = htmlPage("adhoc-polymorphism.html") {
-    article("Using ad-hoc Polymorphism to test functional Kotlin") {
+    article("Using Ad-hoc Polymorphism to Test Functional Kotlin") {
         htmlSection(dependencyInjection)
         footer(myFooter)
     }
@@ -296,15 +296,14 @@ For example:
     }
     p {
         +"""
-This is a simple pattern I have found to write more testable functional Kotlin, and I hope it is useful to others. 
-Please leave your feedback in the comments section!
+This is a simple pattern I have found to write more testable functional Kotlin, and I hope it is useful to others.
     """.trimIndent()
     }
     p {
         +"Discuss this post on "
-        a(href = "https://mastodon.technology/@wakingrufus/100265615075039570") { +"Mastodon" }
+        a(href = "https://mastodon.technology/@wakingrufus/103862936151360467") { +"Mastodon" }
         +" or "
-        a(href = "https://twitter.com/wakingrufus/status/1011236173774245888") { +"Twitter" }
+        a(href = "https://twitter.com/wakingrufus/status/1241462314269843456") { +"Twitter" }
         +"."
     }
 }
