@@ -133,8 +133,8 @@ For example:
     p {
         +"""
 If you are like most Kotlin developers, you come from an Object-Oriented Java background.
-You most likely start out by writng Object oriented Kotlin that look a lot like Java.
-But as you became more comfortable, you might start taking advantage of Kotlin’s ability to be functional. 
+You most likely start out by writing Object-Oriented Kotlin that looks a lot like Java.
+As you became more comfortable, you might start taking advantage of Kotlin’s ability to be functional. 
 This means writing first-class functions, not classes. 
 Functional programming has led me to rethink my approaches to software design, for the better. 
 However, I soon realized that as great as pure functions are, 
