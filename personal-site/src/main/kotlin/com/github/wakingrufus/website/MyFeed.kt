@@ -112,6 +112,22 @@ val allEntries = entries {
         content("Happy π Day! I gave a talk about DSLs in Kotlin at the Chicago Kotlin User Group. " +
                 "I added a link to the video on archive.org on my development page")
     }
+    entry {
+        title = adhocPolymorphism.getTitle()
+        author = "wakingrufus"
+        categories = listOf(article)
+        link = "https://wakingrufus.neocities.org/" + adhocPolymorphism.path
+        publishedDate = Date.from(ZonedDateTime.of(LocalDate.of(2020, Month.MARCH, 21),
+                LocalTime.of(15, 30, 0),
+                ZoneOffset.ofHours(-5)).toInstant())
+        content {
+            body {
+                div {
+                    this.apply(dependencyInjection)
+                }
+            }
+        }
+    }
 }
 
 fun siteUpdateFeed(): SyndFeed = rss {

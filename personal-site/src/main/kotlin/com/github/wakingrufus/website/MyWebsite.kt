@@ -1,10 +1,10 @@
 package com.github.wakingrufus.website
 
+import com.github.wakingrufus.recipe.Recipe
+import com.github.wakingrufus.website.articles.adhocPolymorphism
 import com.github.wakingrufus.website.articles.antipatterns
 import com.github.wakingrufus.website.articles.failAgile
 import com.github.wakingrufus.website.articles.staticWeb
-import com.github.wakingrufus.recipe.Recipe
-import com.github.wakingrufus.website.articles.adhocPolymorphism
 import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.article.article
@@ -138,8 +138,8 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         panel("Software Development") {
-//            h3 { +"Using ad-hoc Polymorphism to test functional Kotlin" }
-//            p { a(href = adhocPolymorphism.path) { +"Article" } }
+            h3 { +adhocPolymorphism.getTitle() }
+            p { a(href = adhocPolymorphism.path) { +"Article" } }
             h3 { +"Static Web development and Kotlin DSLs" }
             span { a(href = staticWeb.path) { +"Article" } }
             span { +" - " }

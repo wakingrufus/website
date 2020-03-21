@@ -15,6 +15,10 @@ class HtmlPage(val path: String) {
         builder = block
     }
 
+    fun getTitle(): String {
+        return article?.title ?: ""
+    }
+
     fun writeHtmlPage(writer: Writer) {
         writer.use {
             it.appendHTML().html(block = {
