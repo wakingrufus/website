@@ -1,1 +1,6 @@
 rootProject.name = 'website'
+
+include(":website-dsl")
+include(":recipe-dsl")
+include(":rss-dsl")
+include(":personal-site")
