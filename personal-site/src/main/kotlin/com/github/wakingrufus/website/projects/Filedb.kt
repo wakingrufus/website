@@ -1,13 +1,11 @@
 package com.github.wakingrufus.website.projects
 
 import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.a
 import kotlinx.html.div
 import kotlinx.html.p
-
 
 val filedb = htmlPage(Paths.FILEDB_PATH) {
     article("Filedb") {

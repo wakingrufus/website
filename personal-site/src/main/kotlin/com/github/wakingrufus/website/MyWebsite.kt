@@ -7,7 +7,6 @@ import com.github.wakingrufus.website.articles.failAgile
 import com.github.wakingrufus.website.articles.staticWeb
 import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.lib.*
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.html
 import com.github.wakingrufus.website.projects.*
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow

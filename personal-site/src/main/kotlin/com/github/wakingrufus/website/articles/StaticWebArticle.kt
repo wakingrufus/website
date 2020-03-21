@@ -1,39 +1,10 @@
 package com.github.wakingrufus.website.articles
 
-import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.lib.sideNavBar
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
-
-val staticWeb = htmlPage("staticwebarticle.html") {
-    article("Static Web with Kotlin DSLs") {
-        nav {
-            sideNavBar {
-                li { a(href = "#intro") { +"Intro" } }
-                li { a(href = "#documents") { +"Documents, not Apps" } }
-                li { a(href = "#lambdaparameter") { +"Lambda as final parameter" } }
-                li { a(href = "#lambdareceiver") { +"Lambda with receiver" } }
-                li { a(href = "#dslmarker") { +"DSL Marker" } }
-                li { a(href = "#htmldsl") { +"HTML DSL" } }
-                li { a(href = "#reuse") { +"Code Reuse" } }
-            }
-        }
-        htmlSection(introToStaticWeb())
-        htmlSection(lambdaAsFinalParameter())
-        htmlSection(lambdaWithReceiver())
-        htmlSection(dslMarker())
-        htmlSection(htmlDsl())
-        htmlSection(codeReuse())
-        htmlSection(dslExtension())
-        htmlSection(usage())
-        htmlSection(conclusion())
-        htmlSection(staticWebAdditionalResources)
-        footer(myFooter)
-    }
-}
 
 fun introToStaticWeb(): DIV.() -> Unit = {
     a { id = "intro" }
@@ -1056,5 +1027,32 @@ val staticWebAdditionalResources: DIV.() -> Unit = {
         +"Discuss this post on "
         a(href = "https://mastodon.technology/web/statuses/101241850991374660") { +"Mastodon" }
         +"."
+    }
+}
+
+val staticWeb = htmlPage("staticwebarticle.html") {
+    article("Static Web with Kotlin DSLs") {
+        nav {
+            sideNavBar {
+                li { a(href = "#intro") { +"Intro" } }
+                li { a(href = "#documents") { +"Documents, not Apps" } }
+                li { a(href = "#lambdaparameter") { +"Lambda as final parameter" } }
+                li { a(href = "#lambdareceiver") { +"Lambda with receiver" } }
+                li { a(href = "#dslmarker") { +"DSL Marker" } }
+                li { a(href = "#htmldsl") { +"HTML DSL" } }
+                li { a(href = "#reuse") { +"Code Reuse" } }
+            }
+        }
+        htmlSection(introToStaticWeb())
+        htmlSection(lambdaAsFinalParameter())
+        htmlSection(lambdaWithReceiver())
+        htmlSection(dslMarker())
+        htmlSection(htmlDsl())
+        htmlSection(codeReuse())
+        htmlSection(dslExtension())
+        htmlSection(usage())
+        htmlSection(conclusion())
+        htmlSection(staticWebAdditionalResources)
+        footer(myFooter)
     }
 }

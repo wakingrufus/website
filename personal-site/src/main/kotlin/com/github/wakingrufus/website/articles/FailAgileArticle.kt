@@ -1,7 +1,6 @@
 package com.github.wakingrufus.website.articles
 
 import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
 

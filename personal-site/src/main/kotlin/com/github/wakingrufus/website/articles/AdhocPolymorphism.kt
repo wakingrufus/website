@@ -1,6 +1,5 @@
 package com.github.wakingrufus.website.articles
 
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
@@ -8,13 +7,6 @@ import kotlinx.html.CODE
 import kotlinx.html.DIV
 import kotlinx.html.a
 import kotlinx.html.p
-
-val adhocPolymorphism = htmlPage("adhoc-polymorphism.html") {
-    article("Using Ad-hoc Polymorphism to Test Functional Kotlin") {
-        htmlSection(dependencyInjection)
-        footer(myFooter)
-    }
-}
 
 val calculateValueForNumberFunction: FUNCTION.() -> Unit = {
     val numberParam = parameter(name = "number", type = "Int")
@@ -305,5 +297,12 @@ This is a simple pattern I have found to write more testable functional Kotlin, 
         +" or "
         a(href = "https://twitter.com/wakingrufus/status/1241462314269843456") { +"Twitter" }
         +"."
+    }
+}
+
+val adhocPolymorphism = htmlPage("adhoc-polymorphism.html") {
+    article("Using Ad-hoc Polymorphism to Test Functional Kotlin") {
+        htmlSection(dependencyInjection)
+        footer(myFooter)
     }
 }

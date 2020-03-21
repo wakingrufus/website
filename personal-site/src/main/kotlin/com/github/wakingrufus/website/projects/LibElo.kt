@@ -1,6 +1,5 @@
 package com.github.wakingrufus.website.projects
 
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.a

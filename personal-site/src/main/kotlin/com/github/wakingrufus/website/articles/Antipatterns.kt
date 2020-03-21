@@ -1,37 +1,9 @@
 package com.github.wakingrufus.website.articles
 
-import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.lib.sideNavBar
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
-
-val antipatterns = htmlPage("antipatterns.html") {
-    article("Software Development Anti-Patterns") {
-        nav {
-            sideNavBar {
-                li { a(href = "#intro") { +"Introduction" } }
-                li { a(href = "#refactoring") { +"Refactoring as a Separate Ticket" } }
-            }
-        }
-        htmlSection {
-            a { id = "intro" }
-            p {
-                +"There are a lot of ways to develop software, and there is no one best way. "
-                +"For this reason, there is much literature about how to develop software. "
-                +"But with so many subjectively good ways to develop software, it can be easier to just focus on how "
-                em { +"not" }
-                +" to do it. "
-                +"I have identified a number of Software Engineering anti-patterns. "
-                +"Note that these are not code design anti-patterns, they are anti-patterns in "
-                em { +"how" }
-                +" we develop software."
-            }
-        }
-        htmlSection(refactoring)
-        footer(myFooter)
-    }
-}
 
 val refactoring: DIV.() -> Unit = {
     h2 { +"Refactoring as a Separate Ticket" }
@@ -80,5 +52,33 @@ val refactoring: DIV.() -> Unit = {
         +" or "
         a(href = "https://twitter.com/wakingrufus/status/1011236173774245888") { +"Twitter" }
         +"."
+    }
+}
+
+
+val antipatterns = htmlPage("antipatterns.html") {
+    article("Software Development Anti-Patterns") {
+        nav {
+            sideNavBar {
+                li { a(href = "#intro") { +"Introduction" } }
+                li { a(href = "#refactoring") { +"Refactoring as a Separate Ticket" } }
+            }
+        }
+        htmlSection {
+            a { id = "intro" }
+            p {
+                +"There are a lot of ways to develop software, and there is no one best way. "
+                +"For this reason, there is much literature about how to develop software. "
+                +"But with so many subjectively good ways to develop software, it can be easier to just focus on how "
+                em { +"not" }
+                +" to do it. "
+                +"I have identified a number of Software Engineering anti-patterns. "
+                +"Note that these are not code design anti-patterns, they are anti-patterns in "
+                em { +"how" }
+                +" we develop software."
+            }
+        }
+        htmlSection(refactoring)
+        footer(myFooter)
     }
 }

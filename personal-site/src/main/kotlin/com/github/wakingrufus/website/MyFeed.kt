@@ -123,7 +123,7 @@ val allEntries = entries {
         content {
             body {
                 div {
-                    this.apply(dependencyInjection)
+                    this.apply(adhocPolymorphism.getContent())
                 }
             }
         }
