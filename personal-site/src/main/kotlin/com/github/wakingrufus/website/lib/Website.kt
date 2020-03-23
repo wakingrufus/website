@@ -39,9 +39,11 @@ class Website(private val baseDir: File) {
     fun page(path: String, pageBuilder: HtmlPage.() -> Unit) {
         htmlFiles += HtmlPage(path).apply(pageBuilder)
     }
+
     fun page(htmlPage: HtmlPage) {
         htmlFiles += htmlPage
     }
+
     fun rssFeed(rssDir: String = "rss", path: String, feedContents: SyndFeed) {
         rssFeeds += RssFeedBuilder(
                 file = File(baseDir, rssDir).let {
@@ -80,8 +82,13 @@ class Website(private val baseDir: File) {
         })
     }
 
-    fun upload() = slideshows.flatMap(Slideshow::files).plus(files())
-            .forEach { file -> uploaders.forEach { u -> u.upload(baseDir, file) } }
+    fun upload() = (slideshows.flatMap(Slideshow::files).plus(files())).also { allFiles ->
+        uploaders.forEach { u ->
+            allFiles.filter { u.check(baseDir, it) }.forEach {
+                u.upload(baseDir, it)
+            }
+        }
+    }
 }
 
 fun website(baseDir: File, builder: Website.(baseDir: File) -> Unit): Website {
