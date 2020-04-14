@@ -1,7 +1,6 @@
 package com.github.wakingrufus.website.articles
 
 import com.github.wakingrufus.website.lib.htmlPage
-import com.github.wakingrufus.website.lib.sideNavBar
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
 
@@ -59,10 +58,8 @@ val refactoring: DIV.() -> Unit = {
 val antipatterns = htmlPage("antipatterns.html") {
     article("Software Development Anti-Patterns") {
         nav {
-            sideNavBar {
-                li { a(href = "#intro") { +"Introduction" } }
-                li { a(href = "#refactoring") { +"Refactoring as a Separate Ticket" } }
-            }
+            item("#intro", "Introduction")
+            item("#refactoring", "Refactoring as a Separate Ticket")
         }
         htmlSection {
             a { id = "intro" }

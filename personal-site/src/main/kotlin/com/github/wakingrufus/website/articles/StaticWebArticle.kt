@@ -2,7 +2,6 @@ package com.github.wakingrufus.website.articles
 
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.htmlPage
-import com.github.wakingrufus.website.lib.sideNavBar
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
 
@@ -1033,15 +1032,13 @@ val staticWebAdditionalResources: DIV.() -> Unit = {
 val staticWeb = htmlPage("staticwebarticle.html") {
     article("Static Web with Kotlin DSLs") {
         nav {
-            sideNavBar {
-                li { a(href = "#intro") { +"Intro" } }
-                li { a(href = "#documents") { +"Documents, not Apps" } }
-                li { a(href = "#lambdaparameter") { +"Lambda as final parameter" } }
-                li { a(href = "#lambdareceiver") { +"Lambda with receiver" } }
-                li { a(href = "#dslmarker") { +"DSL Marker" } }
-                li { a(href = "#htmldsl") { +"HTML DSL" } }
-                li { a(href = "#reuse") { +"Code Reuse" } }
-            }
+            item("#intro", "Intro")
+            item("#documents", "Documents, not Apps")
+            item("#lambdaparameter", "Lambda as final parameter")
+            item("#lambdareceiver", "Lambda with receiver")
+            item("#dslmarker", "DSL Marker")
+            item("#htmldsl", "HTML DSL")
+            item("#reuse", "Code Reuse")
         }
         htmlSection(introToStaticWeb())
         htmlSection(lambdaAsFinalParameter())

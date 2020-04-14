@@ -37,7 +37,7 @@ class MyStyles {
             }
             (".page-content") {
                 display = Display.inlineBlock
-                maxWidth = 79.pct
+         //       maxWidth = 79.pct
             }
 
             (".page-content blockquote") {

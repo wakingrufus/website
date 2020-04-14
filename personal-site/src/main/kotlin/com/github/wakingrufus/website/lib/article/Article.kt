@@ -6,18 +6,19 @@ import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.pageTitle
 import kotlinx.css.em
+import kotlinx.css.pct
 import kotlinx.html.*
 
 @WebsiteDsl
 class ARTICLE(val title: String) {
-    private var nav: BODY.() -> Unit = {}
+    private var nav: Navigation? = null
     private var footer: FOOTER.() -> Unit = {}
     private var content: DIV.() -> Unit = {}
     private val sections: MutableList<Section> = mutableListOf()
     private var source: String? = null
 
-    fun nav(nav: BODY.() -> Unit) {
-        this.nav = nav
+    fun nav(nav: Navigation.() -> Unit) {
+        this.nav = Navigation().apply(nav)
     }
 
     fun htmlSection(content: DIV.() -> Unit) {
@@ -49,10 +50,14 @@ class ARTICLE(val title: String) {
             }
             body {
                 pageTitle(this@ARTICLE.title)
-                this@ARTICLE.nav(this)
+                this@ARTICLE.nav?.invoke(this)
                 content {
                     style = css {
                         marginLeft = 1.em
+                        marginRight = 1.em
+                        if (nav != null) {
+                            maxWidth = 79.pct
+                        }
                     }
                     div {
                         getContent().invoke(this)
