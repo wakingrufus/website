@@ -1,9 +1,11 @@
 package com.github.wakingrufus.website
 
+import com.github.wakingrufus.rss.Entries
 import com.github.wakingrufus.rss.entries
 import com.github.wakingrufus.rss.rss
 import com.github.wakingrufus.rss.rssCategory
 import com.github.wakingrufus.website.articles.*
+import com.github.wakingrufus.website.lib.HtmlPage
 import com.rometools.rome.feed.synd.SyndFeed
 import kotlinx.html.body
 import kotlinx.html.div
@@ -124,6 +126,28 @@ val allEntries = entries {
             body {
                 div {
                     this.apply(adhocPolymorphism.getContent())
+                }
+            }
+        }
+    }
+    article(failAgile,
+            ZonedDateTime.of(
+                    LocalDate.of(2020, Month.APRIL, 20),
+                    LocalTime.of(15, 30, 0),
+                    ZoneOffset.ofHours(-5)).toInstant())
+}
+
+fun Entries.article(articlePage: HtmlPage, date: Instant){
+    entry {
+        title = articlePage.getTitle()
+        author = "wakingrufus"
+        categories = listOf(article)
+        link = "https://wakingrufus.neocities.org/" + articlePage.path
+        publishedDate = Date.from(date)
+        content {
+            body {
+                div {
+                    this.apply(articlePage.getContent())
                 }
             }
         }

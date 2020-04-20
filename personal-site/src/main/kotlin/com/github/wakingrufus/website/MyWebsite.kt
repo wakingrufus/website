@@ -137,6 +137,8 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         panel("Software Development") {
+            h3 { +failAgile.getTitle() }
+            p { a(href = Paths.FAIL_AGILE_BLOG) { +"Article" } }
             h3 { +adhocPolymorphism.getTitle() }
             p { a(href = adhocPolymorphism.path) { +"Article" } }
             h3 { +"Static Web development and Kotlin DSLs" }
@@ -149,8 +151,6 @@ val myDashboard: DIV.() -> Unit = {
             p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
             h3 { +"Software Development Antipatterns" }
             p { a(href = antipatterns.path + "#refactoring") { +"Refactoring" } }
-//            h3 { +"Fail Agile" }
-//            p { a(href = Paths.FAIL_AGILE_BLOG) { +"Article" } }
             h3 { +"Kotlin in 2019" }
             p { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
         }
