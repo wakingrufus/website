@@ -134,4 +134,4 @@ VSM and worker co-ops are two very different but promising models of how we can 
 
 [Tech Co-op Network](https://www.techworker.coop/) A North American Coop Network
 
-Discuss this post on [Mastodon](https://mastodon.technology/web/statuses/101241850991374660).
+Discuss this post on [Mastodon](https://mastodon.technology/web/statuses/104032275121191642).
