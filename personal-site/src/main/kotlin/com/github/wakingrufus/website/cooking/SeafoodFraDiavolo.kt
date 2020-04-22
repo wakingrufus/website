@@ -1,6 +1,8 @@
 package com.github.wakingrufus.website.cooking
 
 import com.github.wakingrufus.recipe.*
+import com.github.wakingrufus.website.cooking.Spices.redPepperFlakes
+import com.github.wakingrufus.website.cooking.Spices.salt
 
 val seafoodFraDiavolo = recipe("Seafood Fra Diavolo") {
     servings = 8

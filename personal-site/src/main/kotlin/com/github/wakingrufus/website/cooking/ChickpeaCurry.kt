@@ -1,6 +1,12 @@
 package com.github.wakingrufus.website.cooking
 
 import com.github.wakingrufus.recipe.*
+import com.github.wakingrufus.website.cooking.Spices.cumin
+import com.github.wakingrufus.website.cooking.Spices.curryPowder
+import com.github.wakingrufus.website.cooking.Spices.garamMasala
+import com.github.wakingrufus.website.cooking.Spices.ginger
+import com.github.wakingrufus.website.cooking.Spices.salt
+
 import java.time.temporal.ChronoUnit.MINUTES
 
 val chickPeaCurry = recipe("Butter Chickpea Curry") {

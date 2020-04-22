@@ -30,7 +30,7 @@ fun Recipe.html(): DIV.() -> Unit = {
             }
         }
         h3 { +"Instructions" }
-        ul {
+        ol {
             instructions.forEach {
                 li { +it.description }
             }
