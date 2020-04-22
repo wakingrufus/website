@@ -142,11 +142,15 @@ val myDashboard: DIV.() -> Unit = {
             h3 { +adhocPolymorphism.getTitle() }
             p { a(href = adhocPolymorphism.path) { +"Article" } }
             h3 { +"Static Web development and Kotlin DSLs" }
-            span { a(href = staticWeb.path) { +"Article" } }
-            span { +" - " }
-            span { a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
-            span { +" - " }
-            span { a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Video" } }
+            span {
+                a(href = staticWeb.path) { +"Article" }
+                +" - "
+                a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" }
+                +" - "
+                a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Presentation Video" }
+                +" - "
+                a(href = "https://archive.org/details/kotlin-web-dsl") { +"Tutorial Video" }
+            }
             h3 { +"Functional Kotlin" }
             p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
             h3 { +"Software Development Antipatterns" }

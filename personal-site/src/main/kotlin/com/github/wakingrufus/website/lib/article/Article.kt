@@ -47,6 +47,7 @@ class ARTICLE(val title: String) {
         page.apply {
             head {
                 link(href = Paths.CSS_PATH, rel = "stylesheet")
+                this.title(this@ARTICLE.title)
             }
             body {
                 pageTitle(this@ARTICLE.title)
