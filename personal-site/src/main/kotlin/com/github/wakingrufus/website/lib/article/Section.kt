@@ -3,11 +3,12 @@ package com.github.wakingrufus.website.lib.article
 import com.vladsch.flexmark.html.HtmlRenderer
 import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.util.data.MutableDataSet
+import kotlinx.html.ARTICLE
 import kotlinx.html.DIV
 import kotlinx.html.unsafe
 import java.nio.charset.Charset
 
-sealed class Section(open val content: DIV.() -> Unit)
+sealed class Section(open val content: ARTICLE.() -> Unit)
 class MarkdownSection(val sourcePath: String) : Section({
     this.unsafe {
         raw(HtmlRenderer.builder(MutableDataSet()).build()
@@ -16,4 +17,4 @@ class MarkdownSection(val sourcePath: String) : Section({
     }
 })
 
-class HtmlSection(override val content: DIV.() -> Unit) : Section(content)
+class HtmlSection(override val content: ARTICLE.() -> Unit) : Section(content)

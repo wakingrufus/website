@@ -7,6 +7,7 @@ import com.github.wakingrufus.rss.rssCategory
 import com.github.wakingrufus.website.articles.*
 import com.github.wakingrufus.website.lib.HtmlPage
 import com.rometools.rome.feed.synd.SyndFeed
+import kotlinx.html.article
 import kotlinx.html.body
 import kotlinx.html.div
 import java.time.*
@@ -43,7 +44,7 @@ val allEntries = entries {
                 ZoneOffset.ofHours(-5)).toInstant())
         content {
             body {
-                div {
+                article {
                     this.apply(refactoring)
                 }
             }
@@ -73,7 +74,7 @@ val allEntries = entries {
         ).toInstant())
         content {
             body {
-                div {
+                article {
                     introToStaticWeb()(this)
                     lambdaAsFinalParameter()(this)
                     lambdaWithReceiver()(this)

@@ -5,7 +5,7 @@ import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
 
-fun introToStaticWeb(): DIV.() -> Unit = {
+fun introToStaticWeb(): ARTICLE.() -> Unit = {
     a { id = "intro" }
     p {
         +"""The term "static web" refers to a style of web development that might seem out of place in today's
@@ -112,7 +112,7 @@ fun introToStaticWeb(): DIV.() -> Unit = {
     p { +"First, let's briefly review some Kotlin features used in DSLs." }
 }
 
-fun lambdaAsFinalParameter(): DIV.() -> Unit = {
+fun lambdaAsFinalParameter(): ARTICLE.() -> Unit = {
     a { id = "lambdaparameter" }
     h2 { +"Lambda as final parameter" }
     p {
@@ -158,7 +158,7 @@ fun lambdaAsFinalParameter(): DIV.() -> Unit = {
     }
 }
 
-fun lambdaWithReceiver(): DIV.() -> Unit = {
+fun lambdaWithReceiver(): ARTICLE.() -> Unit = {
     a { id = "lambdareceiver" }
     h2 { +"Lambda with receiver" }
     p { +"A lambda parameter with receiver looks like this:" }
@@ -231,7 +231,7 @@ fun lambdaWithReceiver(): DIV.() -> Unit = {
     }
 }
 
-fun dslMarker(): DIV.() -> Unit = {
+fun dslMarker(): ARTICLE.() -> Unit = {
     a { id = "dslmarker" }
     h2 { +"@DslMarker" }
     p {
@@ -255,7 +255,7 @@ fun dslMarker(): DIV.() -> Unit = {
     }
 }
 
-fun htmlDsl(): DIV.() -> Unit = {
+fun htmlDsl(): ARTICLE.() -> Unit = {
     a { id = "htmldsl" }
     h2 { +"HTML DSL" }
     p {
@@ -305,7 +305,7 @@ fun htmlDsl(): DIV.() -> Unit = {
     }
 }
 
-fun codeReuse(): DIV.() -> Unit = {
+fun codeReuse(): ARTICLE.() -> Unit = {
     a { id = "reuse" }
     h2 { +"Code reuse" }
     p {
@@ -434,7 +434,7 @@ fun codeReuse(): DIV.() -> Unit = {
     }
 }
 
-fun dslExtension(): DIV.() -> Unit = {
+fun dslExtension(): ARTICLE.() -> Unit = {
     a { id = "extension" }
     p {
         +"""Next, instead of strict code reuse, I want to be able to easily replicate a pattern of usage of the DSL.
@@ -917,7 +917,7 @@ fun BLOCK.cssMaxHeight(em: Number) {
     }
 }
 
-fun usage(): DIV.() -> Unit = {
+fun usage(): ARTICLE.() -> Unit = {
     h2 { +"Usage" }
     p { +"We are ready to use our DSL extensions. An example usage could look like this:" }
     sampleCode {
@@ -992,7 +992,7 @@ fun usage(): DIV.() -> Unit = {
 }
 
 
-fun conclusion(): DIV.() -> Unit = {
+fun conclusion(): ARTICLE.() -> Unit = {
     h2 { +"Conclusion" }
     p {
         +"""
@@ -1007,7 +1007,7 @@ fun conclusion(): DIV.() -> Unit = {
     }
 }
 
-val staticWebAdditionalResources: DIV.() -> Unit = {
+val staticWebAdditionalResources: ARTICLE.() -> Unit = {
     h2 { +"Additional Resources" }
     p {
         +"This article was first posted on "

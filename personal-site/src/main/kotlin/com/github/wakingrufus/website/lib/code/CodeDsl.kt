@@ -22,6 +22,19 @@ fun DIV.sampleCode(block: CODE.() -> Unit) {
     }
 }
 
+@HtmlTagMarker
+fun ARTICLE.sampleCode(block: CODE.() -> Unit) {
+    return pre {
+        code {
+            style = css {
+                fontSize = 1.2.em
+                fontWeight = FontWeight.bold
+            }
+            block(this)
+        }
+    }
+}
+
 fun CODE.keyword(text: String) {
     return span {
         style = css {

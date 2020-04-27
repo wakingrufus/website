@@ -3,10 +3,7 @@ package com.github.wakingrufus.website.articles
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
-import kotlinx.html.CODE
-import kotlinx.html.DIV
-import kotlinx.html.a
-import kotlinx.html.p
+import kotlinx.html.*
 
 val calculateValueForNumberFunction: FUNCTION.() -> Unit = {
     val numberParam = parameter(name = "number", type = "Int")
@@ -83,7 +80,7 @@ val calculateValueForNumberFunction: FUNCTION.() -> Unit = {
     }
 }
 
-val dependencyInjection: DIV.() -> Unit = {
+val dependencyInjection: ARTICLE.() -> Unit = {
     p {
         +"""
 Dependency injection is a pattern very commonly used in Object-Oriented Java. 

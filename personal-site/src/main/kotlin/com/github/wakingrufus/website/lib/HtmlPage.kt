@@ -1,9 +1,10 @@
 package com.github.wakingrufus.website.lib
 
 import com.github.wakingrufus.website.WebsiteDsl
-import com.github.wakingrufus.website.lib.article.ARTICLE
+import com.github.wakingrufus.website.lib.article.ArticleBuilder
 import kotlinx.html.DIV
 import kotlinx.html.HTML
+import kotlinx.html.article
 import kotlinx.html.html
 import kotlinx.html.stream.appendHTML
 import java.io.Writer
@@ -11,7 +12,7 @@ import java.io.Writer
 @WebsiteDsl
 class HtmlPage(val path: String) {
     private var builder: HTML.() -> Unit = {}
-    private var article: ARTICLE? = null
+    private var article: ArticleBuilder? = null
 
     @Deprecated("use article or other typed builder")
     fun builder(block: HTML.() -> Unit) {
@@ -22,8 +23,10 @@ class HtmlPage(val path: String) {
         return article?.title ?: ""
     }
 
-    fun getContent(): DIV.() -> Unit {
-        return article?.getContent() ?: {}
+    fun getContent(): DIV.() -> Unit = {
+        this@HtmlPage.article?.getContent()?.also{
+            article(block = it)
+        }
     }
 
     fun writeHtmlPage(writer: Writer) {
@@ -35,8 +38,8 @@ class HtmlPage(val path: String) {
         }
     }
 
-    fun article(title: String, article: ARTICLE.() -> Unit) {
-        this.article = ARTICLE(title).apply(article)
+    fun article(title: String, article: ArticleBuilder.() -> Unit) {
+        this.article = ArticleBuilder(title).apply(article)
     }
 }
 

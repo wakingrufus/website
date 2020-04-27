@@ -4,7 +4,7 @@ import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.*
 
-val refactoring: DIV.() -> Unit = {
+val refactoring: ARTICLE.() -> Unit = {
     h2 { +"Refactoring as a Separate Ticket" }
     a { id = "refactoring" }
     p {

@@ -10,10 +10,10 @@ import kotlinx.css.pct
 import kotlinx.html.*
 
 @WebsiteDsl
-class ARTICLE(val title: String) {
+class ArticleBuilder(val title: String) {
     private var nav: Navigation? = null
     private var footer: FOOTER.() -> Unit = {}
-    private var content: DIV.() -> Unit = {}
+    private var content: ARTICLE.() -> Unit = {}
     private val sections: MutableList<Section> = mutableListOf()
     private var source: String? = null
 
@@ -21,7 +21,7 @@ class ARTICLE(val title: String) {
         this.nav = Navigation().apply(nav)
     }
 
-    fun htmlSection(content: DIV.() -> Unit) {
+    fun htmlSection(content: ARTICLE.() -> Unit) {
         sections.add(HtmlSection(content))
     }
 
@@ -29,7 +29,7 @@ class ARTICLE(val title: String) {
         sections.add(MarkdownSection(path))
     }
 
-    fun content(block: DIV.() -> Unit) {
+    fun content(block: ARTICLE.() -> Unit) {
         content = block
     }
 
@@ -37,7 +37,7 @@ class ARTICLE(val title: String) {
         this.source = source
     }
 
-    fun getContent(): DIV.() -> Unit = {
+    fun getContent(): ARTICLE.() -> Unit = {
         sections.forEach {
             this.apply(it.content)
         }
@@ -47,11 +47,11 @@ class ARTICLE(val title: String) {
         page.apply {
             head {
                 link(href = Paths.CSS_PATH, rel = "stylesheet")
-                this.title(this@ARTICLE.title)
+                this.title(this@ArticleBuilder.title)
             }
             body {
-                pageTitle(this@ARTICLE.title)
-                this@ARTICLE.nav?.invoke(this)
+                pageTitle(this@ArticleBuilder.title)
+                this@ArticleBuilder.nav?.invoke(this)
                 content {
                     style = css {
                         marginLeft = 1.em
@@ -60,7 +60,7 @@ class ARTICLE(val title: String) {
                             maxWidth = 79.pct
                         }
                     }
-                    div {
+                    article {
                         getContent().invoke(this)
                     }
                 }

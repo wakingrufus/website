@@ -8,7 +8,7 @@ import kotlinx.css.BorderStyle
 import kotlinx.css.em
 import kotlinx.html.*
 
-fun Recipe.html(): DIV.() -> Unit = {
+fun Recipe.html(): ARTICLE.() -> Unit = {
     div {
         style = css {
             backgroundColor = MyStyles.LIGHT_BACKGROUND_COLOR
