@@ -45,6 +45,7 @@ class HtmlPage(val path: String) {
 
 fun writeHtmlPage(writer: Writer, builder: HTML.() -> Unit) {
     writer.use {
+        it.write("<!DOCTYPE html>")
         it.appendHTML().html(block = builder)
     }
 }

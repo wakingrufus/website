@@ -21,7 +21,7 @@ class HtmlPageKtTest {
         }
 
         assertEquals(
-                "<html>\n" +
+                "<!DOCTYPE html><html>\n" +
                         "  <body>\n" +
                         "    <div>\n" +
                         "      <p>text inside</p>\n" +
