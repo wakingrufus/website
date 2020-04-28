@@ -7,6 +7,7 @@ import com.github.wakingrufus.website.articles.failAgile
 import com.github.wakingrufus.website.articles.staticWeb
 import com.github.wakingrufus.website.cooking.allRecipes
 import com.github.wakingrufus.website.lib.*
+import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.html
 import com.github.wakingrufus.website.projects.*
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
@@ -20,21 +21,15 @@ import java.io.File
 
 object Paths {
     val INDEX_PATH = "index.html"
-    val MASTODON_JFX_PATH = "mastodon-jfx.html"
-    val TOURNEY_PATH = "tourney.html"
     val FILEDB_PATH = "filedb.html"
-    val WEBSITE_PATH = "website.html"
     val CSS_PATH = "styles.css"
     val SLIDESHOW_CSS_PATH = "slideshow_styles.css"
     val FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME = "functional-kotlin-slideshow"
     val KOTLIN_2019_SLIDESHOW_BASE_NAME = "kotlin-2019"
     val RSS_PATH = "rss.xml"
     val SITE_UPDATES_RSS_PATH = "site-updates.xml"
-    val FEEDS_PAGE = "feeds.html"
     val STATIC_WEB_SLIDESHOW_BASE_NAME = "static-web"
     val FAIL_AGILE_SLIDESHOW_BASE_NAME = "fail-agile"
-    val TRAVEL_PATH = "travel.html"
-    val FAIL_AGILE_BLOG = "fail-agile.html"
 }
 
 val myFooter: FOOTER.() -> Unit = {
@@ -42,9 +37,19 @@ val myFooter: FOOTER.() -> Unit = {
         style = css {
             display = Display.block
         }
-        a(href = Paths.INDEX_PATH) { +"Home" }
+        a(href = mainPage.path) { +"Home" }
         +" - "
-        a(href = Paths.FEEDS_PAGE) { +"Feeds" }
+        a(href = feeds.path) { +"Feeds" }
+    }
+}
+
+fun HtmlPage.standardHead() {
+    this.head {
+        link(href = Paths.CSS_PATH, rel = "stylesheet")
+        link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
+            title = "RSS"
+        }
+        title(getTitle())
     }
 }
 
@@ -53,16 +58,16 @@ class MyWebsite {
     fun build(baseDir: File): Website {
         return website(baseDir) {
             cssFile(path = Paths.CSS_PATH, cssString = MyStyles().styles())
-            htmlPageBuilder(path = Paths.INDEX_PATH, builder = mainPage())
-            htmlPageBuilder(path = Paths.MASTODON_JFX_PATH, builder = mastodonJfx)
+            page(mainPage)
+            page(mastodonJfx)
             page(filedb)
-            htmlPageBuilder(path = Paths.TOURNEY_PATH, builder = tourney)
+            page(tourney)
             page(libElo)
-            htmlPageBuilder(path = Paths.WEBSITE_PATH, builder = personalSite)
-            htmlPageBuilder(path = Paths.FEEDS_PAGE, builder = feeds())
+            page(personalSite)
+            page(feeds)
             page(antipatterns)
             page(staticWeb)
-            htmlPageBuilder(path = Paths.TRAVEL_PATH, builder = travel())
+            page(travel)
             page(adhocPolymorphism)
             page(failAgile)
 
@@ -80,13 +85,9 @@ class MyWebsite {
     }
 }
 
-fun mainPage(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-        link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
-            title = "RSS"
-        }
-    }
+val mainPage = htmlPage("index.html") {
+    standardHead()
+    title("wakingrufus's home page")
     body {
         pageTitle("wakingrufus")
         content {
@@ -116,7 +117,7 @@ fun mainPage(): HTML.() -> Unit = {
                 }
                 p {
                     +"My "
-                    a(href = Paths.TRAVEL_PATH) { +"Travel Guide" }
+                    a(href = travel.path) { +"Travel Guide" }
                 }
             }
             myDashboard()
@@ -129,16 +130,16 @@ val myDashboard: DIV.() -> Unit = {
     dashboard {
         panel("Projects") {
             ul {
-                li { a(href = Paths.WEBSITE_PATH) { +"This Website" } }
-                li { a(href = Paths.MASTODON_JFX_PATH) { +"mastodon-jfx" } }
-                li { a(href = Paths.TOURNEY_PATH) { +"Tourney" } }
+                li { a(href = personalSite.path) { +"This Website" } }
+                li { a(href = mastodonJfx.path) { +"mastodon-jfx" } }
+                li { a(href = tourney.path) { +"Tourney" } }
                 li { a(href = libElo.path) { +"lib-elo" } }
                 li { a(href = filedb.path) { +"filedb" } }
             }
         }
         panel("Software Development") {
             h3 { +failAgile.getTitle() }
-            p { a(href = Paths.FAIL_AGILE_BLOG) { +"Article" } }
+            p { a(href = failAgile.path) { +"Article" } }
             h3 { +adhocPolymorphism.getTitle() }
             p { a(href = adhocPolymorphism.path) { +"Article" } }
             h3 { +"Static Web development and Kotlin DSLs" }
@@ -168,11 +169,8 @@ val myDashboard: DIV.() -> Unit = {
         }
     }
 }
-
-fun feeds(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
+val feeds = htmlPage("feeds.html") {
+    standardHead()
     body {
         pageTitle("Feeds")
         content {

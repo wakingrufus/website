@@ -31,11 +31,6 @@ class Website(private val baseDir: File) {
         cssFiles += CssStringPage(path, cssString)
     }
 
-    @Deprecated("use page(HtmlPage) instead")
-    fun htmlPageBuilder(path: String, builder: HTML.() -> Unit) {
-        htmlFiles += HtmlPage(path).apply { this.builder(builder) }
-    }
-
     fun page(path: String, pageBuilder: HtmlPage.() -> Unit) {
         htmlFiles += HtmlPage(path).apply(pageBuilder)
     }

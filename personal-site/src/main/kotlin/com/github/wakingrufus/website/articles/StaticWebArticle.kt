@@ -1,5 +1,6 @@
 package com.github.wakingrufus.website.articles
 
+import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter

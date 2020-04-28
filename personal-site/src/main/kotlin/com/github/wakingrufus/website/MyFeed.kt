@@ -9,7 +9,6 @@ import com.github.wakingrufus.website.lib.HtmlPage
 import com.rometools.rome.feed.synd.SyndFeed
 import kotlinx.html.article
 import kotlinx.html.body
-import kotlinx.html.div
 import java.time.*
 import java.util.*
 
@@ -54,7 +53,7 @@ val allEntries = entries {
         title = "Travel Guide"
         author = "wakingrufus"
         categories = listOf(siteUpdates)
-        link = "https://wakingrufus.neocities.org/" + Paths.TRAVEL_PATH
+        link = "https://wakingrufus.neocities.org/" + travel.path
         publishedDate = Date.from(ZonedDateTime.of(
                 LocalDate.of(2018, Month.NOVEMBER, 1),
                 LocalTime.of(8, 0, 0),
@@ -125,9 +124,7 @@ val allEntries = entries {
                 ZoneOffset.ofHours(-5)).toInstant())
         content {
             body {
-                div {
-                    this.apply(adhocPolymorphism.getContent())
-                }
+                this.apply(adhocPolymorphism.getContent())
             }
         }
     }
@@ -138,7 +135,7 @@ val allEntries = entries {
                     ZoneOffset.ofHours(-5)).toInstant())
 }
 
-fun Entries.article(articlePage: HtmlPage, date: Instant){
+fun Entries.article(articlePage: HtmlPage, date: Instant) {
     entry {
         title = articlePage.getTitle()
         author = "wakingrufus"
@@ -147,9 +144,7 @@ fun Entries.article(articlePage: HtmlPage, date: Instant){
         publishedDate = Date.from(date)
         content {
             body {
-                div {
-                    this.apply(articlePage.getContent())
-                }
+                this.apply(articlePage.getContent())
             }
         }
     }

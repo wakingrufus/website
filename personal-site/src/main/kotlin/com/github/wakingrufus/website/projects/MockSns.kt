@@ -1,26 +1,20 @@
 package com.github.wakingrufus.website.projects
 
-import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.lib.article.article
+import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
-import kotlinx.html.*
+import kotlinx.html.a
+import kotlinx.html.p
 
-val mockSns: HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("mock-sns")
-        content {
-            div {
-                p {
-                    +"mock-sns is kotlin library which provides a test fixture for Amazon SNS. See more at "
-                    a(href = "https://github.com/wakingrufus/mock-sns") { +"GitHub" }
-                    +"."
-                }
+val mockSns = htmlPage("mock-sns.html") {
+    article("mock-sns") {
+        htmlSection {
+            p {
+                +"mock-sns is kotlin library which provides a test fixture for Amazon SNS. See more at "
+                a(href = "https://github.com/wakingrufus/mock-sns") { +"GitHub" }
+                +"."
             }
         }
-        footer { myFooter() }
+        footer(myFooter)
     }
 }

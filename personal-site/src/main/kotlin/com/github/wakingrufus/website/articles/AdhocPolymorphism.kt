@@ -1,9 +1,13 @@
 package com.github.wakingrufus.website.articles
 
+import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
-import kotlinx.html.*
+import kotlinx.html.ARTICLE
+import kotlinx.html.CODE
+import kotlinx.html.a
+import kotlinx.html.p
 
 val calculateValueForNumberFunction: FUNCTION.() -> Unit = {
     val numberParam = parameter(name = "number", type = "Int")

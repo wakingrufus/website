@@ -1,26 +1,20 @@
 package com.github.wakingrufus.website.projects
 
-import com.github.wakingrufus.website.Paths
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.lib.article.article
+import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
-import kotlinx.html.*
+import kotlinx.html.a
+import kotlinx.html.p
 
-val mastodonJfx: HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
-    body {
-        pageTitle("mastodon-jfx")
-        content {
-            div {
-                p {
-                    +"mastodon-jfx is kotlin client for mastodon. See more at "
-                    a(href = "https://github.com/wakingrufus/mastodon-jfx") { +"GitHub" }
-                    +"."
-                }
+val mastodonJfx = htmlPage("mastodon-jfx.html") {
+    article("mastodon-jfx") {
+        htmlSection {
+            p {
+                +"mastodon-jfx is kotlin client for mastodon. See more at "
+                a(href = "https://github.com/wakingrufus/mastodon-jfx") { +"GitHub" }
+                +"."
             }
         }
-        footer { myFooter() }
+        footer(myFooter)
     }
 }

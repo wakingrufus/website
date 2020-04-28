@@ -1,16 +1,13 @@
 package com.github.wakingrufus.website
 
-import com.github.wakingrufus.website.lib.PLACE
-import com.github.wakingrufus.website.lib.area
-import com.github.wakingrufus.website.lib.content
-import com.github.wakingrufus.website.lib.pageTitle
-import kotlinx.html.*
+import com.github.wakingrufus.website.lib.*
+import kotlinx.html.a
+import kotlinx.html.footer
+import kotlinx.html.li
+import kotlinx.html.ul
 
-
-fun travel(): HTML.() -> Unit = {
-    head {
-        link(href = Paths.CSS_PATH, rel = "stylesheet")
-    }
+val travel = htmlPage("travel.html") {
+    standardHead()
     body {
         pageTitle("Travel")
         content {

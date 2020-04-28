@@ -1,10 +1,11 @@
 package com.github.wakingrufus.website.lib.article
 
-import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.WebsiteDsl
+import com.github.wakingrufus.website.lib.HtmlPage
 import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.pageTitle
+import com.github.wakingrufus.website.standardHead
 import kotlinx.css.em
 import kotlinx.css.pct
 import kotlinx.html.*
@@ -43,30 +44,23 @@ class ArticleBuilder(val title: String) {
         }
     }
 
-    operator fun invoke(page: HTML) {
+    operator fun invoke(page: BODY) {
         page.apply {
-            head {
-                link(href = Paths.CSS_PATH, rel = "stylesheet")
-                this.title(this@ArticleBuilder.title)
-            }
-            body {
-                pageTitle(this@ArticleBuilder.title)
-                this@ArticleBuilder.nav?.invoke(this)
-                content {
-                    style = css {
-                        marginLeft = 1.em
-                        marginRight = 1.em
-                        if (nav != null) {
-                            maxWidth = 79.pct
-                        }
-                    }
-                    article {
-                        getContent().invoke(this)
+            pageTitle(this@ArticleBuilder.title)
+            this@ArticleBuilder.nav?.invoke(this)
+            content {
+                style = css {
+                    marginLeft = 1.em
+                    marginRight = 1.em
+                    if (nav != null) {
+                        maxWidth = 79.pct
                     }
                 }
-                footer { this.footer() }
+                article {
+                    getContent().invoke(this)
+                }
             }
-
+            footer { this.footer() }
         }
     }
 
@@ -74,4 +68,11 @@ class ArticleBuilder(val title: String) {
         this.footer = footer
     }
 
+}
+
+fun HtmlPage.article(title: String, block: ArticleBuilder.() -> Unit) {
+    val article = ArticleBuilder(title).apply(block)
+    this.standardHead()
+    this@article.body { article.invoke(this) }
+    this.title(article.title)
 }

@@ -2,45 +2,50 @@ package com.github.wakingrufus.website.lib
 
 import com.github.wakingrufus.website.WebsiteDsl
 import com.github.wakingrufus.website.lib.article.ArticleBuilder
-import kotlinx.html.DIV
-import kotlinx.html.HTML
-import kotlinx.html.article
-import kotlinx.html.html
+import com.github.wakingrufus.website.standardHead
+import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
 import java.io.Writer
 
 @WebsiteDsl
 class HtmlPage(val path: String) {
-    private var builder: HTML.() -> Unit = {}
-    private var article: ArticleBuilder? = null
-
-    @Deprecated("use article or other typed builder")
-    fun builder(block: HTML.() -> Unit) {
-        builder = block
-    }
+    private var title: String? = null
+    private var body: BODY.() -> Unit = { }
+    private var head: HEAD.() -> Unit = {}
 
     fun getTitle(): String {
-        return article?.title ?: ""
+        return title ?: ""
     }
 
-    fun getContent(): DIV.() -> Unit = {
-        this@HtmlPage.article?.getContent()?.also{
-            article(block = it)
-        }
+    fun title(title: String){
+        this.title = title
+    }
+
+    fun getContent(): BODY.() -> Unit = {
+      this.apply(body)
+    }
+
+    fun head(block: HEAD.() -> Unit){
+        head = block
     }
 
     fun writeHtmlPage(writer: Writer) {
         writer.use {
-            it.appendHTML().html(block = {
-                builder(this)
-                article?.invoke(this)
-            })
+            it.write("<!DOCTYPE html>")
+            it.appendHTML().html{
+                head(head)
+                body {
+                    apply(body)
+                }
+            }
         }
     }
 
-    fun article(title: String, article: ArticleBuilder.() -> Unit) {
-        this.article = ArticleBuilder(title).apply(article)
+    fun body(block: BODY.() -> Unit){
+        body = block
     }
+
+
 }
 
 fun writeHtmlPage(writer: Writer, builder: HTML.() -> Unit) {
