@@ -124,12 +124,13 @@ val operationsForUnsignedNumberArrays = slide {
         }
     }
 }
+
 val typeOf = slide {
     slideContent {
         slideList { li { +"Accessing the reified type using reflection on JVM" } }
         slideCode {
             declareFunction(name = "accessReifiedTypeArg") {
-                annotation("@UseExperimental") {
+                annotation("UseExperimental") {
                     argument {
                         +"ExperimentalStdlibApi::class"
                     }
@@ -174,7 +175,7 @@ val bitManipulation = slide {
     slideContent {
         slideCode {
             declareFunction(name = "main") {
-                annotation(name = "@UseExperimental") {
+                annotation(name = "UseExperimental") {
                     argument { +"ExperimentalStdlibApi::class" }
                 }
                 body {
@@ -230,7 +231,7 @@ val durationApi = slide {
             +" kotlin.time.*"
             +"\n\n"
             declareFunction(name = "main") {
-                annotation(name = "@UseExperimental") {
+                annotation(name = "UseExperimental") {
                     argument { +"ExperimentalTime::class" }
                 }
                 body {
@@ -277,7 +278,11 @@ val newNullChecks = slide {
 val updatesToWhen = slide {
     slideContent {
         slideCode {
-            commentLine("process(listOf(1,2,3,0,4,-1,10)) == 1234")
+            kotlin {
+                statement {
+                    comment("process(listOf(1,2,3,0,4,-1,10)) == 1234")
+                }
+            }
             declareFunction(name = "process") {
                 parameter(name = "list", type = "List<Int>")
                 body {

@@ -1,19 +1,33 @@
 package com.github.wakingrufus.website.lib.code
 
 import com.github.wakingrufus.website.WebsiteDsl
+import com.github.wakingrufus.website.lib.css
+import kotlinx.css.Color
 import kotlinx.html.CODE
+import kotlinx.html.span
+import kotlinx.html.style
 
 @WebsiteDsl
 class STATEMENT(val indentation: Int = 0) {
     var assignment: ASSIGNMENT? = null
     var isReturn: Boolean = false
-    var body: (List<CODE.() -> Unit>) = ArrayList()
+    private val body: MutableList<CODE.() -> Unit> = mutableListOf()
 
     fun returns(block: EXPRESSION.() -> Unit) {
         isReturn = true
         body += {
             EXPRESSION(indentation = this@STATEMENT.indentation).apply(block)(this)
         }
+    }
+
+    fun declareProperty(modifier: String? = null, name: String, type: String? = null, value: (CODE.() -> Unit)? = null): SUBJECT {
+        val property = PROPERTY(modifier = modifier, name = name, type = type)
+                .apply { value?.let { value(it) } }
+        body += {
+            property.invoke(this)
+            +"\n"
+        }
+        return property.asSubject()
     }
 
     fun assignment(modifier: String? = null,
@@ -78,9 +92,15 @@ class STATEMENT(val indentation: Int = 0) {
         }
     }
 
-    fun comment(comment: String) {
+    fun comment(text: String) {
         body += {
-            commentLine(comment)
+            span {
+                style = css {
+                    color = Color("#808080")
+                }
+                +"// "
+                +text
+            }
         }
     }
 

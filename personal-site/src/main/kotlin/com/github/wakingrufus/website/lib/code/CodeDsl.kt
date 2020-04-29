@@ -150,46 +150,8 @@ fun CODE.variablePropertyName(text: String) {
     }
 }
 
-fun CODE.commentLine(text: String) {
-    return span {
-        style = css {
-            color = Color("#808080")
-        }
-        +"// "
-        +text
-    }
-}
-
 @HtmlTagMarker
-fun CODE.declareClass(modifiers: List<String> = emptyList(),
-                      name: String,
-                      propsOnSeparateLines: Boolean = true,
-                      block: CLASS.() -> Unit = {}) {
-    CLASS(modifiers = modifiers, name = name, propsOnSeparateLines = propsOnSeparateLines)
-            .apply(block)(this)
-}
-
-@HtmlTagMarker
-fun CODE.dataClass(name: String,
-                   propsOnSeparateLines: Boolean = true,
-                   block: CLASS.() -> Unit = {}) {
-    this.apply {
-        CLASS(modifiers = listOf("data"), propsOnSeparateLines = propsOnSeparateLines, name = name)
-                .apply(block)(this)
-    }
-}
-
-@HtmlTagMarker
-fun CODE.annotationClass(name: String,
-                         propsOnSeparateLines: Boolean = true,
-                         block: CLASS.() -> Unit = {}) {
-    this.apply {
-        CLASS(modifiers = listOf("annotation"), propsOnSeparateLines = propsOnSeparateLines, name = name)
-                .apply(block)(this)
-    }
-}
-
-@HtmlTagMarker
+@Deprecated("use kotlin builder instead")
 fun CODE.declareFunction(name: String,
                          returnType: String? = null,
                          argsOnSeparateLines: Boolean = false,
@@ -210,6 +172,7 @@ fun CODE.declareFunction(name: String,
 
 //TODO: fix this up to create the block for you and use EXPRESSION instead of CODE
 @HtmlTagMarker
+@Deprecated("use kotlin builder instead")
 fun CODE.declareFunctionExpression(name: String,
                                    returnType: String? = null,
                                    argsOnSeparateLines: Boolean = true,
@@ -240,13 +203,6 @@ fun CODE.scope(text: String) {
         }
         +text
     }
-}
-
-@HtmlTagMarker
-fun CODE.declareProperty(modifier: String? = null, name: String, type: String? = null, value: (CODE.() -> Unit)? = null) {
-    PROPERTY(modifier = modifier, name = name, type = type)
-            .apply { value?.let { value(it) } }
-            .invoke(this)
 }
 
 fun CODE.indent(level: Int) {

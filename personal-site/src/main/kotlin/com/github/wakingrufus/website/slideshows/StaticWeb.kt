@@ -115,28 +115,32 @@ val infixFunction = slide {
             li { +"Eliminate '.()' ceremony for more natural language" }
         }
         slideCode {
-            declareClass(name = "Pair", propsOnSeparateLines = false) {
-                genericTypes = listOf("A", "B")
-                property(modifier = "val", name = "first", type = "A")
-                property(modifier = "val", name = "second", type = "B")
-            }
-            declareFunction(name = "to", extentionOf = "A", returnType = "Pair<A, B>") {
-                isInfix = true
-                genericType = "A, B"
-                parameter("that", "B")
-                expression {
-                    call("Pair") {
-                        argument { keyword("this") }
-                        argument { +"that" }
+            kotlin {
+                declareClass(name = "Pair", propsOnSeparateLines = false) {
+                    genericTypes = listOf("A", "B")
+                    property(modifier = "val", name = "first", type = "A")
+                    property(modifier = "val", name = "second", type = "B")
+                }
+                declareFunction(name = "to", extentionOf = "A", returnType = "Pair<A, B>") {
+                    isInfix = true
+                    genericType = "A, B"
+                    parameter("that", "B")
+                    expression {
+                        call("Pair") {
+                            argument { keyword("this") }
+                            argument { +"that" }
+                        }
                     }
                 }
-            }
-            declareProperty(modifier = "val", name = "pair", type = "Pair<String, String>") {
-                on({ string("") }) {
-                    call("to") {
-                        extensionFunction()
-                        infix()
-                        argument { string("") }
+                statement {
+                    declareProperty(modifier = "val", name = "pair", type = "Pair<String, String>") {
+                        on({ string("") }) {
+                            call("to") {
+                                extensionFunction()
+                                infix()
+                                argument { string("") }
+                            }
+                        }
                     }
                 }
             }
@@ -153,30 +157,34 @@ val lambdaAsFinalParameter = slide {
             }
         }) {
             slideCode {
-                declareFunction("f") {
-                    parameter("lambda", type = "(Int) -> String")
-                }
-                +"\n"
-                declareProperty(modifier = "val", name = "s") {
-                    call("f") {
-                        argument(name = "lambda") {
-                            block {
-                                expression {
-                                    on({ it() }) {
-                                        call(name = "toString")
+                kotlin {
+                    declareFunction("f") {
+                        parameter("lambda", type = "(Int) -> String")
+                    }
+                    statement {
+                        declareProperty(modifier = "val", name = "s") {
+                            call("f") {
+                                argument(name = "lambda") {
+                                    block {
+                                        expression {
+                                            on({ it() }) {
+                                                call(name = "toString")
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                +"\n\n"
-                declareProperty(modifier = "val", name = "s") {
-                    call("f") {
-                        lambda {
-                            expression {
-                                on({ it() }) {
-                                    call(name = "toString")
+                    statement {
+                        declareProperty(modifier = "val", name = "s") {
+                            call("f") {
+                                lambda {
+                                    expression {
+                                        on({ it() }) {
+                                            call(name = "toString")
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -255,77 +263,82 @@ val dslMarker = slide {
             slideList {
                 li { +"Restricts scope" }
                 this@splitSlide.slideCode {
-                    annotationClass("MyDsl") {
-                        annotation("DslMarker")
+                    kotlin {
+                        annotationClass("MyDsl") {
+                            annotation("DslMarker")
+                        }
                     }
                 }
             }
         }) {
             slideCode {
-                declareFunction(name = "c1", returnType = "Class1") {
-                    parameter(name = "a1", type = "Class1.() -> Unit")
-                    body {
-                        returns {
-                            inline {
-                                on({ +"Class1" }) {
-                                    callInvoke().call(name = "apply") {
-                                        extensionFunction()
-                                        argument(value = { +"a1" })
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                +"\n"
-                declareClass(name = "Class1") {
-                    annotation("MyDsl")
-                    property(modifier = "var", name = "a2", type = "Class2?") {
-                        keyword("null")
-                    }
-                    property(modifier = "var", name = "prop1", type = "String?") {
-                        keyword("null")
-                    }
-                    function(name = "c2", paramsOnSeparateLines = false) {
-                        parameter(name = "c2", type = "Class2.() -> Unit")
+                kotlin {
+                    declareFunction(name = "c1", returnType = "Class1") {
+                        parameter(name = "a1", type = "Class1.() -> Unit")
                         body {
-                            assignment(name = "a2", format = CODE::variablePropertyName) {
-                                expression {
-                                    on({ +"Class2" }) {
+                            returns {
+                                inline {
+                                    on({ +"Class1" }) {
                                         callInvoke().call(name = "apply") {
                                             extensionFunction()
-                                            argument(value = { +"a2" })
+                                            argument(value = { +"a1" })
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                declareClass(name = "Class2", propsOnSeparateLines = false) {
-                    annotation("MyDsl")
-                    property(modifier = "var", name = "prop2", type = "String?") {
-                        keyword("null")
-                    }
-                }
-                call(name = "c1") {
-                    lambda {
-                        call(name = "c2") {
-                            lambda {
-                                assignment(name = "prop2", format = CODE::variablePropertyName) {
-                                    inlineExpression { string("value") }
-                                }
-                                //TODO: refactor
-                                statement {
-                                    on({
-                                        keyword("this")
-                                        scope("@c1")
-                                    }) {
-                                        property("prop1")
+                    declareClass(name = "Class1") {
+                        annotation("MyDsl")
+                        property(modifier = "var", name = "a2", type = "Class2?") {
+                            keyword("null")
+                        }
+                        property(modifier = "var", name = "prop1", type = "String?") {
+                            keyword("null")
+                        }
+                        function(name = "c2", paramsOnSeparateLines = false) {
+                            parameter(name = "c2", type = "Class2.() -> Unit")
+                            body {
+                                assignment(name = "a2", format = CODE::variablePropertyName) {
+                                    expression {
+                                        on({ +"Class2" }) {
+                                            callInvoke().call(name = "apply") {
+                                                extensionFunction()
+                                                argument(value = { +"a2" })
+                                            }
+                                        }
                                     }
-                                    inlineExpression {
-                                        +" = "
-                                        string("value")
+                                }
+                            }
+                        }
+                    }
+                    declareClass(name = "Class2", propsOnSeparateLines = false) {
+                        annotation("MyDsl")
+                        property(modifier = "var", name = "prop2", type = "String?") {
+                            keyword("null")
+                        }
+                    }
+                    statement {
+                        call(name = "c1") {
+                            lambda {
+                                call(name = "c2") {
+                                    lambda {
+                                        assignment(name = "prop2", format = CODE::variablePropertyName) {
+                                            inlineExpression { string("value") }
+                                        }
+                                        //TODO: refactor
+                                        statement {
+                                            on({
+                                                keyword("this")
+                                                scope("@c1")
+                                            }) {
+                                                property("prop1")
+                                            }
+                                            inlineExpression {
+                                                +" = "
+                                                string("value")
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -580,60 +593,62 @@ val backingObjects = slide {
         }
     }) {
         slideCode {
-            declareClass(name = "Entry") {
-                annotation("RssDsl")
-                superClass = "SyndEntryImpl"
-                function(name = "content", paramsOnSeparateLines = false) {
-                    parameter(name = "content", type = "String")
-                    body {
-                        assignment(name = "description", format = CODE::variablePropertyName) {
-                            constructor(className = "SyndContentImpl")
-                                    .call(name = "apply") {
-                                        extensionFunction()
-                                        lambda {
-                                            assignment("value") {
-                                                inlineExpression { +"content" }
-                                            }
-                                            assignment("type") {
-                                                inlineExpression { string("text/string") }
+            kotlin {
+                declareClass(name = "Entry") {
+                    annotation("RssDsl")
+                    superClass = "SyndEntryImpl"
+                    function(name = "content", paramsOnSeparateLines = false) {
+                        parameter(name = "content", type = "String")
+                        body {
+                            assignment(name = "description", format = CODE::variablePropertyName) {
+                                constructor(className = "SyndContentImpl")
+                                        .call(name = "apply") {
+                                            extensionFunction()
+                                            lambda {
+                                                assignment("value") {
+                                                    inlineExpression { +"content" }
+                                                }
+                                                assignment("type") {
+                                                    inlineExpression { string("text/string") }
+                                                }
                                             }
                                         }
-                                    }
+                            }
                         }
                     }
-                }
-                function(name = "content", paramsOnSeparateLines = false) {
-                    parameter(name = "block", type = "HTML.() -> Unit")
-                    body {
-                        assignment(name = "description", format = CODE::variablePropertyName) {
-                            constructor(className = "SyndContentImpl")
-                                    .call(name = "apply") {
-                                        extensionFunction()
-                                        lambda {
-                                            assignment("value") {
-                                                constructor(className = "StringWriter")
-                                                        .breakAndCall(name = "appendHTML", argsOnDifferentLines = false) {
-                                                            extensionFunction()
-                                                            argument("prettyPrint") {
-                                                                keyword("false")
-                                                            }
-                                                        }
-                                                        .breakAndCall("html") {
-                                                            extensionFunction()
-                                                            lambda {
-                                                                call("apply") {
-                                                                    extensionFunction()
-                                                                    argument { +"block" }
+                    function(name = "content", paramsOnSeparateLines = false) {
+                        parameter(name = "block", type = "HTML.() -> Unit")
+                        body {
+                            assignment(name = "description", format = CODE::variablePropertyName) {
+                                constructor(className = "SyndContentImpl")
+                                        .call(name = "apply") {
+                                            extensionFunction()
+                                            lambda {
+                                                assignment("value") {
+                                                    constructor(className = "StringWriter")
+                                                            .breakAndCall(name = "appendHTML", argsOnDifferentLines = false) {
+                                                                extensionFunction()
+                                                                argument("prettyPrint") {
+                                                                    keyword("false")
                                                                 }
                                                             }
-                                                        }
-                                                        .call("toString")
-                                            }
-                                            assignment("type") {
-                                                inlineExpression { string("text/html") }
+                                                            .breakAndCall("html") {
+                                                                extensionFunction()
+                                                                lambda {
+                                                                    call("apply") {
+                                                                        extensionFunction()
+                                                                        argument { +"block" }
+                                                                    }
+                                                                }
+                                                            }
+                                                            .call("toString")
+                                                }
+                                                assignment("type") {
+                                                    inlineExpression { string("text/html") }
+                                                }
                                             }
                                         }
-                                    }
+                            }
                         }
                     }
                 }

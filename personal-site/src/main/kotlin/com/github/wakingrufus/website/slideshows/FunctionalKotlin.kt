@@ -109,6 +109,7 @@ val functionalKotlinImmutableData = slide {
         }
 
         slideCode {
+            kotlin {
             declareClass(name = "ImmutableValue", propsOnSeparateLines = false) {
                 property(modifier = "val", name = "stringData", type = "String")
             }
@@ -153,6 +154,7 @@ val functionalKotlinImmutableData = slide {
                     }
                 }
             }
+            }
         }
     }
 }
@@ -175,30 +177,32 @@ val functionalKotlinDeterministicStory = slide {
 val functionalKotlinNonDeterministic = slide {
     slideContent {
         slideCode {
-            dataClass(name = "ChatMessage") {
-                value(name = "user", type = "String")
-                value(name = "timestamp", type = "Instant")
-                value(name = "message", type = "String")
-            }
-            declareFunction(name = "newMessage",
-                    returnType = "ChatMessage",
-                    argsOnSeparateLines = false) {
-                parameter(name = "message", type = "String")
-                body {
-                    expression {
-                        keyword("return ")
-                        constructor(name = "ChatMessage", baseIndentation = 1, argsOnDifferentLines = true) {
-                            argument("user") {
-                                +"System."
-                                call(name = "getProperty", argsOnDifferentLines = false) {
-                                    argument { string("user.name") }
+            kotlin {
+                dataClass(name = "ChatMessage") {
+                    value(name = "user", type = "String")
+                    value(name = "timestamp", type = "Instant")
+                    value(name = "message", type = "String")
+                }
+                declareFunction(name = "newMessage",
+                        returnType = "ChatMessage",
+                        argsOnSeparateLines = false) {
+                    parameter(name = "message", type = "String")
+                    body {
+                        expression {
+                            keyword("return ")
+                            constructor(name = "ChatMessage", baseIndentation = 1, argsOnDifferentLines = true) {
+                                argument("user") {
+                                    +"System."
+                                    call(name = "getProperty", argsOnDifferentLines = false) {
+                                        argument { string("user.name") }
+                                    }
                                 }
-                            }
-                            argument("timestamp") {
-                                +"Instant.now()"
-                            }
-                            argument("message") {
-                                +"message"
+                                argument("timestamp") {
+                                    +"Instant.now()"
+                                }
+                                argument("message") {
+                                    +"message"
+                                }
                             }
                         }
                     }
@@ -211,28 +215,30 @@ val functionalKotlinNonDeterministic = slide {
 val functionalKotlinDeterministic = slide {
     slideContent {
         slideCode {
-            dataClass(name = "ChatMessage") {
-                value(name = "user", type = "String")
-                value(name = "timestamp", type = "Instant")
-                value(name = "message", type = "String")
-            }
-            declareFunction(name = "newMessage",
-                    returnType = "ChatMessage") {
-                parameter(name = "message", type = "String")
-                parameter(name = "user", type = "String")
-                parameter(name = "timestamp", type = "Instant")
-                body {
-                    expression {
-                        keyword("return ")
-                        constructor(name = "ChatMessage", baseIndentation = 1, argsOnDifferentLines = true) {
-                            argument("user") {
-                                +"user"
-                            }
-                            argument("timestamp") {
-                                +"timestamp"
-                            }
-                            argument("message") {
-                                +"message"
+            kotlin {
+                dataClass(name = "ChatMessage") {
+                    value(name = "user", type = "String")
+                    value(name = "timestamp", type = "Instant")
+                    value(name = "message", type = "String")
+                }
+                declareFunction(name = "newMessage",
+                        returnType = "ChatMessage") {
+                    parameter(name = "message", type = "String")
+                    parameter(name = "user", type = "String")
+                    parameter(name = "timestamp", type = "Instant")
+                    body {
+                        expression {
+                            keyword("return ")
+                            constructor(name = "ChatMessage", baseIndentation = 1, argsOnDifferentLines = true) {
+                                argument("user") {
+                                    +"user"
+                                }
+                                argument("timestamp") {
+                                    +"timestamp"
+                                }
+                                argument("message") {
+                                    +"message"
+                                }
                             }
                         }
                     }
@@ -252,47 +258,48 @@ val functionalKotlinSideEffectsStory = slide {
 val functionalKotlinSideEffectsCode = slide {
     slideContent {
         slideCode {
-            declareFunction(name = "addNewMessageSideEffect") {
-                parameter(name = "messages", type = "ArrayList<ChatMessage>")
-                parameter(name = "newMessage", type = "ChatMessage")
-                body {
-                    expression {
-                        +("messages.")
-                        call(name = "add", argsOnDifferentLines = false) {
-                            argument { +"newMessage" }
-                        }
-                        comment("Modifies input")
-                    }
-                }
-            }
-            +"\n"
-            declareProperty(modifier = "val", name = "externalMessages", type = "List<ChatMessage>") {
-                constructor("ArrayList") {}
-            }
-            +"\n"
-            declareFunction(name = "addNewMessageSideEffect2", argsOnSeparateLines = false) {
-                parameter(name = "newMessage", type = "ChatMessage")
-                body {
-                    expression {
-                        on({ propertyName("externalMessages") }) {
+            kotlin {
+                declareFunction(name = "addNewMessageSideEffect") {
+                    parameter(name = "messages", type = "ArrayList<ChatMessage>")
+                    parameter(name = "newMessage", type = "ChatMessage")
+                    body {
+                        expression {
+                            +("messages.")
                             call(name = "add", argsOnDifferentLines = false) {
                                 argument { +"newMessage" }
                             }
                         }
-                        comment("Modifies something outside of scope")
+                        statement { comment("Modifies input") }
                     }
                 }
-            }
-            +"\n"
-            declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
-                parameter(name = "messages", type = "List<ChatMessage>")
-                parameter(name = "newMessage", type = "ChatMessage")
-                body {
-                    statement {
-                        returns {
-                            on({ +"messages" }) {
-                                call(name = "plus", argsOnDifferentLines = false) {
+                val externalMessages = subjectStatement {
+                    declareProperty(modifier = "val", name = "externalMessages", type = "List<ChatMessage>") {
+                        constructor("ArrayList") {}
+                    }
+                }
+                declareFunction(name = "addNewMessageSideEffect2", argsOnSeparateLines = false) {
+                    parameter(name = "newMessage", type = "ChatMessage")
+                    body {
+                        expression {
+                            on(externalMessages) {
+                                call(name = "add", argsOnDifferentLines = false) {
                                     argument { +"newMessage" }
+                                }
+                            }
+                        }
+                        statement { comment("Modifies something outside of scope") }
+                    }
+                }
+                declareFunction(name = "addNewMessage", returnType = "List<ChatMessage>") {
+                    parameter(name = "messages", type = "List<ChatMessage>")
+                    parameter(name = "newMessage", type = "ChatMessage")
+                    body {
+                        statement {
+                            returns {
+                                on({ +"messages" }) {
+                                    call(name = "plus", argsOnDifferentLines = false) {
+                                        argument { +"newMessage" }
+                                    }
                                 }
                             }
                         }
@@ -313,49 +320,51 @@ val firstClassFunctions = slide {
             li { +"These replace the need for static methods" }
         }
         slideCode {
-            declareFunction(name = "bigDecimalEquals", returnType = "Boolean", argsOnSeparateLines = true) {
-                parameter(name = "one", type = "BigDecimal")
-                parameter(name = "two", type = "BigDecimal")
-                body {
-                    statement {
-                        returns {
-                            on({ +"one" }) {
-                                call(name = "compareTo") {
-                                    argument { +"two" }
-                                }
-                                call("==") {
-                                    infix()
-                                    argument { number(0) }
+            kotlin {
+                declareFunction(name = "bigDecimalEquals", returnType = "Boolean", argsOnSeparateLines = true) {
+                    parameter(name = "one", type = "BigDecimal")
+                    parameter(name = "two", type = "BigDecimal")
+                    body {
+                        statement {
+                            returns {
+                                on({ +"one" }) {
+                                    call(name = "compareTo") {
+                                        argument { +"two" }
+                                    }
+                                    call("==") {
+                                        infix()
+                                        argument { number(0) }
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            +"\n"
-            declareFunction(
-                    name = "bigDecimalEquals",
-                    returnType = "Boolean",
-                    argsOnSeparateLines = true
-            ) {
-                parameter(name = "one", type = "BigDecimal")
-                parameter(name = "two", type = "BigDecimal")
-                expression2 {
-                    on({ +"one" }) {
-                        call(name = "compareTo") {
-                            argument { +"two" }
-                        }
-                        call("==") {
-                            infix()
-                            argument { number(0) }
+                declareFunction(
+                        name = "bigDecimalEquals",
+                        returnType = "Boolean",
+                        argsOnSeparateLines = true
+                ) {
+                    parameter(name = "one", type = "BigDecimal")
+                    parameter(name = "two", type = "BigDecimal")
+                    expression2 {
+                        on({ +"one" }) {
+                            call(name = "compareTo") {
+                                argument { +"two" }
+                            }
+                            call("==") {
+                                infix()
+                                argument { number(0) }
+                            }
                         }
                     }
                 }
-            }
-            +"\n"
-            declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
-                +"one.compareTo(two) == "
-                number(0)
+                statement {
+                    declareProperty(modifier = "val", name = "bigDecimalEquals", type = "Boolean") {
+                        +"one.compareTo(two) == "
+                        number(0)
+                    }
+                }
             }
         }
     }
@@ -587,33 +596,34 @@ val let = slide {
             }
         }
         slideCode {
-            dataClass(name = "Data", propsOnSeparateLines = false) {
-                property(modifier = "val", name = "value", type = "Int?")
-            }
-            declareFunction(name = "getFromDatabase", returnType = "Data?") {
-                body {
-                    expression { +"..." }
+            kotlin {
+                dataClass(name = "Data", propsOnSeparateLines = false) {
+                    property(modifier = "val", name = "value", type = "Int?")
                 }
-            }
-            +"\n"
-            declareFunction(name = "getValue", returnType = "BigDecimal") {
-                body {
-                    returns {
-                        on(subject = {
-                            call(name = "getFromDatabase")
-                        }) {
-                            call("let", baseIndentation = 1, nullSafe = true) {
-                                lambda {
-                                    expression {
-                                        on({ +"it" }) {
-                                            call(name = "toBigDecimal")
+                declareFunction(name = "getFromDatabase", returnType = "Data?") {
+                    body {
+                        expression { +"..." }
+                    }
+                }
+                declareFunction(name = "getValue", returnType = "BigDecimal") {
+                    body {
+                        returns {
+                            on(subject = {
+                                call(name = "getFromDatabase")
+                            }) {
+                                call("let", baseIndentation = 1, nullSafe = true) {
+                                    lambda {
+                                        expression {
+                                            on({ +"it" }) {
+                                                call(name = "toBigDecimal")
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            elvis {
-                                on({ +"BigDecimal" }) {
-                                    property(name = "ZERO")
+                                elvis {
+                                    on({ +"BigDecimal" }) {
+                                        property(name = "ZERO")
+                                    }
                                 }
                             }
                         }
@@ -713,25 +723,29 @@ val run = slide {
             }
         }
         slideCode {
-            declareProperty(modifier = "val", name = "dayOfYear", type = "Int") {
-                on({ +"Calendar" }) {
-                    call(name = "getInstance") {}
-                    call(name = "run") {
-                        lambda {
-                            expression {
-                                call(name = "set") {
-                                    argument {
-                                        +"Calendar."
-                                        propertyName("YEAR")
+            kotlin {
+                statement {
+                    declareProperty(modifier = "val", name = "dayOfYear", type = "Int") {
+                        on({ +"Calendar" }) {
+                            call(name = "getInstance") {}
+                            call(name = "run") {
+                                lambda {
+                                    expression {
+                                        call(name = "set") {
+                                            argument {
+                                                +"Calendar."
+                                                propertyName("YEAR")
+                                            }
+                                            argument { number(2030) }
+                                        }
                                     }
-                                    argument { number(2030) }
-                                }
-                            }
-                            expression {
-                                call(name = "get") {
-                                    argument {
-                                        +"Calendar."
-                                        propertyName("DAY_OF_YEAR")
+                                    expression {
+                                        call(name = "get") {
+                                            argument {
+                                                +"Calendar."
+                                                propertyName("DAY_OF_YEAR")
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -752,31 +766,35 @@ val runNonExtension = slide {
             }
         }
         slideCode {
-            declareProperty(modifier = "val", name = "dayOfYear", type = "Int") {
-                call(name = "run") {
-                    lambda {
-                        assignment(modifier = "val", name = "cal") {
-                            on({ +"Calendar" }) {
-                                call(name = "getInstance")
-                            }
-                        }
-                        statement {
-                            on({ propertyName("cal") }) {
-                                call(name = "set") {
-                                    argument {
-                                        +"Calendar."
-                                        propertyName("YEAR")
+            kotlin {
+                statement {
+                    declareProperty(modifier = "val", name = "dayOfYear", type = "Int") {
+                        call(name = "run") {
+                            lambda {
+                                assignment(modifier = "val", name = "cal") {
+                                    on({ +"Calendar" }) {
+                                        call(name = "getInstance")
                                     }
-                                    argument { number(2030) }
                                 }
-                            }
-                        }
-                        statement {
-                            on({ propertyName("cal") }) {
-                                call(name = "get") {
-                                    argument {
-                                        +"Calendar."
-                                        propertyName("DAY_OF_YEAR")
+                                statement {
+                                    on({ propertyName("cal") }) {
+                                        call(name = "set") {
+                                            argument {
+                                                +"Calendar."
+                                                propertyName("YEAR")
+                                            }
+                                            argument { number(2030) }
+                                        }
+                                    }
+                                }
+                                statement {
+                                    on({ propertyName("cal") }) {
+                                        call(name = "get") {
+                                            argument {
+                                                +"Calendar."
+                                                propertyName("DAY_OF_YEAR")
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -861,19 +879,55 @@ fun sayHello(printFn: (String) -> Unit = System.out::println,
 val functionalTesting = slide {
     slideContent {
         slideCode {
-            declareFunction(name = "sayHello") {
-                body {
-                    expression {
-                        on({
-                            +"System."
-                            propertyName("out")
-                        }) {
-                            call(name = "println") {
+            kotlin {
+                declareFunction(name = "sayHello") {
+                    body {
+                        expression {
+                            on({
+                                +"System."
+                                propertyName("out")
+                            }) {
+                                call(name = "println") {
+                                    argument {
+                                        on({
+                                            call(name = "readLine") {
+                                                packageFunction()
+                                            }
+                                        }) {
+                                            call(name = "let", baseIndentation = 1, nullSafe = true) {
+                                                extensionFunction()
+                                                lambda {
+                                                    expression {
+                                                        string("Hello, ")
+                                                        +" + it"
+                                                    }
+                                                }
+                                            }
+                                            call("orElseEmpty") {
+                                                extensionFunction()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                declareFunction(name = "sayHello", argsOnSeparateLines = true) {
+                    parameter(name = "printFn", type = "(String) -> Unit") {
+                        +"System."
+                        propertyName("out")
+                        +"::println"
+                    }
+                    parameter(name = "readFn", type = "() -> String?") {
+                        +"::readLine"
+                    }
+                    body {
+                        expression {
+                            call(name = "printFn") {
                                 argument {
                                     on({
-                                        call(name = "readLine") {
-                                            packageFunction()
-                                        }
+                                        call(name = "readLine") {}
                                     }) {
                                         call(name = "let", baseIndentation = 1, nullSafe = true) {
                                             extensionFunction()
@@ -894,71 +948,37 @@ val functionalTesting = slide {
                     }
                 }
             }
-            declareFunction(name = "sayHello", argsOnSeparateLines = true) {
-                parameter(name = "printFn", type = "(String) -> Unit") {
-                    +"System."
-                    propertyName("out")
-                    +"::println"
-                }
-                parameter(name = "readFn", type = "() -> String?") {
-                    +"::readLine"
-                }
-                body {
-                    expression {
-
-                        call(name = "printFn") {
-                            argument {
-                                on({
-                                    call(name = "readLine") {}
-                                }) {
-                                    call(name = "let", baseIndentation = 1, nullSafe = true) {
-                                        extensionFunction()
-                                        lambda {
-                                            expression {
-                                                string("Hello, ")
-                                                +" + it"
-                                            }
-                                        }
-                                    }
-                                    call("orElseEmpty") {
-                                        extensionFunction()
-                                    }
+        }
+        slideCode {
+            kotlin {
+                declareFunction(name = "`test sayHello`") {
+                    annotation("Test")
+                    body {
+                        statement {
+                            declareProperty(modifier = "val", name = "sb") {
+                                constructor("StringBuilder") {}
+                            }
+                        }
+                        expression {
+                            call("sayHello", argsOnDifferentLines = true, baseIndentation = 1) {
+                                packageFunction()
+                                argument(name = "printFn") {
+                                    +"{ sb.append(it) }"
+                                }
+                                argument(name = "read") {
+                                    block(inline = true) { expression { string("input") } }
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
-        slideCode {
-            keyword("@Test")
-            +"\n"
-            declareFunction(name = "`test sayHello`") {
-                body {
-                    expression {
-                        declareProperty(modifier = "val", name = "sb") {
-                            constructor("StringBuilder") {}
-                        }
-                    }
-                    expression {
-                        call("sayHello", argsOnDifferentLines = true, baseIndentation = 1) {
-                            packageFunction()
-                            argument(name = "printFn") {
-                                +"{ sb.append(it) }"
-                            }
-                            argument(name = "read") {
-                                block(inline = true) { expression { string("input") } }
-                            }
-                        }
-                    }
-                    expression {
-                        call("assertEquals") {
-                            argument {
-                                string("Hello, input")
-                            }
-                            argument {
-                                on({ +"sb" }) {
-                                    call("toString") {}
+                        expression {
+                            call("assertEquals") {
+                                argument {
+                                    string("Hello, input")
+                                }
+                                argument {
+                                    on({ +"sb" }) {
+                                        call("toString") {}
+                                    }
                                 }
                             }
                         }

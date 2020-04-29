@@ -112,13 +112,6 @@ fun DIV.dashboard(dash: Dashboard.() -> Unit) {
     }
 }
 
-fun BODY.markdownContent(markdown: String, options: MutableDataSet = MutableDataSet()) {
-    return div {
-        classes = setOf("page-content")
-        this.unsafe { raw(HtmlRenderer.builder(options).build().render(com.vladsch.flexmark.parser.Parser.builder(options).build().parse(markdown))) }
-    }
-}
-
 fun BODY.pageTitle(title: String) {
     return h1(classes = "") {
         style = css {

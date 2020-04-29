@@ -95,30 +95,32 @@ For example:
 """.trimIndent()
     }
     sampleCode {
-        declareClass(name = "FizzBuzzRunner", propsOnSeparateLines = false) {
-            property(modifier = "val", name = "linePrinter", type = "PrintStream") {
-                on({ +"System" }) {
-                    property(name = "out")
+        kotlin {
+            declareClass(name = "FizzBuzzRunner", propsOnSeparateLines = false) {
+                property(modifier = "val", name = "linePrinter", type = "PrintStream") {
+                    on({ +"System" }) {
+                        property(name = "out")
+                    }
                 }
-            }
-            function(name = "fizzBuzz", paramsOnSeparateLines = false) {
-                parameter(name = "limit", type = "Int")
-                body {
-                    statement {
-                        forLoop(iterator = "i", collection = "1..limit") {
-                            statement {
-                                on({ +"linePrinter" }) {
-                                    call("println") {
-                                        argument { call("calculateValueForNumber") { argument { +"i" } } }
+                function(name = "fizzBuzz", paramsOnSeparateLines = false) {
+                    parameter(name = "limit", type = "Int")
+                    body {
+                        statement {
+                            forLoop(iterator = "i", collection = "1..limit") {
+                                statement {
+                                    on({ +"linePrinter" }) {
+                                        call("println") {
+                                            argument { call("calculateValueForNumber") { argument { +"i" } } }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-            function(name = "calculateValueForNumber", paramsOnSeparateLines = false) {
-                calculateValueForNumberFunction()
+                function(name = "calculateValueForNumber", paramsOnSeparateLines = false) {
+                    calculateValueForNumberFunction()
+                }
             }
         }
     }
@@ -137,29 +139,31 @@ Functions will call other functions. When one function calls another, how can yo
     }
     p { +"Our FizzBuzz code will now look like this:" }
     sampleCode {
-        declareFunction(name = "fizzBuzz") {
-            parameter(name = "limit", type = "Int")
-            body {
-                statement {
-                    forLoop(iterator = "i", collection = "1..limit") {
-                        call("print") {
-                            argument { call("calculateValueForNumber") { argument { +"i" } } }
+        kotlin {
+            declareFunction(name = "fizzBuzz") {
+                parameter(name = "limit", type = "Int")
+                body {
+                    statement {
+                        forLoop(iterator = "i", collection = "1..limit") {
+                            call("print") {
+                                argument { call("calculateValueForNumber") { argument { +"i" } } }
+                            }
                         }
                     }
                 }
             }
-        }
-        declareFunction(name = "calculateValueForNumber") {
-            calculateValueForNumberFunction()
-        }
-        declareFunction(name = "print") {
-            parameter(name = "string", type = "String")
-            body {
-                statement {
-                    on({ +"System" }) {
-                        property(name = "out")
-                        call(name = "println") {
-                            argument { +"string" }
+            declareFunction(name = "calculateValueForNumber") {
+                calculateValueForNumberFunction()
+            }
+            declareFunction(name = "print") {
+                parameter(name = "string", type = "String")
+                body {
+                    statement {
+                        on({ +"System" }) {
+                            property(name = "out")
+                            call(name = "println") {
+                                argument { +"string" }
+                            }
                         }
                     }
                 }
@@ -181,18 +185,20 @@ The fizzBuzz function now looks like this:
     """.trimIndent()
     }
     sampleCode {
-        declareFunction(name = "fizzBuzz") {
-            parameter(name = "limit", type = "Int")
-            parameter(name = "printer", type = "(String) -> Unit") {
-                +"::print"
-            }
-            body {
-                statement {
-                    forLoop(iterator = "i", collection = "1..limit") {
-                        statement {
-                            on({ +"printer" }) {
-                                call("invoke") {
-                                    argument { call("calculateValueForNumber") { argument { +"i" } } }
+        kotlin {
+            declareFunction(name = "fizzBuzz") {
+                parameter(name = "limit", type = "Int")
+                parameter(name = "printer", type = "(String) -> Unit") {
+                    +"::print"
+                }
+                body {
+                    statement {
+                        forLoop(iterator = "i", collection = "1..limit") {
+                            statement {
+                                on({ +"printer" }) {
+                                    call("invoke") {
+                                        argument { call("calculateValueForNumber") { argument { +"i" } } }
+                                    }
                                 }
                             }
                         }
@@ -209,29 +215,31 @@ The fizzBuzz function now looks like this:
     }
     p { +"And it can be isolated for testing like this:" }
     sampleCode {
-        declareFunction(name = "test") {
-            body {
-                val outputList = assignment(modifier = "val", name = "outputList") {
-                    call(name = "ArrayList<String>")
-                }
-                call(name = "fizzBuzz") {
-                    argument { number(6) }
-                    argument {
-                        block(inline = true) {
-                            expression(outputList.call(callName = "add") {
-                                argument { +"it" }
-                            })
+        kotlin {
+            declareFunction(name = "test") {
+                body {
+                    val outputList = assignment(modifier = "val", name = "outputList") {
+                        call(name = "ArrayList<String>")
+                    }
+                    call(name = "fizzBuzz") {
+                        argument { number(6) }
+                        argument {
+                            block(inline = true) {
+                                expression(outputList.call(callName = "add") {
+                                    argument { +"it" }
+                                })
+                            }
                         }
                     }
-                }
-                statement {
-                    on({
-                        call(name = "assertThat") {
-                            argument { +"outputList[2]" }
-                        }
-                    }) {
-                        call(name = "isEqualTo") {
-                            argument { string("FIZZ") }
+                    statement {
+                        on({
+                            call(name = "assertThat") {
+                                argument { +"outputList[2]" }
+                            }
+                        }) {
+                            call(name = "isEqualTo") {
+                                argument { string("FIZZ") }
+                            }
                         }
                     }
                 }
@@ -246,44 +254,46 @@ For example:
 """
     }
     sampleCode {
-        declareClass(name = "FizzBuzzRunner") {
-            val printer = property(modifier = "private val", name = "printer", type = "(String) -> Unit") {
-                +"::print"
-            }
-            val calculator = property(modifier = "private val", name = "calculator", type = "(Int) -> String") {
-                +"::calculateForNumber"
-            }
-            function(name = "fizzBuzz", paramsOnSeparateLines = false) {
-                parameter(name = "limit", type = "Int")
-                body {
-                    statement {
-                        forLoop(iterator = "i", collection = "1..limit") {
-                            statement {
-                                inlineExpression(printer.call(callName = "invoke") {
-                                    argument(value = calculator.call(callName = "invoke") {
-                                        argument { +"i" }
+        kotlin {
+            declareClass(name = "FizzBuzzRunner") {
+                val printer = property(modifier = "private val", name = "printer", type = "(String) -> Unit") {
+                    +"::print"
+                }
+                val calculator = property(modifier = "private val", name = "calculator", type = "(Int) -> String") {
+                    +"::calculateForNumber"
+                }
+                function(name = "fizzBuzz", paramsOnSeparateLines = false) {
+                    parameter(name = "limit", type = "Int")
+                    body {
+                        statement {
+                            forLoop(iterator = "i", collection = "1..limit") {
+                                statement {
+                                    inlineExpression(printer.call(callName = "invoke") {
+                                        argument(value = calculator.call(callName = "invoke") {
+                                            argument { +"i" }
+                                        })
                                     })
-                                })
+                                }
                             }
                         }
                     }
                 }
-            }
-            function(name = "print", paramsOnSeparateLines = false) {
-                parameter(name = "string", type = "String")
-                body {
-                    statement {
-                        on({ +"System" }) {
-                            property(name = "out")
-                            call(name = "println") {
-                                argument { +"string" }
+                function(name = "print", paramsOnSeparateLines = false) {
+                    parameter(name = "string", type = "String")
+                    body {
+                        statement {
+                            on({ +"System" }) {
+                                property(name = "out")
+                                call(name = "println") {
+                                    argument { +"string" }
+                                }
                             }
                         }
                     }
                 }
-            }
-            function(name = "calculateValueForNumber", paramsOnSeparateLines = false) {
-                calculateValueForNumberFunction()
+                function(name = "calculateValueForNumber", paramsOnSeparateLines = false) {
+                    calculateValueForNumberFunction()
+                }
             }
         }
     }

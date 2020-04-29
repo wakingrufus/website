@@ -18,6 +18,13 @@ class PROPERTY(val modifier: String? = null,
        delegate = CALL(name).apply(call)
     }
 
+    fun asSubject(): SUBJECT{
+       return when (modifier){
+            "var" -> SUBJECT(0) {variablePropertyName(this@PROPERTY.name)}
+           else -> SUBJECT(0) {propertyName(this@PROPERTY.name)}
+       }
+    }
+
     operator fun invoke(code: CODE) {
         this.let { property ->
             code.apply {

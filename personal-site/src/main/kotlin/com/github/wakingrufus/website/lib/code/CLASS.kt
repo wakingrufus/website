@@ -7,7 +7,6 @@ import kotlinx.html.HtmlTagMarker
 class CLASS(val modifiers: List<String> = emptyList(),
             val name: String,
             val propsOnSeparateLines: Boolean = true) {
-    // TODO: class annotations
     private var annotation: String? = null
     var superClass: String? = null
     var constructorProperties: List<PROPERTY> = ArrayList()
@@ -109,11 +108,10 @@ class CLASS(val modifiers: List<String> = emptyList(),
                     }
                     it.functions.forEach {
                         it(this)
-                        +"\n"
                     }
                     +"}"
                 }
-                +"\n\n"
+                +"\n"
             }
         }
 

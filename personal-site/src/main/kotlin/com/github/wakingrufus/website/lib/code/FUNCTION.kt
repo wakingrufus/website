@@ -16,7 +16,7 @@ class FUNCTION(val operator: Boolean = false,
     var parameters: List<PARAMETER> = ArrayList()
     var body: (CODE.() -> Unit)? = null
     var expression: Boolean = false
-    var annotation: CALL? = null
+    private var annotation: CALL? = null
 
     fun parameter(name: String, type: String?, value: (CODE.() -> Unit)? = null): TOKEN {
         parameters += PARAMETER(name = name, type = type).apply { value?.let { value(it) } }
@@ -52,10 +52,18 @@ class FUNCTION(val operator: Boolean = false,
         }
     }
 
-    fun annotation(name: String, call: CALL.() -> Unit) {
-        annotation = CALL(name = name, baseIndentation = indentation, argsOnDifferentLines = false).apply(call).apply {
-            this.callType = ::annotationCall
-        }
+    fun annotation(name: String, call: (CALL.() -> Unit)? = null) {
+        annotation = CALL(name = "@$name", baseIndentation = indentation, argsOnDifferentLines = false)
+                .apply {
+                    if (call != null) {
+                        call(this)
+                    } else {
+                        infix()
+                    }
+                }
+                .apply {
+                    this.callType = ::annotationCall
+                }
     }
 
     operator fun invoke(code: CODE) {
@@ -103,6 +111,7 @@ class FUNCTION(val operator: Boolean = false,
             } else {
                 this@FUNCTION.buildFunctionBody(this)
             }
+            +"\n"
         }
     }
 }
