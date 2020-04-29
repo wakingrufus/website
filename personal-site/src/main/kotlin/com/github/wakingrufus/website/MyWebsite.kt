@@ -50,6 +50,7 @@ fun HtmlPage.standardHead() {
             title = "RSS"
         }
         title(getTitle())
+        meta(name="Description", content = getDescription())
     }
 }
 
@@ -88,6 +89,7 @@ class MyWebsite {
 val mainPage = htmlPage("index.html") {
     standardHead()
     title("wakingrufus's home page")
+    description("Personal home page for wakingrufus, a software developer working on open source projects in kotlin.")
     body {
         pageTitle("wakingrufus")
         content {

@@ -10,6 +10,7 @@ import java.io.Writer
 @WebsiteDsl
 class HtmlPage(val path: String) {
     private var title: String? = null
+    private var description: String? = null
     private var body: BODY.() -> Unit = { }
     private var head: HEAD.() -> Unit = {}
 
@@ -17,22 +18,30 @@ class HtmlPage(val path: String) {
         return title ?: ""
     }
 
-    fun title(title: String){
+    fun getDescription(): String {
+        return description ?: title ?: ""
+    }
+
+    fun title(title: String) {
         this.title = title
     }
 
-    fun getContent(): BODY.() -> Unit = {
-      this.apply(body)
+    fun description(description: String) {
+        this.description = description
     }
 
-    fun head(block: HEAD.() -> Unit){
+    fun getContent(): BODY.() -> Unit = {
+        this.apply(body)
+    }
+
+    fun head(block: HEAD.() -> Unit) {
         head = block
     }
 
     fun writeHtmlPage(writer: Writer) {
         writer.use {
             it.write("<!DOCTYPE html>")
-            it.appendHTML().html{
+            it.appendHTML().html {
                 head(head)
                 body {
                     apply(body)
@@ -41,7 +50,7 @@ class HtmlPage(val path: String) {
         }
     }
 
-    fun body(block: BODY.() -> Unit){
+    fun body(block: BODY.() -> Unit) {
         body = block
     }
 
