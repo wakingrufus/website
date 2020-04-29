@@ -1,5 +1,6 @@
 package com.github.wakingrufus.website.lib.slides
 
+import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.Paths
 import com.github.wakingrufus.website.WebsiteDsl
 import com.github.wakingrufus.website.lib.CssPage
@@ -60,6 +61,7 @@ fun slideshowTitleSlide(mainCssPath: String,
                         totalSlides: Int,
                         content: DIV.() -> Unit): HTML.() -> Unit = {
     head {
+        style(type = "text/css") { +MyStyles().globalStyles() }
         link(href = mainCssPath, rel = "stylesheet")
         title { +title }
     }
@@ -100,6 +102,7 @@ fun slideTemplate(mainCssPath: String,
                   totalSlides: Int,
                   content: DIV.() -> Unit): HTML.() -> Unit = {
     head {
+        style(type = "text/css") { +MyStyles().globalStyles() }
         link(href = mainCssPath, rel = "stylesheet")
         meta { charset = "UTF-8" }
         title { +title }

@@ -42,6 +42,7 @@ class HtmlPage(val path: String) {
         writer.use {
             it.write("<!DOCTYPE html>")
             it.appendHTML().html {
+                lang = "en"
                 head(head)
                 body {
                     apply(body)

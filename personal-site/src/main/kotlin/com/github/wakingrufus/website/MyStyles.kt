@@ -15,7 +15,7 @@ class MyStyles {
         val BORDER_COLOR: Color = Color("#FFFFFF")
     }
 
-    fun styles(): String {
+    fun globalStyles(): String {
         return css {
             body {
                 fontFamily = "sans-serif"
@@ -26,6 +26,11 @@ class MyStyles {
             a {
                 color = LINK_COLOR
             }
+        }
+    }
+
+    fun styles(): String {
+        return css {
             h1 {
                 color = Color("#FFFFFF")
             }
@@ -101,14 +106,6 @@ class MyStyles {
             }
             body {
                 height = 100.pct
-                fontFamily = "sans-serif"
-                backgroundColor = BACKGROUND_COLOR
-                color = FONT_COLOR
-                marginTop = 0.px
-                marginBottom = 0.px
-            }
-            a {
-                color = LINK_COLOR
             }
         }
     }

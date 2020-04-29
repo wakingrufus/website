@@ -45,12 +45,14 @@ val myFooter: FOOTER.() -> Unit = {
 
 fun HtmlPage.standardHead() {
     this.head {
+        style(type = "text/css") { +MyStyles().globalStyles() }
         link(href = Paths.CSS_PATH, rel = "stylesheet")
         link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
             title = "RSS"
         }
         title(getTitle())
-        meta(name="Description", content = getDescription())
+        meta(name = "Description", content = getDescription())
+        meta(name = "viewport", content = "width=device-width, initial-scale=1")
     }
 }
 
