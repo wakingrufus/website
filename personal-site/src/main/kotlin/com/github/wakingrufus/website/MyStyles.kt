@@ -70,10 +70,10 @@ class MyStyles {
                     borderBottomColor = BORDER_COLOR
 
                 }
-                (".navBar li") {
-                    display = Display.inlineBlock
-                }
                 (".page-content") {
+                    display = Display.block
+                }
+                (".page-content article") {
                     display = Display.block
                 }
             }
@@ -84,6 +84,11 @@ class MyStyles {
                     borderRightStyle = BorderStyle.solid
                     borderRightColor = BORDER_COLOR
                     maxWidth = 18.pct
+                    position = Position.sticky
+                    top = 0.px
+                }
+                (".page-content article") {
+                    display = Display.inlineBlock
                 }
             }
         }

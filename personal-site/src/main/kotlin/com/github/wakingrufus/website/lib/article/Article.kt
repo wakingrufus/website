@@ -6,6 +6,8 @@ import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.pageTitle
 import com.github.wakingrufus.website.standardHead
+import kotlinx.css.Display
+import kotlinx.css.Position
 import kotlinx.css.em
 import kotlinx.css.pct
 import kotlinx.html.*
@@ -47,16 +49,23 @@ class ArticleBuilder(val title: String) {
     operator fun invoke(page: BODY) {
         page.apply {
             pageTitle(this@ArticleBuilder.title)
-            this@ArticleBuilder.nav?.invoke(this)
             content {
                 style = css {
                     marginLeft = 1.em
                     marginRight = 1.em
-                    if (nav != null) {
-                        maxWidth = 79.pct
-                    }
+                }
+                nav {
+                    this@ArticleBuilder.nav?.invoke(this)
                 }
                 article {
+                    style = css {
+                        if(nav != null){
+                       //     display = Display.inlineBlock
+                            if (nav != null) {
+                                maxWidth = 79.pct
+                            }
+                        }
+                    }
                     getContent().invoke(this)
                 }
             }

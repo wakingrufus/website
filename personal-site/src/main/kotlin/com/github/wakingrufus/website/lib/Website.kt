@@ -119,20 +119,6 @@ fun BODY.markdownContent(markdown: String, options: MutableDataSet = MutableData
     }
 }
 
-fun BODY.sideNavBar(block: UL.() -> Unit) = div {
-    classes += "navBar"
-    style = css {
-        verticalAlign = VerticalAlign.top
-    }
-    ul {
-        style = css {
-            listStyleType = ListStyleType.none
-            color = MyStyles.LINK_COLOR
-        }
-        block(this)
-    }
-}
-
 fun BODY.pageTitle(title: String) {
     return h1(classes = "") {
         style = css {

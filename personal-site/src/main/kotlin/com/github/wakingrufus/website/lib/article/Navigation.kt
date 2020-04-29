@@ -1,9 +1,12 @@
 package com.github.wakingrufus.website.lib.article
 
-import com.github.wakingrufus.website.lib.sideNavBar
-import kotlinx.html.BODY
+import com.github.wakingrufus.website.lib.css
+import kotlinx.css.Display
+import kotlinx.css.VerticalAlign
+import kotlinx.html.NAV
 import kotlinx.html.a
-import kotlinx.html.li
+import kotlinx.html.classes
+import kotlinx.html.style
 
 class Navigation {
     private val items: MutableList<Pair<String, String>> = mutableListOf()
@@ -11,10 +14,19 @@ class Navigation {
         items.add(href to name)
     }
 
-    operator fun invoke(body: BODY) {
-        body.sideNavBar {
+    operator fun invoke(body: NAV) {
+        body.apply {
+            classes += "navBar"
+            style = css {
+                verticalAlign = VerticalAlign.top
+            }
             items.forEach {
-                li { a(href = it.first) { +it.second } }
+                a(href = it.first) {
+                    style = css {
+                        display = Display.block
+                    }
+                    +it.second
+                }
             }
         }
     }
