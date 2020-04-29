@@ -14,6 +14,7 @@ import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
+import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.em
 import kotlinx.html.*
@@ -45,7 +46,7 @@ val myFooter: FOOTER.() -> Unit = {
 
 fun HtmlPage.standardHead() {
     this.head {
-        style(type = "text/css") { +MyStyles().globalStyles() }
+        style(type = "text/css") { unsafe {raw(MyStyles().globalStyles()) } }
         link(href = Paths.CSS_PATH, rel = "stylesheet")
         link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
             title = "RSS"
@@ -142,26 +143,34 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         panel("Software Development") {
-            h3 { +failAgile.getTitle() }
-            p { a(href = failAgile.path) { +"Article" } }
-            h3 { +adhocPolymorphism.getTitle() }
-            p { a(href = adhocPolymorphism.path) { +"Article" } }
-            h3 { +"Static Web development and Kotlin DSLs" }
-            span {
-                a(href = staticWeb.path) { +"Article" }
-                +" - "
-                a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" }
-                +" - "
-                a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Presentation Video" }
-                +" - "
-                a(href = "https://archive.org/details/kotlin-web-dsl") { +"Tutorial Video" }
+            h3 { a(href = failAgile.path) { +failAgile.getTitle() } }
+            h3 { a(href = adhocPolymorphism.path) { +adhocPolymorphism.getTitle() } }
+            div {
+                style = css {
+                    backgroundColor = MyStyles.BACKGROUND_COLOR
+                    paddingBottom = 1.em
+                }
+                h3 { +"Static Web development and Kotlin DSLs" }
+                span {
+                    a(href = staticWeb.path) { +"Article" }
+                    +" - "
+                    a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" }
+                    +" - "
+                    a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Presentation Video" }
+                    +" - "
+                    a(href = "https://archive.org/details/kotlin-web-dsl") { +"Tutorial Video" }
+                }
             }
-            h3 { +"Functional Kotlin" }
-            p { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
-            h3 { +"Software Development Antipatterns" }
-            p { a(href = antipatterns.path + "#refactoring") { +"Refactoring" } }
-            h3 { +"Kotlin in 2019" }
-            p { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" } }
+            h3 { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") {+"Functional Kotlin Presentation Slides" } }
+            div {
+                style = css {
+                    backgroundColor = MyStyles.BACKGROUND_COLOR
+                    paddingBottom = 1.em
+                }
+                h3 { +"Software Development Antipatterns" }
+                span { a(href = antipatterns.path + "#refactoring") { +"Refactoring as a Separate Ticket" } }
+            }
+            h3 { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") {  +"Kotlin in 2019 Presentation Slides" } }
         }
         panel("Recipes") {
             a { id = "recipes" }
