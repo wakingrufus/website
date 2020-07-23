@@ -1,8 +1,8 @@
 package com.github.wakingrufus.generationq
 
 import com.github.wakingrufus.website.WebsiteDsl
-import com.rometools.rome.feed.synd.SyndFeed
-import kotlinx.css.*
+import kotlinx.css.CSSBuilder
+import kotlinx.css.TextAlign
 import kotlinx.html.*
 import mu.KLogging
 import java.io.File
@@ -15,7 +15,6 @@ class Website(private val baseDir: File) {
     private var htmlFiles: List<HtmlPage> = ArrayList()
     private var cssFiles: List<CssPage> = ArrayList()
     private var uploaders: List<Uploader> = ArrayList()
-    private var rssFeeds: List<RssFeed> = ArrayList()
 
     fun cssFile(path: String, builder: CSSBuilder) {
         cssFiles += CssBuilderPage(path, builder)
@@ -33,14 +32,6 @@ class Website(private val baseDir: File) {
         htmlFiles += htmlPage
     }
 
-    fun rssFeed(rssDir: String = "rss", path: String, feedContents: SyndFeed) {
-        rssFeeds += RssFeedBuilder(
-                file = File(baseDir, rssDir).let {
-                    it.mkdir()
-                    File(it, path)
-                }, builder = feedContents)
-    }
-
     fun upload(uploader: Uploader) {
         uploaders += uploader
     }
@@ -54,11 +45,6 @@ class Website(private val baseDir: File) {
         }.plus(cssFiles.map {
             File(baseDir, it.path).apply {
                 it.write(FileWriter(this))
-            }
-        }).plus(rssFeeds.map {
-            it.file.apply {
-                logger.info(this.canonicalPath)
-                it.write(FileWriter(it.file))
             }
         })
     }

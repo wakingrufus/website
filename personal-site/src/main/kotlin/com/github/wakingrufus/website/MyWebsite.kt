@@ -14,7 +14,6 @@ import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
-import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.em
 import kotlinx.html.*
@@ -46,7 +45,7 @@ val myFooter: FOOTER.() -> Unit = {
 
 fun HtmlPage.standardHead() {
     this.head {
-        style(type = "text/css") { unsafe {raw(MyStyles().globalStyles()) } }
+        style(type = "text/css") { unsafe { raw(MyStyles().globalStyles()) } }
         link(href = Paths.CSS_PATH, rel = "stylesheet")
         link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
             title = "RSS"
@@ -124,6 +123,11 @@ val mainPage = htmlPage("index.html") {
                     +"My "
                     a(href = travel.path) { +"Travel Guide" }
                 }
+                p {
+                    +"I am also one of the hosts of "
+                    a(href = "https://generationq.neocities.org/") { +"Generation Q" }
+                    +", a Star Trek TNG Podcast"
+                }
             }
             myDashboard()
         }
@@ -161,7 +165,7 @@ val myDashboard: DIV.() -> Unit = {
                     a(href = "https://archive.org/details/kotlin-web-dsl") { +"Tutorial Video" }
                 }
             }
-            h3 { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") {+"Functional Kotlin Presentation Slides" } }
+            h3 { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Functional Kotlin Presentation Slides" } }
             div {
                 style = css {
                     backgroundColor = MyStyles.BACKGROUND_COLOR
@@ -170,7 +174,7 @@ val myDashboard: DIV.() -> Unit = {
                 h3 { +"Software Development Antipatterns" }
                 span { a(href = antipatterns.path + "#refactoring") { +"Refactoring as a Separate Ticket" } }
             }
-            h3 { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") {  +"Kotlin in 2019 Presentation Slides" } }
+            h3 { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Kotlin in 2019 Presentation Slides" } }
         }
         panel("Recipes") {
             a { id = "recipes" }

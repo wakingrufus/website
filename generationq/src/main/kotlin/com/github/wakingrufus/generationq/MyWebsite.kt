@@ -19,8 +19,6 @@ val myFooter: FOOTER.() -> Unit = {
             display = Display.block
         }
         a(href = mainPage.path) { +"Home" }
-        +" - "
-        a(href = feeds.path) { +"Feeds" }
     }
 }
 
@@ -43,10 +41,6 @@ class MyWebsite {
         return website(baseDir) {
             cssFile(path = Paths.CSS_PATH, cssString = MyStyles().styles())
             page(mainPage)
-            page(feeds)
-
-            rssFeed(path = Paths.RSS_PATH, feedContents = feed())
-            //    rssFeed(path = Paths.SITE_UPDATES_RSS_PATH, feedContents = siteUpdateFeed())
 
         }
     }
@@ -64,6 +58,7 @@ val mainPage = htmlPage("index.html") {
                     paddingLeft = 1.em
                 }
                 p { +"A Star Trek: The Next Generation Podcast" }
+                p { a(href = "http://generationq.libsyn.com/rss") { +"RSS" } }
                 p {
                     +"Discuss at: "
                     a(href = "https://tenforward.social/@TanagraTooter") {
@@ -88,26 +83,27 @@ val mainPage = htmlPage("index.html") {
                     }
                     h2 { +"000 - Intro" }
                     p { +"The hosts John and Andy introduce themselves, and what their goal is with this podcast." }
-                    span {
-                        a(href = "https://archive.org/details/kotlin-web-dsl") { +"MP3" }
+                    p {
+                        a(href = "https://archive.org/details/GenerationQ-000-Intro") { +"MP3" }
+                    }
+                    p {
+                        a(href = "https://tenforward.social/@TanagraTooter/104560793009745258") { +"Discuss this episode" }
+                    }
+                    p {
+                        a(href = "https://www.deviantart.com/benttibisson/art/Star-Trek-the-Next-Generation-painting-617241159") { +"Artwork: Bentti Bisson" }
+                    }
+                    p {
+                        a(href = "https://soundcloud.com/nes-house") {
+                            +"Intro Music: NES House - Star Trek the next generation House"
+                        }
+                    }
+                    p {
+                        a(href = "https://soundcloud.com/aeop") {
+                            +"Outro Music: Aeop - A308 - What Do You Want Will Riker"
+                        }
                     }
                 }
             }
-        }
-        footer { myFooter() }
-    }
-}
-
-val feeds = htmlPage("feeds.html") {
-    standardHead()
-    body {
-        pageTitle("Feeds")
-        content {
-            ul {
-                li { a(href = "rss/" + Paths.RSS_PATH) { +"All Updates" } }
-                //   li { a(href = "rss/"+Paths.SITE_UPDATES_RSS_PATH) { +"Site Updates" } }
-            }
-
         }
         footer { myFooter() }
     }

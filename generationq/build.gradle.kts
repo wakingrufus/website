@@ -18,7 +18,6 @@ repositories {
 
 dependencies {
     implementation(project(":website-dsl"))
-    implementation(project(":rss-dsl"))
     compile("org.slf4j:slf4j-api:1.7.25")
     compile("io.github.microutils:kotlin-logging:1.6.10")
     compile("org.jetbrains.kotlin:kotlin-reflect")
@@ -29,7 +28,6 @@ dependencies {
     compile("org.slf4j:slf4j-log4j12:1.7.25")
     compile("org.jetbrains:kotlin-css:1.0.0-pre.70-kotlin-1.3.21")
     compile("org.jetbrains:kotlin-css-jvm:1.0.0-pre.70-kotlin-1.3.21")
-    compile("com.rometools:rome:1.10.0")
     implementation("com.vladsch.flexmark:flexmark-all:0.50.16")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
