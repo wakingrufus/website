@@ -71,7 +71,7 @@ val mainPage = htmlPage("index.html") {
                     paddingLeft = 1.em
                 }
                 h1 { +"Latest Episode" }
-                episode1()
+                episode2()
             }
 
             div {
@@ -94,6 +94,7 @@ val mainPage = htmlPage("index.html") {
                     a { id = "s1" }
                     h2 { +"Season 1" }
                     episode1()
+                    episode2()
                 }
             }
         }
@@ -118,6 +119,16 @@ val episode1: DIV.() -> Unit = {
             """.trimMargin()
         }
         p { +"This episode is longer due to covering both parts of the episode (technically episodes 1&2)" }
+    }
+}
+
+val episode2: DIV.() -> Unit = {
+    episode("002 - S1E03 - The Naked Now",
+            "https://archive.org/details/002-s1e03-the-naked-now",
+            "https://tenforward.social/@TanagraTooter/104633016860860724") {
+        p {
+            +"We watch “The Naked Now”, quite possibly the worst episode of the series, but hey, sex sells."
+        }
     }
 }
 
