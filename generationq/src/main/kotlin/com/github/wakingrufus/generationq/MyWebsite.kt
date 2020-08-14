@@ -58,6 +58,11 @@ val mainPage = htmlPage("index.html") {
                 p { +"A Star Trek: The Next Generation Podcast" }
                 p { a(href = "http://generationq.libsyn.com/rss") { +"RSS" } }
                 p {
+                    +"If you like us, please consider supporting us via "
+                    a(href = "https://www.patreon.com/generationqpod") { +"Patreon" }
+                    +" and get some bonus content as well."
+                }
+                p {
                     +"Discuss at: "
                     a(href = "https://tenforward.social/@TanagraTooter") {
                         rel = "me"
@@ -71,7 +76,7 @@ val mainPage = htmlPage("index.html") {
                     paddingLeft = 1.em
                 }
                 h1 { +"Latest Episode" }
-                episode2()
+                episode4()
             }
 
             div {
@@ -80,7 +85,7 @@ val mainPage = htmlPage("index.html") {
                 }
                 h1 { +"Episodes" }
                 span { a(href = "#s1") { +"Season 1" } }
-                episode0()
+                episode1()
 
                 div {
                     style = css {
@@ -93,8 +98,9 @@ val mainPage = htmlPage("index.html") {
                     }
                     a { id = "s1" }
                     h2 { +"Season 1" }
-                    episode1()
                     episode2()
+                    episode3()
+                    episode4()
                 }
             }
         }
@@ -102,15 +108,15 @@ val mainPage = htmlPage("index.html") {
     }
 }
 
-val episode0: DIV.() -> Unit = {
-    episode("000 - Intro", "https://archive.org/details/GenerationQ-000-Intro",
+val episode1: DIV.() -> Unit = {
+    episode("001 - Intro", "https://archive.org/details/GenerationQ-000-Intro",
             "https://tenforward.social/@TanagraTooter/104560793009745258") {
         p { +"The hosts John and Andy introduce themselves, and what their goal is with this podcast." }
     }
 }
 
-val episode1: DIV.() -> Unit = {
-    episode("001 - S1E01 - Encounter at Farpoint",
+val episode2: DIV.() -> Unit = {
+    episode("002 - S1E01 - Encounter at Farpoint",
             "https://archive.org/details/001-s1e01-encounter-at-farpoint",
             "https://tenforward.social/@TanagraTooter/104593651455494052") {
         p {
@@ -122,12 +128,24 @@ val episode1: DIV.() -> Unit = {
     }
 }
 
-val episode2: DIV.() -> Unit = {
-    episode("002 - S1E03 - The Naked Now",
+val episode3: DIV.() -> Unit = {
+    episode("003 - S1E03 - The Naked Now",
             "https://archive.org/details/002-s1e03-the-naked-now",
             "https://tenforward.social/@TanagraTooter/104633016860860724") {
         p {
             +"We watch “The Naked Now”, quite possibly the worst episode of the series, but hey, sex sells."
+        }
+    }
+}
+
+val episode4: DIV.() -> Unit = {
+    episode("004 - S1E04 - Code of Honor",
+            "https://archive.org/details/GenerationQ-004-S1E04CodeOfHonor",
+            "https://tenforward.social/@TanagraTooter/104689478681842924") {
+        p {
+            +"""We review “Code of Honor”, possibly THE most racist, terrible episode in all of Trek. 
+|We also discuss the concept of Scifi/Fantasy species as stand ins for race. We referenced """.trimMargin()
+            a(href = "https://www.denofgeek.com/tv/revisiting-star-trek-tng-code-of-honor/") { +"Den of Geek" }
         }
     }
 }
