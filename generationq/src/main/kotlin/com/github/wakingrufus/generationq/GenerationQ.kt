@@ -11,7 +11,7 @@ object GenerationQ : Podcast() {
         }
     }
 
-    val season1 = season("Season 1"){
+    val season1 = season("Season 1") {
         val episode2 = episode("002 - S1E01 - Encounter at Farpoint",
                 "https://archive.org/details/001-s1e01-encounter-at-farpoint") {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104593651455494052"
@@ -55,6 +55,14 @@ object GenerationQ : Podcast() {
                 p {
                     +"We review The Last Outpost, our first look at the Ferengi."
                 }
+            }
+        }
+
+        val episode6 = episode("006 - S1E06 - Where No One Has Gone Before",
+                "https://archive.org/details/generationq-s1e6") {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/104830242366600858"
+            description {
+                p { +"We review Where No One Has Gone Before and take a trip." }
             }
         }
     }
