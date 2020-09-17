@@ -65,5 +65,14 @@ object GenerationQ : Podcast() {
                 p { +"We review Where No One Has Gone Before and take a trip." }
             }
         }
+
+        val episode7 = episode("007 - S1E07 - Lonely Among Us",
+                "https://archive.org/details/GenerationQ-S1E07-LonelyAmongUs"
+        ) {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/104880119881367074"
+            description {
+                p { +"We review Lonely Among Us, in which we upload ourselves to the cloud." }
+            }
+        }
     }
 }
