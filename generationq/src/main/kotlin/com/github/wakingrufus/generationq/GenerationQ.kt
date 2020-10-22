@@ -74,5 +74,13 @@ object GenerationQ : Podcast() {
                 p { +"We review Lonely Among Us, in which we upload ourselves to the cloud." }
             }
         }
+
+        episode("008 - S1E08 - Justice",
+                "https://archive.org/details/generationq-008") {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105036382906419475"
+            description {
+                p { +"You know, I came to this sex planet to get away from things like lectures about justice." }
+            }
+        }
     }
 }
