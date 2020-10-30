@@ -5,7 +5,7 @@ import com.github.wakingrufus.website.articles.adhocPolymorphism
 import com.github.wakingrufus.website.articles.antipatterns
 import com.github.wakingrufus.website.articles.failAgile
 import com.github.wakingrufus.website.articles.staticWeb
-import com.github.wakingrufus.website.cooking.allRecipes
+import com.github.wakingrufus.website.cooking.RecipeIndex
 import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.html
@@ -74,8 +74,8 @@ class MyWebsite {
             page(adhocPolymorphism)
             page(failAgile)
 
-            allRecipes.forEach {
-                page(it.invoke().recipePage())
+            RecipeIndex.recipes.forEach {
+                page(it.recipePage())
             }
 
             rssFeed(path = Paths.RSS_PATH, feedContents = feed())
@@ -179,7 +179,7 @@ val myDashboard: DIV.() -> Unit = {
         panel("Recipes") {
             a { id = "recipes" }
             ul {
-                allRecipes.forEach { recipe ->
+                RecipeIndex.recipes.forEach { recipe ->
                     li { a(href = recipe.name.replace(" ", "") + ".html") { +recipe.name } }
                 }
             }

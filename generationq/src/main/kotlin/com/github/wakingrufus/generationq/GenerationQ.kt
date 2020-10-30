@@ -82,5 +82,13 @@ object GenerationQ : Podcast() {
                 p { +"You know, I came to this sex planet to get away from things like lectures about justice." }
             }
         }
+
+        episode("009 - S1E09 - The Battle",
+                "https://archive.org/details/generation-q-009") {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105084689212363611"
+            description {
+                p { +"I didn't expect to be explaining hashing algorithms on this podcast, but here we are." }
+            }
+        }
     }
 }

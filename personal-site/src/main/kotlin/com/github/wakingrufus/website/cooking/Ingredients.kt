@@ -5,6 +5,7 @@ import com.github.wakingrufus.recipe.Ingredient
 val chickpeas = Ingredient("chickpeas")
 val canolaOil = Ingredient("canola oil")
 val yellowOnion = Ingredient("yellow onion")
+val greenOnion = Ingredient("green onion")
 fun yogurt(style: String, flavor: String) = Ingredient("yogurt")("$flavor $style")
 val tomatoPaste = Ingredient("tomato paste")
 val crushedTomatoes = Ingredient("crushed tomatoes")
