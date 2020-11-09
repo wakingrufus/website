@@ -1,7 +1,14 @@
 package com.github.wakingrufus.website.cooking
 
 import com.github.wakingrufus.recipe.*
+import com.github.wakingrufus.website.cooking.Spices.blackPepper
+import com.github.wakingrufus.website.cooking.Spices.cumin
+import com.github.wakingrufus.website.cooking.Spices.curryPowder
+import com.github.wakingrufus.website.cooking.Spices.garamMasala
 import com.github.wakingrufus.website.cooking.Spices.ginger
+import com.github.wakingrufus.website.cooking.Spices.oregano
+import com.github.wakingrufus.website.cooking.Spices.salt
+
 import java.time.temporal.ChronoUnit
 
 object RecipeIndex : RecipeDb() {
@@ -22,16 +29,16 @@ object RecipeIndex : RecipeDb() {
             duration(5, ChronoUnit.MINUTES)
         }
     }
-    val carnitas = com.github.wakingrufus.recipe.recipe("Carnitas") {
+    val carnitas = recipe("Carnitas") {
         servings = 4
         ingredients(
                 4 lbs pork("Butt or Shoulder"),
-                2.5 tsp Spices.salt,
-                1 tsp Spices.blackPepper,
+                2.5 tsp salt,
+                1 tsp blackPepper,
                 1 medium yellowOnion,
                 8 ea garlic("cloves, minced"),
-                1 tbs Spices.oregano,
-                1 tbs Spices.cumin,
+                1 tbs oregano,
+                1 tbs cumin,
                 1 tbs oliveOil,
                 .75 cup orangeJuice,
                 .75 cup mexicanCoke
@@ -56,7 +63,7 @@ object RecipeIndex : RecipeDb() {
             duration(3, ChronoUnit.MINUTES)
         }
     }
-    val chickPeaCurry = com.github.wakingrufus.recipe.recipe("Butter Chickpea Curry") {
+    val chickPeaCurry = recipe("Butter Chickpea Curry") {
         servings = 4
         ingredients(
                 12 oz chickpeas,
@@ -64,11 +71,11 @@ object RecipeIndex : RecipeDb() {
                 1 tbs butter,
                 1 medium yellowOnion,
                 1 tsp garlic("minced"),
-                2 tsp Spices.curryPowder,
-                2 tsp Spices.garamMasala,
+                2 tsp curryPowder,
+                2 tsp garamMasala,
                 1 tsp ginger("ground"),
-                1 tsp Spices.cumin,
-                1 tsp Spices.salt,
+                1 tsp cumin,
+                1 tsp salt,
                 1 cup yogurt("greek", "plain"),
                 8 oz tomatoPaste,
                 15 oz crushedTomatoes
@@ -82,14 +89,14 @@ object RecipeIndex : RecipeDb() {
             duration(5, ChronoUnit.MINUTES)
         }
     }
-    val seafoodFraDiavolo = com.github.wakingrufus.recipe.recipe("Seafood Fra Diavolo") {
+    val seafoodFraDiavolo = recipe("Seafood Fra Diavolo") {
         servings = 8
         ingredients(
                 1 lbs shrimp,
                 4 tbs oliveOil,
                 6 ea garlic("cloves, minced"),
                 28 oz dicedTomatoes,
-                1.5 tsp Spices.salt,
+                1.5 tsp salt,
                 1 tsp Spices.redPepperFlakes,
                 16 oz linguine,
                 1 tbs parsley("chopped"),
