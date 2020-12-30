@@ -12,8 +12,10 @@ object GenerationQ : Podcast() {
     }
 
     val season1 = season("Season 1") {
-        val episode2 = episode("002 - S1E01 - Encounter at Farpoint",
-                "https://archive.org/details/001-s1e01-encounter-at-farpoint") {
+        val episode2 = episode(
+            "002 - S1E01 - Encounter at Farpoint",
+            "https://archive.org/details/001-s1e01-encounter-at-farpoint"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104593651455494052"
             description {
                 p {
@@ -25,8 +27,10 @@ object GenerationQ : Podcast() {
             }
         }
 
-        val episode3 = episode("003 - S1E03 - The Naked Now",
-                "https://archive.org/details/002-s1e03-the-naked-now") {
+        val episode3 = episode(
+            "003 - S1E03 - The Naked Now",
+            "https://archive.org/details/002-s1e03-the-naked-now"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104633016860860724"
             imageName = "ep2.jpg"
             description {
@@ -36,21 +40,25 @@ object GenerationQ : Podcast() {
             }
         }
 
-        val episode4 = episode("004 - S1E04 - Code of Honor",
-                "https://archive.org/details/GenerationQ-004-S1E04CodeOfHonor") {
+        val episode4 = episode(
+            "004 - S1E04 - Code of Honor",
+            "https://archive.org/details/GenerationQ-004-S1E04CodeOfHonor"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104689478681842924"
             description {
                 p {
                     +"""We review “Code of Honor”, possibly THE most racist, terrible episode in all of Trek. 
                     |We also discuss the concept of Scifi/Fantasy species as stand ins for race. We referenced """
-                            .trimMargin()
+                        .trimMargin()
                     a(href = "https://www.denofgeek.com/tv/revisiting-star-trek-tng-code-of-honor/") { +"Den of Geek" }
                 }
             }
         }
 
-        val episode5 = episode("005 - S1E05 - The Last Outpost",
-                "https://archive.org/details/GenerationQ-005-S1E5-TheLastOutpost") {
+        val episode5 = episode(
+            "005 - S1E05 - The Last Outpost",
+            "https://archive.org/details/GenerationQ-005-S1E5-TheLastOutpost"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104689478681842924"
             imageName = "ep5.png"
             description {
@@ -60,8 +68,10 @@ object GenerationQ : Podcast() {
             }
         }
 
-        val episode6 = episode("006 - S1E06 - Where No One Has Gone Before",
-                "https://archive.org/details/generationq-s1e6") {
+        val episode6 = episode(
+            "006 - S1E06 - Where No One Has Gone Before",
+            "https://archive.org/details/generationq-s1e6"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104830242366600858"
             imageName = "ep6.png"
             description {
@@ -69,8 +79,9 @@ object GenerationQ : Podcast() {
             }
         }
 
-        val episode7 = episode("007 - S1E07 - Lonely Among Us",
-                "https://archive.org/details/GenerationQ-S1E07-LonelyAmongUs"
+        val episode7 = episode(
+            "007 - S1E07 - Lonely Among Us",
+            "https://archive.org/details/GenerationQ-S1E07-LonelyAmongUs"
         ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/104880119881367074"
             imageName = "ep7.png"
@@ -79,8 +90,10 @@ object GenerationQ : Podcast() {
             }
         }
 
-        episode("008 - S1E08 - Justice",
-                "https://archive.org/details/generationq-008") {
+        episode(
+            "008 - S1E08 - Justice",
+            "https://archive.org/details/generationq-008"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/105036382906419475"
             imageName = "ep8.png"
             description {
@@ -88,8 +101,10 @@ object GenerationQ : Podcast() {
             }
         }
 
-        episode("009 - S1E09 - The Battle",
-                "https://archive.org/details/generation-q-009") {
+        episode(
+            "009 - S1E09 - The Battle",
+            "https://archive.org/details/generation-q-009"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/105084689212363611"
             imageName = "ep9.png"
             description {
@@ -97,8 +112,10 @@ object GenerationQ : Podcast() {
             }
         }
 
-        episode("010 - S1E10 - Hide and Q",
-                "https://archive.org/details/generationq-010") {
+        episode(
+            "010 - S1E10 - Hide and Q",
+            "https://archive.org/details/generationq-010"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/105266789173514217"
             imageName = "ep10.png"
             description {
@@ -107,8 +124,18 @@ object GenerationQ : Podcast() {
                         |and life gets in the way. 
                         |In this episode, we review S1E10 "Hide and Q".  
                         |We talk about Q and Picard's ongoing bet, and how it relates to politics in our time."""
-                            .trimMargin()
+                        .trimMargin()
                 }
+            }
+        }
+        episode(
+            "011 - S1E11 - Haven",
+            "https://archive.org/details/generation-q-011"
+        ) {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105471469922559613"
+            imageName = "ep11.png"
+            description {
+                p { +"In this episode, we review S1E11 \"Haven\"." }
             }
         }
     }
