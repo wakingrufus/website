@@ -138,5 +138,15 @@ object GenerationQ : Podcast() {
                 p { +"In this episode, we review S1E11 \"Haven\"." }
             }
         }
+        episode(
+            "012 - S1E12 - The Big Goodbye",
+            "https://archive.org/details/generationq-012"
+        ) {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105512678150722191"
+            imageName = "ep12.png"
+            description {
+                p { +"In this episode, we review S1E12 \"The Big Goodbye\". We talk Ubik, Raymond Chandler, and DRM." }
+            }
+        }
     }
 }
