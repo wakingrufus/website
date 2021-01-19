@@ -52,12 +52,12 @@ class MyStyles {
 
             media("screen and (min-resolution: 120dpi)") {
                 body {
-                    fontSize = 1.5.em
+                    fontSize = 1.25.em
                 }
             }
             media("screen and (min-resolution: 192dpi)") {
                 body {
-                    fontSize = 1.75.em
+                    fontSize = 1.5.em
                 }
             }
 

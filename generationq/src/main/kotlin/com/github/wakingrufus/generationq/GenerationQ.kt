@@ -148,5 +148,18 @@ object GenerationQ : Podcast() {
                 p { +"In this episode, we review S1E12 \"The Big Goodbye\". We talk Ubik, Raymond Chandler, and DRM." }
             }
         }
+        episode(
+            "013 - S1E13 - Datalore",
+            "https://archive.org/details/generationq-013"
+        ) {
+            imageName = "ep13.png"
+            description {
+                p {
+                    +"""
+                    In this episode, we review S1E13 "Datalore", and talk about why COVID is our Crystalline Entity.
+                """.trimIndent()
+                }
+            }
+        }
     }
 }
