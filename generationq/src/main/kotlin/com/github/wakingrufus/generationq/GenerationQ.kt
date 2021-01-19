@@ -152,6 +152,7 @@ object GenerationQ : Podcast() {
             "013 - S1E13 - Datalore",
             "https://archive.org/details/generationq-013"
         ) {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105583733375028262"
             imageName = "ep13.png"
             description {
                 p {
