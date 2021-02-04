@@ -162,5 +162,18 @@ object GenerationQ : Podcast() {
                 }
             }
         }
+        episode(
+            "014 - S1E14 - Angel One",
+            "https://archive.org/details/generationq-014"
+        ) {
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105675385094791069"
+            imageName = "ep14.png"
+            description {
+                p {
+                    +"In this episode, we discuss Angel One, discuss revolutions, anarchists, and try our new format as a shock jock morning show."
+                }
+                p { a(href = "https://vimeo.com/434141029") { +"The Murder of Fred Hampton (1971, The Film Group)" } }
+            }
+        }
     }
 }
