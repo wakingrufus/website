@@ -175,5 +175,17 @@ object GenerationQ : Podcast() {
                 p { a(href = "https://vimeo.com/434141029") { +"The Murder of Fred Hampton (1971, The Film Group)" } }
             }
         }
+        episode(
+            "015 - S1E15 - 11001001",
+            "https://archive.org/details/generationq-015"
+        ){
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105720436485763423"
+            imageName = "ep15.png"
+            description {
+                p {
+                    +"In this episode, we discuss 11001001. Jack in to the mainframe and help us save the world."
+                }
+            }
+        }
     }
 }
