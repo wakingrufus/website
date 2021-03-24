@@ -191,13 +191,20 @@ object GenerationQ : Podcast() {
             "016 - S1E16 - Too Short a Season",
                 "https://archive.org/details/generationq-016"
         ){
-            discussionUrl = "https://tenforward.social/@TanagraTooter/105942485500264872"
+            discussionUrl = "https://tenforward.social/@TanagraTooter/105942530656600418"
             imageName = "ep16.png"
             description {
                 p {
-                    +"Don't scab for the kidnappers..."
+                    +"You are never too old to do a contra."
                 }
             }
         }
+//        episode(){
+//            description {
+//                p {
+//                    +"Don't scab for the kidnappers..."
+//                }
+//            }
+//        }
     }
 }
