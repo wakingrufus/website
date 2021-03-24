@@ -37,14 +37,14 @@ class HtmlPage(val path: String) {
     }
 
     fun writeHtmlPage(writer: Writer) {
-        writer.use {
-            it.write("<!DOCTYPE html>")
-            it.appendHTML().html {
-                lang = "en"
-                head(head)
-                body {
-                    apply(body)
-                }
+        writeHtmlPage(writer){
+            lang = "en"
+            head {
+                meta(charset = "UTF-8")
+                this@HtmlPage.head(this)
+            }
+            body {
+                apply(body)
             }
         }
     }
