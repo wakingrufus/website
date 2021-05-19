@@ -178,7 +178,7 @@ object GenerationQ : Podcast() {
         episode(
             "015 - S1E15 - 11001001",
             "https://archive.org/details/generationq-015"
-        ){
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/105720436485763423"
             imageName = "ep15.png"
             description {
@@ -189,8 +189,8 @@ object GenerationQ : Podcast() {
         }
         episode(
             "016 - S1E16 - Too Short a Season",
-                "https://archive.org/details/generationq-016"
-        ){
+            "https://archive.org/details/generationq-016"
+        ) {
             discussionUrl = "https://tenforward.social/@TanagraTooter/105942530656600418"
             imageName = "ep16.png"
             description {
@@ -199,12 +199,17 @@ object GenerationQ : Podcast() {
                 }
             }
         }
-//        episode(){
-//            description {
-//                p {
-//                    +"Don't scab for the kidnappers..."
-//                }
-//            }
-//        }
+        episode(
+            "017 - S1E17 - When the Bough Breaks",
+            "https://archive.org/details/generationq-017"
+        ) {
+            imageName = "ep17.png"
+            discussionUrl = "https://tenforward.social/@TanagraTooter/106263902671073126"
+            description {
+                p {
+                    +"Don't scab for the kidnappers..."
+                }
+            }
+        }
     }
 }
