@@ -3,7 +3,7 @@ resources:
     type: GitRepo
     configuration:
       gitProvider: github_wakingrufus
-      path: ~wakingrufus/website
+      path: wakingrufus/website
       branches:
         include: master
   - name: build_info
