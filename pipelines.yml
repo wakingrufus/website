@@ -1,0 +1,34 @@
+resources:
+  - name: my_Git_Repository
+    type: GitRepo
+    configuration:
+      gitProvider: github_wakingrufus
+      path: ~wakingrufus/website
+      branches:
+        include: master
+
+pipelines:
+  - name: website_build
+    steps:
+      - name: build
+        type: GradleBuild
+        configuration:
+          gradleCommand: "build"
+          useWrapper: true
+          autoPublishBuildInfo: true
+          forceXrayScan: true
+          inputResources:
+            - name: my_Git_Repository
+          outputResources:
+            - name: myBuildInfo
+          integrations:
+            - name: jfrog
+        execution:
+          onStart:
+            - echo "Preparing for work..."
+          onSuccess:
+            - echo "Job well done!"
+          onFailure:
+            - echo "uh oh, something went wrong"
+          onComplete: #always
+            - echo "Cleaning up some stuff"
