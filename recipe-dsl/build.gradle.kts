@@ -5,11 +5,6 @@ plugins {
     jacoco
 }
 
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
 dependencies {
     compile("org.slf4j:slf4j-api:1.7.25")
     compile("io.github.microutils:kotlin-logging:1.6.10")

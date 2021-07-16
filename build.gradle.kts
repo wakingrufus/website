@@ -17,3 +17,9 @@ tasks.getByName<Wrapper>("wrapper") {
     gradleVersion = "6.8.3"
     distributionType = Wrapper.DistributionType.ALL
 }
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}

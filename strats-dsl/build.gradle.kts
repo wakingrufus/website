@@ -1,13 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.60"
+    kotlin("jvm")
     jacoco
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
 }
 
 dependencies {
