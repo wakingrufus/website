@@ -6,6 +6,10 @@ resources:
       path: ~wakingrufus/website
       branches:
         include: master
+  - name: build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: jfrog
 
 pipelines:
   - name: website_build
@@ -20,7 +24,7 @@ pipelines:
           inputResources:
             - name: my_Git_Repository
           outputResources:
-            - name: myBuildInfo
+            - name: build_info
           integrations:
             - name: jfrog
         execution:
