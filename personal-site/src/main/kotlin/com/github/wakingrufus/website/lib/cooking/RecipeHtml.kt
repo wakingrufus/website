@@ -4,8 +4,7 @@ import com.github.wakingrufus.recipe.ModifiedIngredient
 import com.github.wakingrufus.recipe.Recipe
 import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.lib.css
-import kotlinx.css.BorderStyle
-import kotlinx.css.em
+import kotlinx.css.*
 import kotlinx.html.*
 
 fun Recipe.html(): ARTICLE.() -> Unit = {

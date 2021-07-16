@@ -1,10 +1,7 @@
 package com.github.wakingrufus.website.lib.code
 
 import com.github.wakingrufus.website.lib.css
-import kotlinx.css.Color
-import kotlinx.css.FontStyle
-import kotlinx.css.FontWeight
-import kotlinx.css.em
+import kotlinx.css.*
 import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.TextDecorationLine
 import kotlinx.html.*

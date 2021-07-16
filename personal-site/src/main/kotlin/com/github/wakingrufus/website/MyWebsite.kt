@@ -14,8 +14,7 @@ import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
-import kotlinx.css.Display
-import kotlinx.css.em
+import kotlinx.css.*
 import kotlinx.html.*
 import java.io.File
 

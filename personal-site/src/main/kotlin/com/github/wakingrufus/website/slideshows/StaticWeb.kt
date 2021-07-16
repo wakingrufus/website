@@ -8,7 +8,9 @@ import com.github.wakingrufus.website.lib.code.*
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.slides.*
 import kotlinx.css.Color
+import kotlinx.css.color
 import kotlinx.css.em
+import kotlinx.css.fontSize
 import kotlinx.html.*
 
 fun staticWebSlideshow(): Website.() -> Unit = {
@@ -471,47 +473,49 @@ val staticWebKotlinReuse = slide {
     slideContent {
         splitSlide(leftBlock = {
             slideCode {
-                declareFunction(name = "sideNavBar", extentionOf = "BODY") {
-                    parameter(name = "block", type = "UL.() -> Unit")
-                    expression {
-                        call("div") {
-                            lambda {
-                                assignment(name = "classes", operator = "+=") {
-                                    inlineExpression { string("navBar") }
-                                }
-                                assignment(name = "style") {
-                                    call("css") {
-                                        lambda {
-                                            assignment(name = "verticalAlign") {
-                                                inlineExpression {
-                                                    +"VerticalAlign.top"
+                kotlin {
+                    declareFunction(name = "sideNavBar", extentionOf = "BODY") {
+                        parameter(name = "block", type = "UL.() -> Unit")
+                        expression {
+                            call("div") {
+                                lambda {
+                                    assignment(name = "classes", operator = "+=") {
+                                        inlineExpression { string("navBar") }
+                                    }
+                                    assignment(name = "style") {
+                                        call("css") {
+                                            lambda {
+                                                assignment(name = "verticalAlign") {
+                                                    inlineExpression {
+                                                        +"VerticalAlign.top"
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                statement {
-                                    call("ul") {
-                                        lambda {
-                                            assignment(name = "style") {
-                                                call(name = "css") {
-                                                    lambda {
-                                                        assignment(name = "listStyleType") {
-                                                            inlineExpression {
-                                                                +"ListStyleType.none"
+                                    statement {
+                                        call("ul") {
+                                            lambda {
+                                                assignment(name = "style") {
+                                                    call(name = "css") {
+                                                        lambda {
+                                                            assignment(name = "listStyleType") {
+                                                                inlineExpression {
+                                                                    +"ListStyleType.none"
+                                                                }
                                                             }
-                                                        }
-                                                        assignment(name = "color") {
-                                                            call(name = "Color") {
-                                                                argument { string("#9999EE") }
+                                                            assignment(name = "color") {
+                                                                call(name = "Color") {
+                                                                    argument { string("#9999EE") }
+                                                                }
                                                             }
                                                         }
                                                     }
                                                 }
-                                            }
-                                            statement {
-                                                call(name = "block") {
-                                                    argument { keyword("this") }
+                                                statement {
+                                                    call(name = "block") {
+                                                        argument { keyword("this") }
+                                                    }
                                                 }
                                             }
                                         }
@@ -524,34 +528,36 @@ val staticWebKotlinReuse = slide {
             }
         }) {
             slideCode {
-                declareFunction(name = "sideNav", extentionOf = "BODY") {
-                    body {
-                        call(name = "sideNavBar") {
-                            lambda {
-                                call(name = "li") {
-                                    lambda(inline = true) {
-                                        call(name = "a") {
-                                            argument(name = "href") { string("index.html") }
-                                            lambda(inline = true) {
-                                                statement {
-                                                    inlineExpression {
-                                                        +"+"
-                                                        string("Home")
+                kotlin {
+                    declareFunction(name = "sideNav", extentionOf = "BODY") {
+                        body {
+                            call(name = "sideNavBar") {
+                                lambda {
+                                    call(name = "li") {
+                                        lambda(inline = true) {
+                                            call(name = "a") {
+                                                argument(name = "href") { string("index.html") }
+                                                lambda(inline = true) {
+                                                    statement {
+                                                        inlineExpression {
+                                                            +"+"
+                                                            string("Home")
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                call(name = "li") {
-                                    lambda(inline = true) {
-                                        call(name = "a") {
-                                            argument(name = "href") { string("travel.html") }
-                                            lambda(inline = true) {
-                                                statement {
-                                                    inlineExpression {
-                                                        +"+"
-                                                        string("Travel Guide")
+                                    call(name = "li") {
+                                        lambda(inline = true) {
+                                            call(name = "a") {
+                                                argument(name = "href") { string("travel.html") }
+                                                lambda(inline = true) {
+                                                    statement {
+                                                        inlineExpression {
+                                                            +"+"
+                                                            string("Travel Guide")
+                                                        }
                                                     }
                                                 }
                                             }
@@ -561,18 +567,18 @@ val staticWebKotlinReuse = slide {
                             }
                         }
                     }
-                }
-                declareFunction(name = "mainPage", returnType = "HTML.() -> Unit") {
-                    expression {
-                        block {
-                            call(name = "head") {
-                                lambda { }
-                            }
-                            call(name = "body") {
-                                lambda {
-                                    expression {
-                                        call(name = "sideNav") {
-                                            extensionFunction()
+                    declareFunction(name = "mainPage", returnType = "HTML.() -> Unit") {
+                        expression {
+                            block {
+                                call(name = "head") {
+                                    lambda { }
+                                }
+                                call(name = "body") {
+                                    lambda {
+                                        expression {
+                                            call(name = "sideNav") {
+                                                extensionFunction()
+                                            }
                                         }
                                     }
                                 }

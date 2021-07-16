@@ -1,6 +1,9 @@
 package com.github.wakingrufus.website.lib
 
 import kotlinx.css.em
+import kotlinx.css.fontSize
+import kotlinx.css.marginBottom
+import kotlinx.css.paddingLeft
 import kotlinx.html.*
 
 fun DIV.area(name: String, block: PLACE.() -> Unit) {

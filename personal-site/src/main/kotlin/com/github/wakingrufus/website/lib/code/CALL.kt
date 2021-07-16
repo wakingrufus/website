@@ -3,6 +3,8 @@ package com.github.wakingrufus.website.lib.code
 import com.github.wakingrufus.website.lib.css
 import kotlinx.css.Color
 import kotlinx.css.FontStyle
+import kotlinx.css.color
+import kotlinx.css.fontStyle
 import kotlinx.html.CODE
 import kotlinx.html.HtmlTagMarker
 import kotlinx.html.span

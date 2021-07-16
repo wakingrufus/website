@@ -3,6 +3,8 @@ package com.github.wakingrufus.website.lib.article
 import com.github.wakingrufus.website.lib.css
 import kotlinx.css.Display
 import kotlinx.css.VerticalAlign
+import kotlinx.css.display
+import kotlinx.css.verticalAlign
 import kotlinx.html.NAV
 import kotlinx.html.a
 import kotlinx.html.classes

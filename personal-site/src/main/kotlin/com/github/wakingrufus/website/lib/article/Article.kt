@@ -6,10 +6,7 @@ import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.css
 import com.github.wakingrufus.website.lib.pageTitle
 import com.github.wakingrufus.website.standardHead
-import kotlinx.css.Display
-import kotlinx.css.Position
-import kotlinx.css.em
-import kotlinx.css.pct
+import kotlinx.css.*
 import kotlinx.html.*
 
 @WebsiteDsl

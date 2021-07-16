@@ -1,9 +1,6 @@
 package com.github.wakingrufus.generationq
 
-import kotlinx.css.Color
-import kotlinx.css.Display
-import kotlinx.css.em
-import kotlinx.css.px
+import kotlinx.css.*
 import kotlinx.html.*
 import java.io.File
 

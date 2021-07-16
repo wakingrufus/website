@@ -3,6 +3,7 @@ package com.github.wakingrufus.website.lib.code
 import com.github.wakingrufus.website.WebsiteDsl
 import com.github.wakingrufus.website.lib.css
 import kotlinx.css.Color
+import kotlinx.css.color
 import kotlinx.html.CODE
 import kotlinx.html.span
 import kotlinx.html.style

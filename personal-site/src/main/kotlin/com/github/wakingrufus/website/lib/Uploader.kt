@@ -3,7 +3,9 @@ package com.github.wakingrufus.website.lib
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
+import com.github.kittinunf.fuel.core.FileDataPart
 import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpUpload
 import com.github.kittinunf.result.Result
@@ -24,38 +26,41 @@ class NeocitiesUploader(val username: String, val password: String) : Uploader {
 
     private val existingFiles: NeocitiesFileList by lazy {
         "https://neocities.org/api/list"
-                .httpGet()
-                .authenticate(username, password)
-                .responseObject(KlaxonDeserializer()).third.map {
-            NeocitiesFileList(
+            .httpGet()
+            .authentication().basic(username, password)
+            .responseObject(KlaxonDeserializer()).third.map {
+                NeocitiesFileList(
                     result = it.string("result") ?: "",
                     files = it.array<JsonObject>("files").orEmpty().map {
-                        NeocitiesFile(path = it.string("path").orEmpty(),
-                                size = it.long("size") ?: 0L,
-                                sha1Hash = it.string("sha1_hash").orEmpty())
+                        NeocitiesFile(
+                            path = it.string("path").orEmpty(),
+                            size = it.long("size") ?: 0L,
+                            sha1Hash = it.string("sha1_hash").orEmpty()
+                        )
                     })
-        }.get()
+            }.get()
     }
 
     override fun upload(baseDir: File, file: File) {
         logger.info("Uploading file: ${file.toRelativeString(baseDir)}")
         "https://neocities.org/api/upload"
-                .httpUpload()
-                .name({ file.toRelativeString(baseDir) })
-                .authenticate(username, password)
-                .source { _, _ -> file }
-                .responseString().let { (request, response, result) ->
-                    when (result) {
-                        is Result.Failure -> {
-                            logger.error("error uploading: ${String(result.getException().errorData)}",
-                                    result.getException().exception)
-                        }
-                        is Result.Success -> {
-                            logger.info { result.get() }
-                        }
+            .httpUpload()
+            .add(FileDataPart(name = file.toRelativeString(baseDir), file = file))
+            .authentication().basic(username, password)
+            .responseString().let { (request, response, result) ->
+                when (result) {
+                    is Result.Failure -> {
+                        logger.error(
+                            "error uploading: ${String(result.getException().errorData)}",
+                            result.getException().exception
+                        )
                     }
-
+                    is Result.Success -> {
+                        logger.info { result.get() }
+                    }
                 }
+
+            }
     }
 
     override fun check(baseDir: File, file: File): Boolean {
@@ -76,17 +81,19 @@ class NeocitiesAPiKeyUploader(val apiKey: String) : Uploader {
 
     private val existingFiles: NeocitiesFileList by lazy {
         "https://neocities.org/api/list"
-                .httpGet()
-                .header("Authorization" to "Bearer $apiKey")
-                .responseObject(KlaxonDeserializer()).third.map {
-            NeocitiesFileList(
+            .httpGet()
+            .header("Authorization" to "Bearer $apiKey")
+            .responseObject(KlaxonDeserializer()).third.map {
+                NeocitiesFileList(
                     result = it.string("result") ?: "",
                     files = it.array<JsonObject>("files").orEmpty().map {
-                        NeocitiesFile(path = it.string("path").orEmpty(),
-                                size = it.long("size") ?: 0L,
-                                sha1Hash = it.string("sha1_hash").orEmpty())
+                        NeocitiesFile(
+                            path = it.string("path").orEmpty(),
+                            size = it.long("size") ?: 0L,
+                            sha1Hash = it.string("sha1_hash").orEmpty()
+                        )
                     })
-        }.get()
+            }.get()
     }
 
     override fun check(baseDir: File, file: File): Boolean {
@@ -98,22 +105,23 @@ class NeocitiesAPiKeyUploader(val apiKey: String) : Uploader {
         logger.info("Uploading file: ${file.toRelativeString(baseDir)}")
 
         "https://neocities.org/api/upload"
-                .httpUpload()
-                .name({ file.toRelativeString(baseDir) })
-                .header("Authorization" to "Bearer $apiKey")
-                .source { _, _ -> file }
-                .responseString().let { (request, response, result) ->
-                    when (result) {
-                        is Result.Failure -> {
-                            logger.error("error uploading: ${String(result.getException().errorData)}",
-                                    result.getException().exception)
-                        }
-                        is Result.Success -> {
-                            logger.info { result.get() }
-                        }
+            .httpUpload()
+            .add(FileDataPart(name = file.toRelativeString(baseDir), file = file))
+            .header("Authorization" to "Bearer $apiKey")
+            .responseString().let { (request, response, result) ->
+                when (result) {
+                    is Result.Failure -> {
+                        logger.error(
+                            "error uploading: ${String(result.getException().errorData)}",
+                            result.getException().exception
+                        )
                     }
-
+                    is Result.Success -> {
+                        logger.info { result.get() }
+                    }
                 }
+
+            }
     }
 }
 
@@ -122,17 +130,19 @@ class NeocitiesTestUploader(val apiKey: String) : Uploader {
 
     private val existingFiles: NeocitiesFileList by lazy {
         "https://neocities.org/api/list"
-                .httpGet()
-                .header("Authorization" to "Bearer $apiKey")
-                .responseObject(KlaxonDeserializer()).third.map {
-            NeocitiesFileList(
+            .httpGet()
+            .header("Authorization" to "Bearer $apiKey")
+            .responseObject(KlaxonDeserializer()).third.map {
+                NeocitiesFileList(
                     result = it.string("result") ?: "",
                     files = it.array<JsonObject>("files").orEmpty().map {
-                        NeocitiesFile(path = it.string("path").orEmpty(),
-                                size = it.long("size") ?: 0L,
-                                sha1Hash = it.string("sha1_hash").orEmpty())
+                        NeocitiesFile(
+                            path = it.string("path").orEmpty(),
+                            size = it.long("size") ?: 0L,
+                            sha1Hash = it.string("sha1_hash").orEmpty()
+                        )
                     })
-        }.get()
+            }.get()
     }
 
     override fun check(baseDir: File, file: File): Boolean {

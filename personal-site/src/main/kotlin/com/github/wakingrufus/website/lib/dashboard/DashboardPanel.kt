@@ -3,10 +3,7 @@ package com.github.wakingrufus.website.lib.dashboard
 import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.WebsiteDsl
 import com.github.wakingrufus.website.lib.css
-import kotlinx.css.BorderStyle
-import kotlinx.css.Display
-import kotlinx.css.VerticalAlign
-import kotlinx.css.em
+import kotlinx.css.*
 import kotlinx.html.*
 
 @WebsiteDsl

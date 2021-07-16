@@ -3,6 +3,8 @@ package com.github.wakingrufus.generationq
 import com.github.wakingrufus.website.WebsiteDsl
 import kotlinx.css.CSSBuilder
 import kotlinx.css.TextAlign
+import kotlinx.css.backgroundColor
+import kotlinx.css.textAlign
 import kotlinx.html.*
 import mu.KLogging
 import java.io.File
