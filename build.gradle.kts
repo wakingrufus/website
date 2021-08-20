@@ -3,7 +3,7 @@ plugins {
 }
 
 allprojects {
-    version = "0.4.0"
+    version = "0.4.1"
     group = "com.github.wakingrufus"
 }
 
@@ -14,7 +14,7 @@ idea {
 }
 
 tasks.getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.8.3"
+    gradleVersion = "6.9"
     distributionType = Wrapper.DistributionType.ALL
 }
 

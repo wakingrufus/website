@@ -3,11 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     jacoco
+    id("com.jfrog.artifactory")
+    `maven-publish`
 }
 
 dependencies {
-    compile("org.slf4j:slf4j-api:1.7.25")
-    compile("io.github.microutils:kotlin-logging:1.6.10")
+    api("org.slf4j:slf4j-api:1.7.25")
+    api("io.github.microutils:kotlin-logging:1.6.10")
     api("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
     api("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.205-kotlin-1.4.32")
     api("org.jetbrains.kotlin-wrappers:kotlin-css-jvm:1.0.0-pre.205-kotlin-1.4.32")
@@ -42,3 +44,26 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava"){
+            from(components["java"])
+        }
+    }
+}
+
+configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention> {
+    setContextUrl(System.getenv("int_jfrog_url"))
+    publish {
+        repository {
+            setRepoKey("public")
+            setUsername(System.getenv("int_jfrog_user"))
+            setPassword(System.getenv("int_jfrog_apikey"))
+            setMavenCompatible(true)
+        }
+        defaults {
+            publications("mavenJava")
+        }
+    }
+}
