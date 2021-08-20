@@ -37,6 +37,7 @@ pipelines:
           useWrapper: true
           autoPublishBuildInfo: true
           forceXrayScan: true
+          usesPlugin: true
           inputResources:
             - name: website_snapshot
           outputResources:
