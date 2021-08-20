@@ -36,7 +36,6 @@ pipelines:
           gradleCommand: "build"
           useWrapper: true
           autoPublishBuildInfo: true
-          forceXrayScan: true
           usesPlugin: true
           inputResources:
             - name: website_snapshot
@@ -64,7 +63,6 @@ pipelines:
           gradleCommand: "build"
           useWrapper: true
           autoPublishBuildInfo: true
-          forceXrayScan: true
           usesPlugin: true
           inputResources:
             - name: website_pull_request
