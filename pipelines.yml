@@ -91,7 +91,6 @@ pipelines:
           onComplete: #always
             - echo "Cleaning up some stuff"
   - name: website_release
-    configuration:
     steps:
       - name: build
         type: GradleBuild
