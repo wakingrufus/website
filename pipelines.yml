@@ -103,7 +103,7 @@ pipelines:
           inputResources:
             - name: website_release
           outputResources:
-            - name: website_build_info
+            - name: build_info
           integrations:
             - name: jfrog
         execution:
