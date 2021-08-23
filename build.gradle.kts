@@ -3,7 +3,8 @@ plugins {
 }
 
 allprojects {
-    version = "0.4.1"
+    version = if (System.getenv("res_website_release_isGitTag") == "true")
+        System.getenv("res_website_release_gitTagName") else "0.5.0-SNAPSHOT"
     group = "com.github.wakingrufus"
 }
 
