@@ -14,6 +14,10 @@ val personalSite = htmlPage("website.html") {
                 a(href = "https://github.com/wakingrufus/website") { +"GitHub" }
                 +"."
             }
+            p {
+                +"Libraries from this project are published to my "
+                a(href = "https://wakingrufus.jfrog.io/artifactory/public/") { +"personal jfrog" }
+            }
         }
         footer(myFooter)
     }
