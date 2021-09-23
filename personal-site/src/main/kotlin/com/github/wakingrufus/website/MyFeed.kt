@@ -133,6 +133,16 @@ val allEntries = entries {
                     LocalDate.of(2020, Month.APRIL, 20),
                     LocalTime.of(15, 30, 0),
                     ZoneOffset.ofHours(-5)).toInstant())
+    entry {
+        title = "My Public Artifactory"
+        author = "wakingrufus"
+        categories = listOf(siteUpdates)
+        link = "https://wakingrufus.jfrog.io/artifactory/public/"
+        publishedDate = Date.from(ZonedDateTime.of(LocalDate.of(2021, Month.SEPTEMBER, 23),
+            LocalTime.of(12, 30, 0),
+            ZoneOffset.ofHours(-5)).toInstant())
+        content("I now have a public artifactory where I will publish all libraries going forward.")
+    }
 }
 
 fun Entries.article(articlePage: HtmlPage, date: Instant) {
