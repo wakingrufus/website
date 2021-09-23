@@ -144,6 +144,11 @@ val myDashboard: DIV.() -> Unit = {
                 li { a(href = libElo.path) { +"lib-elo" } }
                 li { a(href = filedb.path) { +"filedb" } }
             }
+            p {
+                a(href = "https://wakingrufus.jfrog.io/artifactory/public/") {
+                    +"My Public Artifactory"
+                }
+            }
         }
         panel("Software Development") {
             h3 { a(href = failAgile.path) { +failAgile.getTitle() } }
