@@ -46,6 +46,14 @@ tasks.withType<KotlinCompile> {
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
 
 publishing {
+    repositories {
+        maven("https://packagecloud.io/wakingrufus/public/java/maven2/") {
+            credentials {
+                username = project.property("packageCloudKey").toString()
+                password = ""
+            }
+        }
+    }
     publications {
         create<MavenPublication>("mavenJava"){
             from(components["java"])
