@@ -43,3 +43,9 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}

@@ -8,14 +8,8 @@ allprojects {
     group = "com.github.wakingrufus"
 }
 
-idea {
-    module {
-        languageLevel = org.gradle.plugins.ide.idea.model.IdeaLanguageLevel("1.8")
-    }
-}
-
 tasks.getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.9"
+    gradleVersion = "6.9.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 

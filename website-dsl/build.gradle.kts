@@ -67,3 +67,9 @@ configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention> {
         }
     }
 }
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
