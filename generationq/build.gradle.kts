@@ -54,3 +54,9 @@ tasks.getByName<JavaExec>("run") {
         args(project.properties.get("neocities.user"), project.properties.get("neocities.password"))
     }
 }
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}

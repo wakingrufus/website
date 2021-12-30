@@ -1,10 +1,7 @@
 package com.github.wakingrufus.website
 
 import com.github.wakingrufus.recipe.Recipe
-import com.github.wakingrufus.website.articles.adhocPolymorphism
-import com.github.wakingrufus.website.articles.antipatterns
-import com.github.wakingrufus.website.articles.failAgile
-import com.github.wakingrufus.website.articles.staticWeb
+import com.github.wakingrufus.website.articles.*
 import com.github.wakingrufus.website.cooking.RecipeIndex
 import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.article.article
@@ -46,7 +43,10 @@ fun HtmlPage.standardHead() {
     this.head {
         style(type = "text/css") { unsafe { raw(MyStyles().globalStyles()) } }
         link(href = Paths.CSS_PATH, rel = "stylesheet")
-        link(href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml", rel = "alternate") {
+        link(
+            href = "https://wakingrufus.neocities.org/rss/" + Paths.RSS_PATH, type = "application/rss+xml",
+            rel = "alternate"
+        ) {
             title = "RSS"
         }
         title(getTitle())
@@ -72,6 +72,7 @@ class MyWebsite {
             page(travel)
             page(adhocPolymorphism)
             page(failAgile)
+            page(music2021)
 
             RecipeIndex.recipes.forEach {
                 page(it.recipePage())
@@ -169,7 +170,11 @@ val myDashboard: DIV.() -> Unit = {
                     a(href = "https://archive.org/details/kotlin-web-dsl") { +"Tutorial Video" }
                 }
             }
-            h3 { a(href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html") { +"Functional Kotlin Presentation Slides" } }
+            h3 {
+                a(
+                    href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html"
+                ) { +"Functional Kotlin Presentation Slides" }
+            }
             div {
                 style = css {
                     backgroundColor = MyStyles.BACKGROUND_COLOR
@@ -179,6 +184,14 @@ val myDashboard: DIV.() -> Unit = {
                 span { a(href = antipatterns.path + "#refactoring") { +"Refactoring as a Separate Ticket" } }
             }
             h3 { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Kotlin in 2019 Presentation Slides" } }
+        }
+        panel("Music") {
+            a(href = music2021.path) {
+                +"Best Music of 2021"
+            }
+        }
+        panel("Film") {
+
         }
         panel("Recipes") {
             a { id = "recipes" }
