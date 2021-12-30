@@ -73,6 +73,8 @@ class MyWebsite {
             page(adhocPolymorphism)
             page(failAgile)
             page(music2021)
+            page(criterion2021)
+            page(jamm)
 
             RecipeIndex.recipes.forEach {
                 page(it.recipePage())
@@ -144,6 +146,7 @@ val myDashboard: DIV.() -> Unit = {
                 li { a(href = tourney.path) { +"Tourney" } }
                 li { a(href = libElo.path) { +"lib-elo" } }
                 li { a(href = filedb.path) { +"filedb" } }
+                li { a(href = jamm.path) { +"Jamm" } }
             }
             p {
                 a(href = "https://wakingrufus.jfrog.io/artifactory/public/") {
@@ -191,7 +194,9 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         panel("Film") {
-
+            a(href = criterion2021.path) {
+                +"2021 Criterion Challenge Recap"
+            }
         }
         panel("Recipes") {
             a { id = "recipes" }
