@@ -149,8 +149,8 @@ val myDashboard: DIV.() -> Unit = {
                 li { a(href = jamm.path) { +"Jamm" } }
             }
             p {
-                a(href = "https://wakingrufus.jfrog.io/artifactory/public/") {
-                    +"My Public Artifactory"
+                a(href = "https://packagecloud.io/wakingrufus/public/maven2") {
+                    +"My Public Maven Repo"
                 }
             }
         }
