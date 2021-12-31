@@ -43,7 +43,10 @@ class HtmlPage(val path: String) {
             it.write("<!DOCTYPE html>")
             it.appendHTML().html {
                 lang = "en"
-                head(head)
+                head {
+                    meta(charset = "utf-8")
+                    this@HtmlPage.head.invoke(this)
+                }
                 body {
                     apply(body)
                 }

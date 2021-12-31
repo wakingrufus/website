@@ -6,6 +6,8 @@ import com.github.wakingrufus.website.cooking.RecipeIndex
 import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.html
+import com.github.wakingrufus.website.music.music2020
+import com.github.wakingrufus.website.music.music2021
 import com.github.wakingrufus.website.projects.*
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
@@ -72,6 +74,7 @@ class MyWebsite {
             page(travel)
             page(adhocPolymorphism)
             page(failAgile)
+            page(music2020)
             page(music2021)
             page(criterion2021)
             page(jamm)
@@ -149,8 +152,8 @@ val myDashboard: DIV.() -> Unit = {
                 li { a(href = jamm.path) { +"Jamm" } }
             }
             p {
-                a(href = "https://packagecloud.io/wakingrufus/public/maven2") {
-                    +"My Public Maven Repo"
+                a(href = "https://packagecloud.io/wakingrufus/public") {
+                    +"My Public Maven and debian Repo"
                 }
             }
         }
@@ -189,13 +192,22 @@ val myDashboard: DIV.() -> Unit = {
             h3 { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Kotlin in 2019 Presentation Slides" } }
         }
         panel("Music") {
-            a(href = music2021.path) {
-                +"Best Music of 2021"
+            h3 {
+                a(href = music2020.path) {
+                    +"Best Music of 2020"
+                }
+            }
+            h3 {
+                a(href = music2021.path) {
+                    +"Best Music of 2021"
+                }
             }
         }
         panel("Film") {
-            a(href = criterion2021.path) {
-                +"2021 Criterion Challenge Recap"
+            h3 {
+//                a(href = criterion2021.path) {
+//                    +"2021 Criterion Challenge Recap"
+//                }
             }
         }
         panel("Recipes") {
