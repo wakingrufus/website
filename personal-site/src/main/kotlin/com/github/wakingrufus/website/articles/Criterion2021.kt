@@ -48,7 +48,7 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             h2 { +"Best Movie Starring Marcello Mastrionni" }
             a { id = "marcello" }
             p { +"We ended up watching 4 movies starring him, so it felt fitting to pick the best." }
-            h3 { +"A Very Special Day (1977)" }
+            h3 { +"A Special Day (1977)" }
             p {
                 strong { +"tprig3: " }
                 +"""Starts with a basic rom-com premise but goes k. A different direction and becomes about so much more"""
