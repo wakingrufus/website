@@ -30,8 +30,19 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             h2 { +"Most Traumatic" }
             a { id = "traumatic" }
             h3 { +"Come and See (1985)" }
-            p { strong { +"wakingrufus: " } }
-            p { strong { +"tprig3: " } }
+            p {
+                strong {
+                    +"wakingrufus: "
+                }
+                +"""Even war movies with a "war is bad" message tend to glorify some aspects of war and focus on the leaders and soldiers fighting the war. 
+                |This movie is an unflinching look at what happens to ordinary poor people who are in the wrong place at the wrong time during a war. 
+                |These stories are important to tell because in history books, they are reduced to statistics.""".trimMargin()
+
+            }
+            p {
+                strong { +"tprig3: " }
+                +"""Probably the only true anti-war movie ever made. Should be required viewing for high school students."""
+            }
         }
         htmlSection {
             h2 { +"Best Movie Starring Marcello Mastrionni" }
@@ -39,20 +50,30 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             p { +"We ended up watching 4 movies starring him, so it felt fitting to pick the best." }
             h3 { +"A Very Special Day (1977)" }
             p {
+                strong { +"tprig3: " }
+                +"""Starts with a basic rom-com premise but goes k. A different direction and becomes about so much more"""
+            }
+            p {
                 strong { +"wakingrufus: " }
                 +"""This movie centers on two people, oppressed in different ways who are set up to be political enemies:
                 a gay leftist, and a wife and mother of a fascist family.
                 Through the movie, they actually meet each other as human beings,
                 and show us that human connection has the ability to break down the barriers put between us by oppressive regimes."""
             }
-            p { strong { +"tprig3: " } }
         }
         htmlSection {
             h2 { +"Most Fun" }
             a { id = "fun" }
             h3 { +"The Fabulous Baron Munchausen (1962)" }
-            p { strong { +"wakingrufus: " } }
-            p { strong { +"tprig3: " } }
+            p {
+                strong { +"wakingrufus: " }
+                +"""This film's distinctive style combines paintings, animation, and live action in a way that is mind-blowing for the pre-digital era. 
+                |Best not enjoyed sober. Consume your substance of choice and enjoy.""".trimMargin()
+            }
+            p {
+                strong { +"tprig3: " }
+                +"Completely unique and perfect for a movie about fairy tales."
+            }
         }
         htmlSection {
             h2 { +"You'll Laugh, You'll Cry" }
@@ -66,7 +87,10 @@ val criterion2021 = htmlPage("criterion-2021.html") {
                     |I have never seen a movie that covers so many bases, and it is all based on a true story!""".trimMargin()
             }
             h3 { +"El Verdugo (The Executioner) (1963)" }
-            p { strong { +"tprig3: " } }
+            p {
+                strong { +"tprig3: " }
+                +"A movie so funny you start to forget it's about a reluctant executioner until you're brutally reminded of it."
+            }
         }
         htmlSection {
             h2 { +"Most Relevant Today" }
@@ -78,7 +102,11 @@ val criterion2021 = htmlPage("criterion-2021.html") {
                 |Paranoia, rage, mob mentality, and scapegoating leading to a society that has completely lost its mind.""".trimMargin()
             }
             h3 { +"Death By Hanging (1968)" }
-            p { strong { +"tprig3: " } }
+            p {
+                strong { +"tprig3: " }
+                +"""It tackles xenophobia, nationalism, wealth inequality, class, duty, bureaucracy, so much more. 
+                |Hard to think of a movie that makes you think about so many issues important to today.""".trimMargin()
+            }
         }
         htmlSection {
             h2 { +"Most Surprising" }
@@ -91,18 +119,25 @@ val criterion2021 = htmlPage("criterion-2021.html") {
                 | but this movie with its gorgeous Technicolor and mesmerizing music and dance sequences won me over.""".trimMargin()
             }
             h3 { +"ハウス (House) (1977)" }
-            p { strong { +"tprig3: " } }
+            p {
+                strong { +"tprig3: " }
+                +"""A cult 70s Japanese horror movie is something I would usually try to avoid at all costs. 
+                |This was a great watch. Completely won me over.""".trimMargin()
+            }
         }
         htmlSection {
-            h2 { +"Most disappointing" }
+            h2 { +"Most Disappointing" }
             a { id = "disappointing" }
             h3 { +"8½ (1963)" }
+            p {
+                strong { +"tprig3: " }
+                +"Really don't understand the hype around this movie."
+            }
             p {
                 strong { +"wakingrufus: " }
                 +"""This is supposed to be one of the greatest films ever. I can see why a director would think this, 
                 |but to me, its just too much self-indulgence and self-pity about a director who is just a misogynistic jerk.""".trimMargin()
             }
-            p { strong { +"tprig3: " } }
         }
         htmlSection {
             h2 { +"Bottom of the Ninth Award" }
@@ -121,7 +156,11 @@ val criterion2021 = htmlPage("criterion-2021.html") {
                     of nationalism and imperialism in the speech."""
             }
             h3 { +"La Haine (1995)" }
-            p { strong { +"tprig3: " } }
+            p {
+                strong { +"tprig3: " }
+                +""""It's about a society on its way down. And as it falls,it keeps telling itself: "So far so good... So far so good... So far so good." 
+                |It's not how you fall that matters. It's how you land."""".trimMargin()
+            }
         }
         htmlSection {
             h2 { +"Most Obscure" }
@@ -130,10 +169,14 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             p {
                 strong { +"wakingrufus: " }
                 +"""With only 1.5k views on letterboxd, 
-                |this Ethiopian post-apocolyptic sci-fi shows us a world after an alien race of pop culture fandoms 
+                |this Ethiopian post-apocalyptic sci-fi shows us a world after an alien race of pop culture fandoms 
                 |have forced the entire earth economy to revolve around the secondhand vintage collectables market.""".trimMargin()
             }
-            p { strong { +"tprig3: " } }
+            p {
+                strong { +"tprig3: " }
+                +"""Never heard of it before but it carries an important lesson for a lot of people my age. 
+                |Do not pray to Michael Jordan he can not save you.""".trimMargin()
+            }
         }
         footer(myFooter)
     }

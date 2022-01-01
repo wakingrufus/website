@@ -205,9 +205,9 @@ val myDashboard: DIV.() -> Unit = {
         }
         panel("Film") {
             h3 {
-//                a(href = criterion2021.path) {
-//                    +"2021 Criterion Challenge Recap"
-//                }
+                a(href = criterion2021.path) {
+                    +"2021 Criterion Challenge Recap"
+                }
             }
         }
         panel("Recipes") {
