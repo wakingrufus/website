@@ -27,8 +27,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             +"."
         }
         htmlSection {
-            h2 { +"Most Traumatic" }
             a { id = "traumatic" }
+            h2 { +"Most Traumatic" }
             h3 { +"Come and See (1985)" }
             p {
                 strong {
@@ -45,8 +45,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"Best Movie Starring Marcello Mastrionni" }
             a { id = "marcello" }
+            h2 { +"Best Movie Starring Marcello Mastrionni" }
             p { +"We ended up watching 4 movies starring him, so it felt fitting to pick the best." }
             h3 { +"A Special Day (1977)" }
             p {
@@ -62,8 +62,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"Most Fun" }
             a { id = "fun" }
+            h2 { +"Most Fun" }
             h3 { +"The Fabulous Baron Munchausen (1962)" }
             p {
                 strong { +"wakingrufus: " }
@@ -76,8 +76,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"You'll Laugh, You'll Cry" }
             a { id = "laughcry" }
+            h2 { +"You'll Laugh, You'll Cry" }
             h3 { +"Death By Hanging (1968)" }
             p {
                 strong { +"wakingrufus: " }
@@ -93,8 +93,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"Most Relevant Today" }
             a { id = "relevant" }
+            h2 { +"Most Relevant Today" }
             h3 { +"Canoa: A Shameful Memory (1968)" }
             p {
                 strong { +"wakingrufus: " }
@@ -109,8 +109,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"Most Surprising" }
             a { id = "surprising" }
+            h2 { +"Most Surprising" }
             p { +"This award goes to the movie that was better than we expected, underrated, or just a great movie that we would have never watched on our own. " }
             h3 { +"The Red Shoes (1948)" }
             p {
@@ -126,8 +126,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"Most Disappointing" }
             a { id = "disappointing" }
+            h2 { +"Most Disappointing" }
             h3 { +"8½ (1963)" }
             p {
                 strong { +"tprig3: " }
@@ -140,9 +140,9 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
+            a { id = "ninth" }
             h2 { +"Bottom of the Ninth Award" }
             p { +"This award goes to a movie that was better made significantly better by the ending." }
-            a { id = "ninth" }
             h3 { +"The Great Dictator (1940)" }
             p {
                 strong { +"wakingrufus: " }
@@ -163,8 +163,8 @@ val criterion2021 = htmlPage("criterion-2021.html") {
             }
         }
         htmlSection {
-            h2 { +"Most Obscure" }
             a { id = "obscure" }
+            h2 { +"Most Obscure" }
             h3 { +"Crumbs (2015)" }
             p {
                 strong { +"wakingrufus: " }

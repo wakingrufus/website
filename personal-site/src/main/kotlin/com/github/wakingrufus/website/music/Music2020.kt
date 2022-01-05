@@ -12,15 +12,16 @@ val music2020 = htmlPage("music-2020.html") {
             item("#tracks", "Tracks")
         }
         htmlSection {
-            h1 { +"Albums" }
             a { id = "Albums" }
-            p{+"These are all the great albums, released this year, that I found."}
+            h1 { +"Albums" }
+            h1 { +"Album of the Year" }
             h3 { +"Just Look At That Sky - Ganser" }
-            p { a(href = "https://parannoul.bandcamp.com/album/to-see-the-next-part-of-the-dream") { +"Bandcamp" } }
+            p { a(href = "https://ganser.bandcamp.com/album/just-look-at-that-sky") { +"Bandcamp" } }
+            h1 { +"Great Albums" }
             h3 { +"Women in Music Pt. III - HAIM" }
             h3 { +"Black Aura My Sun - Deserta" }
-            h3 {+"Ghosts of West Virginia - Steve Earle & The Dukes"}
-            h3 {+"Spider Tales - Jake Blount"}
+            h3 { +"Ghosts of West Virginia - Steve Earle & The Dukes" }
+            h3 { +"Spider Tales - Jake Blount" }
         }
         htmlSection {
             h1 { +"Tracks" }
@@ -31,6 +32,7 @@ val music2020 = htmlPage("music-2020.html") {
                 li { +"Now I'm In It - HAIM" }
                 li { +"ochita koto no aru sora - DIR EN GREY" }
                 li { +"Aspects - STR4TA" }
+                li { +"Unglitched - Дeva" }
             }
         }
         footer(myFooter)
