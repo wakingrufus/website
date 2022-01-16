@@ -41,6 +41,7 @@ val music2021 = htmlPage("music-2021.html") {
                         href = "https://parannoul.bandcamp.com/track/into-the-endless-night"
                     ) { +"Into the Endless Night - Parannoul" }
                 }
+                li { a(href = "https://makthaverskan.bandcamp.com/track/this-time-2") { +"This Time - Makthaverskan" } }
                 li { a(href = "https://nightbeats.bandcamp.com/track/new-day") { +"New Day - Night Beats" } }
                 li { a(href = "https://goatgirl.bandcamp.com/track/sad-cowboy-1") { +"Sad Cowboy - Goat Girl" } }
                 li { a(href = "https://nonameraps.bandcamp.com/track/rainforest") { +"Rainforest - Noname" } }
