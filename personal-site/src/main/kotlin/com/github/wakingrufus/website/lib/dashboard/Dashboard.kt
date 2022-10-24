@@ -14,6 +14,14 @@ class Dashboard {
         })
     }
 
+    fun topicPanel(title: String?, content: DashboardPanel.() -> Unit) {
+        panels.add(DashboardPanel().apply {
+            title?.also {
+                this.title(it) }
+           this.content()
+        })
+    }
+
     operator fun invoke(div: DIV) {
         panels.forEach { it(div) }
     }

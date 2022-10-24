@@ -10,7 +10,7 @@ import kotlinx.html.*
 fun Recipe.html(): ARTICLE.() -> Unit = {
     div {
         style = css {
-            backgroundColor = MyStyles.LIGHT_BACKGROUND_COLOR
+            backgroundColor = MyStyles.SUB_BACKGROUND_COLOR
             borderStyle = BorderStyle.dashed
             borderColor = MyStyles.FONT_COLOR
             paddingLeft = 1.em

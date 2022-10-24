@@ -7,10 +7,12 @@ import kotlinx.html.a
 import kotlinx.html.p
 
 val jamm = htmlPage("jamm.html") {
-    article("Jamm") {
+    article("JaMM") {
         htmlSection {
             p {
-                +"JaMM is a queue-based music library and player. See more at "
+                +"JaMM is a queue-based music library and player for Linux/Mac/Windows desktop. "
+                +"JaMM is written in JavaFx, and distributed with its own runtime using jlink and jpackage. "
+                +"See more at "
                 a(href = "https://github.com/wakingrufus/JaMM") { +"GitHub" }
                 +"."
             }

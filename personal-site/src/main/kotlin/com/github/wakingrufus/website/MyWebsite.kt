@@ -13,7 +13,10 @@ import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
-import kotlinx.css.*
+import kotlinx.css.Display
+import kotlinx.css.display
+import kotlinx.css.em
+import kotlinx.css.paddingLeft
 import kotlinx.html.*
 import java.io.File
 
@@ -104,7 +107,7 @@ val mainPage = htmlPage("index.html") {
                 style = css {
                     paddingLeft = 1.em
                 }
-                p { +"I am a software developer working on open source projects in kotlin. " }
+                p { +"I am a software engineer working on open source projects in kotlin." }
                 h3 { +"You can also find me at: " }
                 ul {
                     li {
@@ -113,9 +116,9 @@ val mainPage = htmlPage("index.html") {
                         }
                     }
                     li {
-                        a(href = "https://mastodon.technology/@wakingrufus") {
+                        a(href = "https://bigshoulders.city/@wakingrufus") {
                             rel = "me"
-                            +"mastodon.technology"
+                            +"Fediverse"
                         }
                     }
                     li {
@@ -124,15 +127,11 @@ val mainPage = htmlPage("index.html") {
                         }
                     }
                 }
-                p {
-                    +"My "
-                    a(href = travel.path) { +"Travel Guide" }
-                }
-                p {
-                    +"I am also one of the hosts of "
-                    a(href = "https://generationq.neocities.org/") { +"Generation Q" }
-                    +", a Star Trek TNG Podcast"
-                }
+//                p {
+//                    +"My "
+//                    a(href = travel.path) { +"Travel Guide" }
+//                }
+
             }
             myDashboard()
         }
@@ -142,54 +141,56 @@ val mainPage = htmlPage("index.html") {
 
 val myDashboard: DIV.() -> Unit = {
     dashboard {
-        panel("Projects") {
+        panel("Open Source Projects") {
+            h3 {
+                a(href = jamm.path) { +"JaMM" }
+                +": A desktop media player / music library"
+            }
             ul {
                 li { a(href = personalSite.path) { +"This Website" } }
                 li { a(href = mastodonJfx.path) { +"mastodon-jfx" } }
                 li { a(href = tourney.path) { +"Tourney" } }
                 li { a(href = libElo.path) { +"lib-elo" } }
                 li { a(href = filedb.path) { +"filedb" } }
-                li { a(href = jamm.path) { +"Jamm" } }
             }
             p {
                 a(href = "https://packagecloud.io/wakingrufus/public") {
-                    +"My Public Maven and debian Repo"
+                    +"My Public Maven and Debian Repo"
                 }
             }
         }
-        panel("Software Development") {
-            h3 { a(href = failAgile.path) { +failAgile.getTitle() } }
-            h3 { a(href = adhocPolymorphism.path) { +adhocPolymorphism.getTitle() } }
-            div {
-                style = css {
-                    backgroundColor = MyStyles.BACKGROUND_COLOR
-                    paddingBottom = 1.em
-                }
-                h3 { +"Static Web development and Kotlin DSLs" }
-                span {
-                    a(href = staticWeb.path) { +"Article" }
-                    +" - "
-                    a(href = Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html") { +"Slides" }
-                    +" - "
-                    a(href = "https://archive.org/details/march2019-static_web_development_kotlin_dsls") { +"Presentation Video" }
-                    +" - "
-                    a(href = "https://archive.org/details/kotlin-web-dsl") { +"Tutorial Video" }
-                }
+        topicPanel("Writing / Speaking") {
+            topic("Developing Gradle Plugins") {
+                entry("Video (Coming Soon)", "")
+                entry("Slides", "https://wakingrufus.github.io/developing-gradle-plugins/")
             }
-            h3 {
-                a(
-                    href = Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html"
-                ) { +"Functional Kotlin Presentation Slides" }
+            topic(failAgile.getTitle()) {
+                entry("Article", failAgile.path)
             }
-            div {
-                style = css {
-                    backgroundColor = MyStyles.BACKGROUND_COLOR
-                    paddingBottom = 1.em
-                }
-                h3 { +"Software Development Antipatterns" }
-                span { a(href = antipatterns.path + "#refactoring") { +"Refactoring as a Separate Ticket" } }
+            topic("Static Web development and Kotlin DSLs") {
+                entry("Article", staticWeb.path)
+                entry("Slides", Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html")
+                entry("Presentation Video", "https://archive.org/details/march2019-static_web_development_kotlin_dsls")
+                entry("Tutorial Video", "https://archive.org/details/kotlin-web-dsl")
             }
-            h3 { a(href = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html") { +"Kotlin in 2019 Presentation Slides" } }
+            topic(adhocPolymorphism.getTitle()) {
+                entry("Article", adhocPolymorphism.path)
+            }
+            topic("Functional Kotlin") {
+                entry("Slides", Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html")
+            }
+            topic("Software Development Antipatterns") {
+                entry("Refactoring as a Separate Ticket", antipatterns.path + "#refactoring")
+            }
+            topic("Kotlin in 2019") {
+                entry("Video (CKUG)", "https://youtu.be/nLKJJASfRh4")
+                entry("Slides", Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html")
+            }
+        }
+    }
+    dashboard {
+        h2 {
+            +"Other Interests"
         }
         panel("Music") {
             h3 {
@@ -203,14 +204,18 @@ val myDashboard: DIV.() -> Unit = {
                 }
             }
         }
-        panel("Film") {
+        panel("TV / Film") {
             h3 {
                 a(href = criterion2021.path) {
                     +"2021 Criterion Challenge Recap"
                 }
             }
+            h3 {
+                a(href = "https://generationq.neocities.org/") { +"Generation Q" }
+                +": Star Trek TNG Podcast"
+            }
         }
-        panel("Recipes") {
+        panel("Cooking") {
             a { id = "recipes" }
             ul {
                 RecipeIndex.recipes.forEach { recipe ->

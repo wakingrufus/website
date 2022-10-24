@@ -1,5 +1,6 @@
 package com.github.wakingrufus.website.lib.article
 
+import com.github.wakingrufus.website.MyStyles
 import com.github.wakingrufus.website.WebsiteDsl
 import com.github.wakingrufus.website.lib.HtmlPage
 import com.github.wakingrufus.website.lib.content
@@ -50,6 +51,7 @@ class ArticleBuilder(val title: String) {
                 style = css {
                     marginLeft = 1.em
                     marginRight = 1.em
+                    backgroundColor = MyStyles.SUB_BACKGROUND_COLOR
                 }
                 nav {
                     this@ArticleBuilder.nav?.invoke(this)
