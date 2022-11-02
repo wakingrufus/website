@@ -77,6 +77,7 @@ class MyWebsite {
             page(travel)
             page(adhocPolymorphism)
             page(failAgile)
+            page(coHost)
             page(music2020)
             page(music2021)
             page(criterion2021)
@@ -160,6 +161,12 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         topicPanel("Writing / Speaking") {
+            topic("Social Media / Fediverse"){
+                entry("Concerns about Cohost", coHost.path)
+            }
+            topic("Developer Productivity / Platform Engineering") {
+                entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
+            }
             topic("Developing Gradle Plugins") {
                 entry("Video (Coming Soon)", "")
                 entry("Slides", "https://wakingrufus.github.io/developing-gradle-plugins/")
