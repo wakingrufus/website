@@ -13,15 +13,18 @@ val coHost = htmlPage("cohost.html") {
         htmlSection {
             h3 { +"November, 2022" }
             p {
-                +"""With the recent buyout of Twitter by Elon Musk, many people have been discovering Mastodon/Fediverse.
-        |I have been on the Fediverse since 2017, and I am a big fan of it, so I am glad that so many others are starting to discover its merits.
-        |A lot of people have put in a lot of hard work to make this possible.
-        |
-        |There are other places people are looking for something to fill the void of Twitter as well, one of them being Cohost.
-        |At first, I didn't like the idea of Cohost, but because I am on fediverse, so I am biased toward that.
-        |But through the efforts of """.trimMargin()
-                a(href = "https://weirder.earth/@noracodes") { +"Nora Tindall" }
-                +", I now realize there are some very legitimate concerns with Cohost. I wanted to collect those here for easy reference."
+                +"With the recent buyout of Twitter by Elon Musk, many people have been discovering Mastodon/Fediverse. "
+                +"I have been on the Fediverse since 2017, and I am a big fan of it, so I am glad that so many others are starting to discover its merits. "
+                +"A lot of people have put in a lot of hard work to make this possible. "
+                +"There are other places people are looking for something to fill the void of Twitter as well, one of them being Cohost. "
+                +"At first, I didn't like the idea of Cohost, but because I am on fediverse, so I am biased toward that. "
+                +"But through the efforts of other people interested in the subject, I now realize there are some very legitimate concerns with Cohost. "
+                +"I wanted to collect those here for easy reference. "
+                +"These critiques come from a place of constructive criticism. "
+                +"The anti software software club (Cohost owners) and fediverse have very similar shared goals of taking on the centralized commercial internet. "
+                +"The more people we have doing this the better. "
+                +"But as we have many people branching out from major social media networks into alternatives for their first time, "
+                +"I (and others, I believe) feel that we need to help make sure some of the lessons we learned already in the Fediverse don't have to be re-learned the hard way by people just branching out for the first time."
             }
             h3 { +"It is centralized" }
             p {
