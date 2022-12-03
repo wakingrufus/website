@@ -168,7 +168,7 @@ val myDashboard: DIV.() -> Unit = {
                 entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
             }
             topic("Developing Gradle Plugins") {
-                entry("Video (Coming Soon)", "")
+                entry("Video", "https://www.youtube.com/watch?v=7kNLBmAMAno")
                 entry("Slides", "https://wakingrufus.github.io/developing-gradle-plugins/")
             }
             topic(failAgile.getTitle()) {
