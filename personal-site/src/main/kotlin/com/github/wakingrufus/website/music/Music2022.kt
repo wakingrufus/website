@@ -83,7 +83,7 @@ val bestMusic2022 = bestMusicOf(2022) {
     track("Szélben Szőtt", "Дeva (feat. Labek & Chrobák)") {
         link("https://movegentlyrecords.bandcamp.com/track/sz-lben-sz-tt-feat-labek-chrob-k")
     }
-    track("The World is Dying, Hold My Hand", "Void River)") {
+    track("The World is Dying, Hold My Hand", "Void River") {
         link("https://voidriver.bandcamp.com/track/the-world-is-dying-hold-my-hand")
         tag("Noise")
     }
