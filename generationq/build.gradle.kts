@@ -7,7 +7,7 @@ plugins {
 }
 
 application {
-    mainClassName = "com.github.wakingrufus.generationq.MainKt"
+    mainClass.set("com.github.wakingrufus.generationq.MainKt")
 }
 
 dependencies {
@@ -39,12 +39,6 @@ tasks.jacocoTestReport {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.languageVersion = "1.4"
-    kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
-}
-
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
 
 tasks.getByName<JavaExec>("run") {
@@ -57,6 +51,6 @@ tasks.getByName<JavaExec>("run") {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }

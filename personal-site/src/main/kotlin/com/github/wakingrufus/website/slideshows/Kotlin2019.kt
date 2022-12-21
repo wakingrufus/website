@@ -30,12 +30,16 @@ import kotlinx.html.li
 
 fun kotlin2019Slideshow(): Website.() -> Unit = {
     slideshow(
-            name = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME,
-            rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())) {
+        name = Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME,
+        rootCss = CssStringPage(Paths.SLIDESHOW_CSS_PATH, MyStyles().slideShowStyles())
+    ) {
         titleSlide(title = "Kotlin in 2019", block = kotlin2019TitleSlide)
         slide(title = "Multiplatform Overhaul", subTitle = "Kotlin 1.3.20", block = multiplatform)
         slide(title = "Improved Inline Classes", subTitle = "Kotlin 1.3.20", block = improvedInlineClasses)
-        slide(title = "Operations for unsigned number arrays", subTitle = "Kotlin 1.3.30", block = operationsForUnsignedNumberArrays)
+        slide(
+            title = "Operations for unsigned number arrays", subTitle = "Kotlin 1.3.30",
+            block = operationsForUnsignedNumberArrays
+        )
         slide(title = "typeOf", subTitle = "Kotlin 1.3.40", block = typeOf)
         slide(title = "Gradle NPM Support", subTitle = "Kotlin 1.3.40", block = gradleNpmSupport)
         slide(title = "Bit Manipulation", subTitle = "Kotlin 1.3.50", block = bitManipulation)
@@ -129,22 +133,24 @@ val typeOf = slide {
     slideContent {
         slideList { li { +"Accessing the reified type using reflection on JVM" } }
         slideCode {
-            declareFunction(name = "accessReifiedTypeArg") {
-                annotation("UseExperimental") {
-                    argument {
-                        +"ExperimentalStdlibApi::class"
-                    }
-                }
-                this.isInfix = true
-                this.genericType = "reified T"
-                body {
-                    val kType = assignment(modifier = "val", name = "kType") {
-                        call(name = "typeOf") {
-                            genericType = "T"
+            kotlin {
+                declareFunction(name = "accessReifiedTypeArg") {
+                    annotation("UseExperimental") {
+                        argument {
+                            +"ExperimentalStdlibApi::class"
                         }
                     }
-                    call(name = "println") {
-                        argument(value = kType.call("toString"))
+                    this.isInfix = true
+                    this.genericType = "reified T"
+                    body {
+                        val kType = assignment(modifier = "val", name = "kType") {
+                            call(name = "typeOf") {
+                                genericType = "T"
+                            }
+                        }
+                        call(name = "println") {
+                            argument(value = kType.call("toString"))
+                        }
                     }
                 }
             }
@@ -174,47 +180,49 @@ val gradleNpmSupport = slide {
 val bitManipulation = slide {
     slideContent {
         slideCode {
-            declareFunction(name = "main") {
-                annotation(name = "UseExperimental") {
-                    argument { +"ExperimentalStdlibApi::class" }
-                }
-                body {
-                    assignment(modifier = "val", name = "number") {
-                        on({ string("1010000") }) {
-                            call(name = "toInt") {
-                                argument(name = "radix") {
-                                    number(2)
+            kotlin {
+                declareFunction(name = "main") {
+                    annotation(name = "UseExperimental") {
+                        argument { +"ExperimentalStdlibApi::class" }
+                    }
+                    body {
+                        assignment(modifier = "val", name = "number") {
+                            on({ string("1010000") }) {
+                                call(name = "toInt") {
+                                    argument(name = "radix") {
+                                        number(2)
+                                    }
                                 }
                             }
                         }
-                    }
-                    call(name = "println") {
-                        argument { on({ +"number" }) { call("countOneBits") } }
-                    }
-                    call(name = "println") {
-                        argument { on({ +"number" }) { call("countTrailingZeroBits") } }
-                    }
-                    call(name = "println") {
-                        argument {
-                            on({ +"number" }) {
-                                call("takeHighestOneBit")
-                                call("toString") { argument { number(2) } }
+                        call(name = "println") {
+                            argument { on({ +"number" }) { call("countOneBits") } }
+                        }
+                        call(name = "println") {
+                            argument { on({ +"number" }) { call("countTrailingZeroBits") } }
+                        }
+                        call(name = "println") {
+                            argument {
+                                on({ +"number" }) {
+                                    call("takeHighestOneBit")
+                                    call("toString") { argument { number(2) } }
+                                }
                             }
                         }
-                    }
-                    call(name = "println") {
-                        argument {
-                            on({ +"number" }) {
-                                call("rotateRight") { argument { number(3) } }
-                                call("toString") { argument { number(2) } }
+                        call(name = "println") {
+                            argument {
+                                on({ +"number" }) {
+                                    call("rotateRight") { argument { number(3) } }
+                                    call("toString") { argument { number(2) } }
+                                }
                             }
                         }
-                    }
-                    call(name = "println") {
-                        argument {
-                            on({ +"number" }) {
-                                call("rotateLeft") { argument { number(3) } }
-                                call("toString") { argument { number(2) } }
+                        call(name = "println") {
+                            argument {
+                                on({ +"number" }) {
+                                    call("rotateLeft") { argument { number(3) } }
+                                    call("toString") { argument { number(2) } }
+                                }
                             }
                         }
                     }
@@ -227,37 +235,40 @@ val bitManipulation = slide {
 val durationApi = slide {
     slideContent {
         slideCode {
+            //TODO: add import support to kotlin DSL
             keyword("import")
             +" kotlin.time.*"
             +"\n\n"
-            declareFunction(name = "main") {
-                annotation(name = "UseExperimental") {
-                    argument { +"ExperimentalTime::class" }
-                }
-                body {
-                    assignment(modifier = "val", name = "(value, duration)", format = CODE::plain) {
-                        call("measureTimedValue") {
-                            lambda {
-                                statement {
-                                    on({ +"Thread" }) {
-                                        call("sleep") {
-                                            argument { number(100) }
+            kotlin {
+                declareFunction(name = "main") {
+                    annotation(name = "UseExperimental") {
+                        argument { +"ExperimentalTime::class" }
+                    }
+                    body {
+                        assignment(modifier = "val", name = "(value, duration)", format = CODE::plain) {
+                            call("measureTimedValue") {
+                                lambda {
+                                    statement {
+                                        on({ +"Thread" }) {
+                                            call("sleep") {
+                                                argument { number(100) }
+                                            }
                                         }
                                     }
-                                }
-                                statement {
-                                    expression {
-                                        inline { number(42) }
+                                    statement {
+                                        expression {
+                                            inline { number(42) }
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    statement { comment("42") }
-                    call("println") { argument { +"number" } }
+                        statement { comment("42") }
+                        call("println") { argument { +"number" } }
 
-                    statement { comment("e.g. 103 ms") }
-                    call("println") { argument { +"duration" } }
+                        statement { comment("e.g. 103 ms") }
+                        call("println") { argument { +"duration" } }
+                    }
                 }
             }
         }
@@ -282,22 +293,22 @@ val updatesToWhen = slide {
                 statement {
                     comment("process(listOf(1,2,3,0,4,-1,10)) == 1234")
                 }
-            }
-            declareFunction(name = "process") {
-                parameter(name = "list", type = "List<Int>")
-                body {
-                    forLoop("i") {
-                        collectionExpression { inline { +"list" } }
-                        logicBlock {
-                            whenExpression {
-                                subject { +"i" }
-                                pair({ number(0) }, { keyword("continue") })
-                                pair({ number(-1) }, { keyword("break") })
-                                pair({ keyword("else") }, {
-                                    call("print") {
-                                        argument { +"i" }
-                                    }
-                                })
+                declareFunction(name = "process") {
+                    parameter(name = "list", type = "List<Int>")
+                    body {
+                        forLoop("i") {
+                            collectionExpression { inline { +"list" } }
+                            logicBlock {
+                                whenExpression {
+                                    subject { +"i" }
+                                    pair({ number(0) }, { keyword("continue") })
+                                    pair({ number(-1) }, { keyword("break") })
+                                    pair({ keyword("else") }, {
+                                        call("print") {
+                                            argument { +"i" }
+                                        }
+                                    })
+                                }
                             }
                         }
                     }

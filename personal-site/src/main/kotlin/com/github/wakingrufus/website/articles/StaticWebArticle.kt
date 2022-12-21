@@ -123,8 +123,10 @@ fun lambdaAsFinalParameter(): ARTICLE.() -> Unit = {
             """.trimMargin()
     }
     sampleCode {
-        declareFunction("f") {
-            parameter("lambda", type = "(Int) -> String")
+        kotlin {
+            declareFunction("f") {
+                parameter("lambda", type = "(Int) -> String")
+            }
         }
     }
     p { +"Then, instead of invoking it like this:" }
@@ -668,12 +670,16 @@ fun rolodexDslClass(): CODE.() -> Unit = {
                                                         lambda {
                                                             call("h2") {
                                                                 lambda {
-                                                                    assignment(format = CODE::variablePropertyName,
-                                                                            name = "style") {
+                                                                    assignment(
+                                                                        format = CODE::variablePropertyName,
+                                                                        name = "style"
+                                                                    ) {
                                                                         call("css") {
                                                                             lambda {
-                                                                                assignment(format = CODE::variablePropertyName,
-                                                                                        name = "display") {
+                                                                                assignment(
+                                                                                    format = CODE::variablePropertyName,
+                                                                                    name = "display"
+                                                                                ) {
                                                                                     on({ +"Display" }) {
                                                                                         property("block")
                                                                                     }
@@ -760,8 +766,10 @@ fun contactDslClass(): CODE.() -> Unit = {
                                         lambda {
                                             call("div") {
                                                 lambda {
-                                                    assignment(format = CODE::variablePropertyName,
-                                                            name = "style") {
+                                                    assignment(
+                                                        format = CODE::variablePropertyName,
+                                                        name = "style"
+                                                    ) {
                                                         call("css") {
                                                             lambda {
                                                                 cssHeight(3)
@@ -782,10 +790,16 @@ fun contactDslClass(): CODE.() -> Unit = {
                                                         }
                                                     }
                                                     call("img") {
-                                                        argument("src") { string("data:image/png;base64, \$imageBase64") }
+                                                        argument("src") {
+                                                            string(
+                                                                "data:image/png;base64, \$imageBase64"
+                                                            )
+                                                        }
                                                         lambda {
-                                                            assignment(format = CODE::variablePropertyName,
-                                                                    name = "style") {
+                                                            assignment(
+                                                                format = CODE::variablePropertyName,
+                                                                name = "style"
+                                                            ) {
                                                                 call("css") {
                                                                     lambda {
                                                                         cssHeight(3)
@@ -799,8 +813,10 @@ fun contactDslClass(): CODE.() -> Unit = {
                                             }
                                             call("div") {
                                                 lambda {
-                                                    assignment(format = CODE::variablePropertyName,
-                                                            name = "style") {
+                                                    assignment(
+                                                        format = CODE::variablePropertyName,
+                                                        name = "style"
+                                                    ) {
                                                         call("css") {
                                                             lambda {
                                                                 cssDisplayInlineBlock()
@@ -813,14 +829,18 @@ fun contactDslClass(): CODE.() -> Unit = {
                                                                 call("css") {
                                                                     lambda {
                                                                         cssDisplayBlock()
-                                                                        assignment(format = CODE::variablePropertyName,
-                                                                                name = "fontWeight") {
+                                                                        assignment(
+                                                                            format = CODE::variablePropertyName,
+                                                                            name = "fontWeight"
+                                                                        ) {
                                                                             on({ +"FontWeight" }) {
                                                                                 property("bold")
                                                                             }
                                                                         }
-                                                                        assignment(format = CODE::variablePropertyName,
-                                                                                name = "fontSize") {
+                                                                        assignment(
+                                                                            format = CODE::variablePropertyName,
+                                                                            name = "fontSize"
+                                                                        ) {
                                                                             on({ number(1.17) }) {
                                                                                 property("em")
                                                                             }
@@ -918,8 +938,10 @@ fun BLOCK.cssDisplayInlineBlock() {
 }
 
 fun BLOCK.cssHeight(em: Number) {
-    assignment(format = CODE::variablePropertyName,
-            name = "height") {
+    assignment(
+        format = CODE::variablePropertyName,
+        name = "height"
+    ) {
         on({ number(em) }) {
             property("em")
         }
@@ -927,8 +949,10 @@ fun BLOCK.cssHeight(em: Number) {
 }
 
 fun BLOCK.cssWidth(em: Number) {
-    assignment(format = CODE::variablePropertyName,
-            name = "width") {
+    assignment(
+        format = CODE::variablePropertyName,
+        name = "width"
+    ) {
         on({ number(em) }) {
             property("em")
         }
@@ -936,8 +960,10 @@ fun BLOCK.cssWidth(em: Number) {
 }
 
 fun BLOCK.cssMaxHeight(em: Number) {
-    assignment(format = CODE::variablePropertyName,
-            name = "maxHeight") {
+    assignment(
+        format = CODE::variablePropertyName,
+        name = "maxHeight"
+    ) {
         on({ number(em) }) {
             property("em")
         }
@@ -948,56 +974,62 @@ fun usage(): ARTICLE.() -> Unit = {
     h2 { +"Usage" }
     p { +"We are ready to use our DSL extensions. An example usage could look like this:" }
     sampleCode {
-        declareFunction(name = "rolodex", returnType = "HTML.() -> Unit") {
-            expression2 {
-                block {
-                    statement {
-                        call(name = "head") {
-                            lambda {
-                                call(name = "link") {
-                                    argument(name = "href") {
-                                        string("styles.css")
+        kotlin {
+            declareFunction(name = "rolodex", returnType = "HTML.() -> Unit") {
+                expression2 {
+                    block {
+                        statement {
+                            call(name = "head") {
+                                lambda {
+                                    call(name = "link") {
+                                        argument(name = "href") {
+                                            string("styles.css")
+                                        }
+                                        argument(name = "rel") { string("stylesheet") }
                                     }
-                                    argument(name = "rel") { string("stylesheet") }
                                 }
                             }
                         }
-                    }
-                    statement {
-                        call(name = "body") {
-                            lambda {
-                                call("rolodex") {
-                                    extensionFunction()
-                                    lambda {
-                                        call("contact") {
-                                            lambda {
-                                                assignment(name = "name", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("Finn Mertens") }
-                                                }
-                                                assignment(name = "email", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("finnthehuman@hero.org") }
-                                                }
-                                                assignment(name = "phone", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("+11325554321") }
-                                                }
-                                                assignment(name = "picture", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("finn.jpeg") }
+                        statement {
+                            call(name = "body") {
+                                lambda {
+                                    call("rolodex") {
+                                        extensionFunction()
+                                        lambda {
+                                            call("contact") {
+                                                lambda {
+                                                    assignment(name = "name", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("Finn Mertens") }
+                                                    }
+                                                    assignment(name = "email", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("finnthehuman@hero.org") }
+                                                    }
+                                                    assignment(name = "phone", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("+11325554321") }
+                                                    }
+                                                    assignment(name = "picture", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("finn.jpeg") }
+                                                    }
                                                 }
                                             }
-                                        }
-                                        call("contact") {
-                                            lambda {
-                                                assignment(name = "name", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("Bonnibel Bubblegum") }
-                                                }
-                                                assignment(name = "email", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("princessbubblegum@candykingdom.gov") }
-                                                }
-                                                assignment(name = "phone", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("+11235551234") }
-                                                }
-                                                assignment(name = "picture", format = CODE::variablePropertyName) {
-                                                    inlineExpression { string("bubblegum.jpeg") }
+                                            call("contact") {
+                                                lambda {
+                                                    assignment(name = "name", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("Bonnibel Bubblegum") }
+                                                    }
+                                                    assignment(name = "email", format = CODE::variablePropertyName) {
+                                                        inlineExpression {
+                                                            string(
+                                                                "princessbubblegum@candykingdom.gov"
+                                                            )
+                                                        }
+                                                    }
+                                                    assignment(name = "phone", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("+11235551234") }
+                                                    }
+                                                    assignment(name = "picture", format = CODE::variablePropertyName) {
+                                                        inlineExpression { string("bubblegum.jpeg") }
+                                                    }
                                                 }
                                             }
                                         }

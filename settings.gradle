@@ -1,6 +1,6 @@
 pluginManagement{
     plugins {
-        id("org.jetbrains.kotlin.jvm") version "1.4.32"
+        id("org.jetbrains.kotlin.jvm") version "1.7.20"
         id("com.jfrog.artifactory") version "4.24.12"
     }
 }

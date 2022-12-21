@@ -14,13 +14,13 @@ dependencies {
     implementation(project(":website-dsl"))
     implementation(project(":recipe-dsl"))
     implementation(project(":rss-dsl"))
-    implementation("org.slf4j:slf4j-api:1.7.25")
-    implementation("io.github.microutils:kotlin-logging:1.6.10")
+    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("io.github.microutils:kotlin-logging:3.0.4")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jsoup:jsoup:1.10.3")
+    implementation("org.jsoup:jsoup:1.15.3")
     implementation("com.beust:klaxon:5.5")
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
-    implementation("org.slf4j:slf4j-log4j12:1.7.25")
+    implementation("ch.qos.logback:logback-classic:1.4.5")
     implementation("com.rometools:rome:1.10.0")
     implementation("com.vladsch.flexmark:flexmark-all:0.50.16")
 
@@ -42,12 +42,6 @@ tasks.jacocoTestReport {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.languageVersion = "1.4"
-    kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
-}
-
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
 
 tasks.getByName<JavaExec>("run") {
@@ -60,6 +54,6 @@ tasks.getByName<JavaExec>("run") {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }

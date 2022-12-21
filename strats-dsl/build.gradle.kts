@@ -31,12 +31,6 @@ tasks.jacocoTestReport {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.languageVersion = "1.4"
-    kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
-}
-
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
 
 publishing {

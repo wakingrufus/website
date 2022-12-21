@@ -6,8 +6,7 @@ import com.github.wakingrufus.website.cooking.RecipeIndex
 import com.github.wakingrufus.website.lib.*
 import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.cooking.html
-import com.github.wakingrufus.website.music.music2020
-import com.github.wakingrufus.website.music.music2021
+import com.github.wakingrufus.website.music.*
 import com.github.wakingrufus.website.projects.*
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
@@ -80,6 +79,7 @@ class MyWebsite {
             page(coHost)
             page(music2020)
             page(music2021)
+            page(music2022)
             page(criterion2021)
             page(jamm)
 
@@ -200,16 +200,9 @@ val myDashboard: DIV.() -> Unit = {
             +"Other Interests"
         }
         panel("Music") {
-            h3 {
-                a(href = music2020.path) {
-                    +"Best Music of 2020"
-                }
-            }
-            h3 {
-                a(href = music2021.path) {
-                    +"Best Music of 2021"
-                }
-            }
+            h3 { a(href = music2020.path) { +"Best Music of 2020" } }
+            h3 { a(href = music2021.path) { +"Best Music of 2021" } }
+            h3 { a(href = music2022.path) { +"Best Music of 2022" } }
         }
         panel("TV / Film") {
             h3 {

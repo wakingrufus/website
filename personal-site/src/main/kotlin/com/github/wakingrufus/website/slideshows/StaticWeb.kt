@@ -206,6 +206,7 @@ val lambdaWithReceiver = slide {
             }
         }) {
             slideCode {
+                kotlin {
                 declareFunction("builder", "String", false) {
                     body {
                         returns {
@@ -253,6 +254,7 @@ val lambdaWithReceiver = slide {
                             }
                         })
                     }
+                }
                 }
             }
         }
