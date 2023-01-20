@@ -81,6 +81,7 @@ class MyWebsite {
             page(music2021)
             page(music2022)
             page(criterion2021)
+            page(criterion2022)
             page(jamm)
 
             RecipeIndex.recipes.forEach {
@@ -208,6 +209,11 @@ val myDashboard: DIV.() -> Unit = {
             h3 {
                 a(href = criterion2021.path) {
                     +"2021 Criterion Challenge Recap"
+                }
+            }
+            h3 {
+                a(href = criterion2022.path) {
+                    +"2022 Criterion Challenge Recap"
                 }
             }
             h3 {
