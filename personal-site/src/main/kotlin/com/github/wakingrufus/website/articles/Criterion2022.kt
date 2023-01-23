@@ -116,12 +116,6 @@ val criterion2022 = htmlPage("criterion-2022.html") {
                     |Then it did and I was """.trimMargin()
                 i { + "blown away."}
             }
-            h3 { +"La Haine (1995)" }
-            p {
-                strong { +"tprig3: " }
-                +""""It's about a society on its way down. And as it falls,it keeps telling itself: "So far so good... So far so good... So far so good." 
-                |It's not how you fall that matters. It's how you land."""".trimMargin()
-            }
         }
         htmlSection {
             a { id = "obscure" }
