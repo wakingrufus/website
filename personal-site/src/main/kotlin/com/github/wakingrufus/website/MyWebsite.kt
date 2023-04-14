@@ -185,7 +185,7 @@ val myDashboard: DIV.() -> Unit = {
                 entry("Article", adhocPolymorphism.path)
             }
             topic("Functional Kotlin") {
-                entry("Slides", Paths.FUNCTIONAL_KOTLIN_SLIDESHOW_BASE_NAME + "/0.html")
+                entry("Slides", "https://wakingrufus.github.io/functional-kotlin/")
             }
             topic("Software Development Antipatterns") {
                 entry("Refactoring as a Separate Ticket", antipatterns.path + "#refactoring")
@@ -193,6 +193,10 @@ val myDashboard: DIV.() -> Unit = {
             topic("Kotlin in 2019") {
                 entry("Video (CKUG)", "https://youtu.be/nLKJJASfRh4")
                 entry("Slides", Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html")
+            }
+            topic("Kotlin in 2022") {
+                entry("Video (CKUG)", "https://www.youtube.com/live/PQ61TzbT88M?feature=share&t=2610")
+                entry("Slides", "https://wakingrufus.github.io/kotlin-2022/")
             }
         }
     }
