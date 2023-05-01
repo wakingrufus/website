@@ -31,9 +31,6 @@ val testTask = tasks.getByName<Test>("test") {
 
 tasks.jacocoTestReport {
     dependsOn(testTask)
-    reports {
-        xml.isEnabled = true
-    }
 }
 
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")

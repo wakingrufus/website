@@ -5,11 +5,18 @@ pluginManagement{
     }
 }
 
-rootProject.name = 'website'
+rootProject.name = "website"
 
 include(":website-dsl")
 include(":recipe-dsl")
 include(":rss-dsl")
 include(":personal-site")
-include(":strats-dsl")
 include(":generationq")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("kotlinlib"){
+            library("html","org.jetbrains.kotlinx","kotlinx-html-jvm").version("0.8.1")
+        }
+    }
+}
