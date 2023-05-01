@@ -7,14 +7,13 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    compile("org.slf4j:slf4j-api:1.7.25")
-    compile("io.github.microutils:kotlin-logging:1.6.10")
+    implementation("org.slf4j:slf4j-api:1.7.25")
+    implementation("io.github.microutils:kotlin-logging:1.6.10")
     api("com.rometools:rome:1.10.0")
-    api("org.jetbrains.kotlinx:kotlinx-html-jvm:0.6.12")
+    api(kotlinlib.html)
 
     testImplementation("org.slf4j:slf4j-log4j12:1.7.25")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
@@ -31,9 +30,6 @@ val testTask = tasks.getByName<Test>("test") {
 
 tasks.jacocoTestReport {
     dependsOn(testTask)
-    reports {
-        xml.isEnabled = true
-    }
 }
 
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")

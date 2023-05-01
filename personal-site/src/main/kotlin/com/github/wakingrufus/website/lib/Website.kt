@@ -107,6 +107,7 @@ fun DIV.dashboard(dash: Dashboard.() -> Unit) {
         style = css {
             paddingLeft = 1.em
             paddingRight = 1.em
+            textAlign = TextAlign.left
         }
         Dashboard().apply(dash)(this)
     }

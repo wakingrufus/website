@@ -1,13 +1,9 @@
-plugins {
-    idea
-}
-
 allprojects {
     group = "com.github.wakingrufus"
 }
 
 tasks.getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.9.1"
+    gradleVersion = "8.1.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 

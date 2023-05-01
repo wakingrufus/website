@@ -7,7 +7,7 @@ plugins {
 }
 
 application {
-    mainClassName = "com.github.wakingrufus.website.MainKt"
+    mainClass.set("com.github.wakingrufus.website.MainKt")
 }
 
 dependencies {
@@ -37,9 +37,6 @@ val testTask = tasks.getByName<Test>("test") {
 
 tasks.jacocoTestReport {
     dependsOn(testTask)
-    reports {
-        xml.isEnabled = true
-    }
 }
 
 tasks.findByPath("build")?.dependsOn("jacocoTestReport")
