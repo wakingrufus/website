@@ -28,11 +28,16 @@ import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
 import kotlinx.css.Display
 import kotlinx.css.TextAlign
+import kotlinx.css.VerticalAlign
 import kotlinx.css.display
 import kotlinx.css.em
+import kotlinx.css.height
+import kotlinx.css.margin
 import kotlinx.css.paddingLeft
 import kotlinx.css.paddingRight
+import kotlinx.css.px
 import kotlinx.css.textAlign
+import kotlinx.css.verticalAlign
 import kotlinx.html.DIV
 import kotlinx.html.FOOTER
 import kotlinx.html.a
@@ -41,11 +46,13 @@ import kotlinx.html.footer
 import kotlinx.html.h1
 import kotlinx.html.h2
 import kotlinx.html.h3
-import kotlinx.html.id
+import kotlinx.html.img
 import kotlinx.html.li
 import kotlinx.html.link
 import kotlinx.html.meta
 import kotlinx.html.p
+import kotlinx.html.picture
+import kotlinx.html.span
 import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.ul
@@ -110,6 +117,11 @@ class MyWebsite {
             page(criterion2021)
             page(criterion2022)
 
+            resource("fediverse-sm.png")
+            resource("fediverse-60.png")
+            resource("github-sm.png")
+            resource("github-60.png")
+
             RecipeIndex.recipes.forEach {
                 page(it.recipePage())
             }
@@ -153,32 +165,61 @@ val mainPage = htmlPage("index.html") {
             div {
                 style = css {
                     textAlign = TextAlign.center
-                    display = Display.block
+                    display = Display.inlineBlock
                 }
-                p {
+                span {
                     style = css {
-                        display = Display.inlineFlex
-                        paddingRight = 2.em
+                        height = 48.px
+                        display = Display.inlineBlock
                     }
                     a(href = "https://bigshoulders.city/@wakingrufus") {
                         style = css {
                             paddingRight = 0.5.em
+                            display = Display.inlineBlock
                         }
-                        imgFromResources("fediverse-sm.png", "fediverse logo")
+                        picture {
+                            img(alt = "fediverse logo", src = "fediverse-sm.png") {
+                                height = "30"
+                                width = "30"
+                            }
+                        }
                     }
-                    +"@wakingrufus@bigshoulders.city"
-                }
-                p {
-                    style = css {
-                        display = Display.inlineFlex
-                    }
-                    a(href = "https://github.com/wakingrufus") {
+                    p {
                         style = css {
-                            paddingRight = 1.em
+                            display = Display.inlineBlock
+                            paddingRight = 2.em
+                            verticalAlign = VerticalAlign.top
+                            margin = "0"
                         }
-                        imgFromResources("github-sm.png", "Github logo")
+                        +"@wakingrufus@bigshoulders.city"
                     }
-                    +"wakingrufus"
+                }
+                span {
+                    style = css {
+                        height = 48.px
+                        display = Display.inlineBlock
+                    }
+                    a(href = "https://bigshoulders.city/@wakingrufus") {
+                        style = css {
+                            paddingRight = 0.5.em
+                            display = Display.inlineBlock
+                        }
+                        picture {
+                            img(alt = "github logo", src = "github-sm.png") {
+                                height = "30"
+                                width = "30"
+                            }
+                        }
+                    }
+                    p {
+                        style = css {
+                            display = Display.inlineBlock
+                            paddingRight = 2.em
+                            verticalAlign = VerticalAlign.top
+                            margin = "0"
+                        }
+                        +"wakingrufus"
+                    }
                 }
             }
             myDashboard()
@@ -302,7 +343,6 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         panel("Cooking") {
-            a { id = "recipes" }
             ul {
                 RecipeIndex.recipes.forEach { recipe ->
                     li { a(href = recipe.name.replace(" ", "") + ".html") { +recipe.name } }
