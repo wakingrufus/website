@@ -20,6 +20,7 @@ import kotlinx.css.maxWidth
 import kotlinx.css.paddingBottom
 import kotlinx.css.paddingLeft
 import kotlinx.css.paddingRight
+import kotlinx.css.paddingTop
 import kotlinx.css.px
 import kotlinx.css.textAlign
 import kotlinx.css.verticalAlign
@@ -91,10 +92,14 @@ class DashboardPanel {
                         }
                         div {
                             style  = css {
-                                paddingBottom = 1.em
+                                paddingBottom = 12.px
                             }
                             subPanel.entries.forEach { topicEntry ->
                                 div {
+                                    style = css {
+                                        paddingTop = 4.px
+                                        paddingBottom = 12.px
+                                    }
                                     a(href = topicEntry.link) { +topicEntry.name }
                                 }
                             }

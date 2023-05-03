@@ -17,11 +17,12 @@ import java.io.FileWriter
 class Website(private val baseDir: File) {
     companion object : KLogging()
 
-    private var htmlFiles: List<HtmlPage> = ArrayList()
-    private var cssFiles: List<CssPage> = ArrayList()
-    private var uploaders: List<Uploader> = ArrayList()
-    private var rssFeeds: List<RssFeed> = ArrayList()
-    var slideshows: List<Slideshow> = ArrayList()
+    private var htmlFiles: List<HtmlPage> = mutableListOf()
+    private var resources: MutableList<String> = mutableListOf()
+    private var cssFiles: List<CssPage> = mutableListOf()
+    private var uploaders: List<Uploader> = mutableListOf()
+    private var rssFeeds: List<RssFeed> = mutableListOf()
+    var slideshows: List<Slideshow> = mutableListOf()
 
     fun cssFile(path: String, builder: CSSBuilder) {
         cssFiles += CssBuilderPage(path, builder)
@@ -29,6 +30,10 @@ class Website(private val baseDir: File) {
 
     fun cssFile(path: String, cssString: String) {
         cssFiles += CssStringPage(path, cssString)
+    }
+
+    fun resource(name: String){
+        resources.add(name)
     }
 
     fun page(path: String, pageBuilder: HtmlPage.() -> Unit) {
@@ -73,6 +78,12 @@ class Website(private val baseDir: File) {
             it.file.apply {
                 logger.info(this.canonicalPath)
                 it.write(FileWriter(it.file))
+            }
+        }).plus(resources.map { name ->
+            File(baseDir, name).also {file ->
+                this::class.java.classLoader.getResource(name)?.readBytes()?.also { ba ->
+                    file.writeBytes(ba)
+                }
             }
         })
     }

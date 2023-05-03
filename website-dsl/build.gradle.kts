@@ -9,7 +9,7 @@ plugins {
 dependencies {
     api("org.slf4j:slf4j-api:1.7.25")
     api("io.github.microutils:kotlin-logging:1.6.10")
-    api("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
+    api("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
     api("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.205-kotlin-1.4.32")
     api("org.jetbrains.kotlin-wrappers:kotlin-css-jvm:1.0.0-pre.205-kotlin-1.4.32")
     api("com.rometools:rome:1.10.0")

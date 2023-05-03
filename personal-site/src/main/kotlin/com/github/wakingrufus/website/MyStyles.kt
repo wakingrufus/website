@@ -51,13 +51,17 @@ class MyStyles {
                 borderLeftStyle = BorderStyle.solid
                 borderLeftWidth = 5.px
             }
-
-            media("screen and (min-resolution: 120dpi)") {
+            media("screen and (max-width: 480px)") {
+                body {
+                    fontSize = 1.0.em
+                }
+            }
+            media("screen and (min-width: 481px) and (max-width: 3000px)") {
                 body {
                     fontSize = 1.25.em
                 }
             }
-            media("screen and (min-resolution: 192dpi)") {
+            media("screen and (min-width: 3001px)") {
                 body {
                     fontSize = 1.5.em
                 }
