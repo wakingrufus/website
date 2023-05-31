@@ -342,13 +342,6 @@ val myDashboard: DIV.() -> Unit = {
                 +": Star Trek TNG Podcast"
             }
         }
-        panel("Cooking") {
-            ul {
-                RecipeIndex.recipes.forEach { recipe ->
-                    li { a(href = recipe.name.replace(" ", "") + ".html") { +recipe.name } }
-                }
-            }
-        }
     }
 }
 val feeds = htmlPage("feeds.html") {
