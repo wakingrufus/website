@@ -23,6 +23,7 @@ data class Track(
 )
 
 data class YearEndList(val year: Year, val albumOfTheYear: Album?, val albums: List<Album>, val tracks: List<Track>)
+data class Playlist(val name: String, val description: String?, val tracks: List<Track>)
 
 @MusicListDsl
 class TrackBuilder(val title: String, private val artist: String, var link: String? = null) {
@@ -107,6 +108,29 @@ class YearEndListBuilder(private val year: Year) {
 }
 
 @MusicListDsl
+class PlaylistBuilder(private val name: String) {
+    private var description: String? = null
+
+    private val tracks: MutableList<Track> = mutableListOf()
+
+    fun track(title: String, artist: String, build: TrackBuilder.() -> Unit = {}): Track {
+        return TrackBuilder(title, artist)(build).also {
+            tracks.add(it)
+        }
+    }
+
+    fun toPlaylist(): Playlist {
+        return Playlist(name, description, tracks)
+    }
+}
+
+
+@MusicListDsl
 fun bestMusicOf(year: Int, build: YearEndListBuilder.() -> Unit): YearEndList {
     return YearEndListBuilder(Year.of(year))(build)
+}
+
+@MusicListDsl
+fun playlist(name: String, build: PlaylistBuilder.() -> Unit): Playlist {
+    return PlaylistBuilder(name).apply(build).toPlaylist()
 }
