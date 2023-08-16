@@ -138,8 +138,8 @@ class MyWebsite {
 
 val mainPage = htmlPage("index.html") {
     standardHead()
-    title("wakingrufus's home page")
-    description("Personal home page for wakingrufus, a software developer working on open source projects in kotlin.")
+    title("John Burns")
+    description("Personal home page for John Burns, a software developer working on open source projects in kotlin.")
     body {
         style = css {
             textAlign = TextAlign.center
@@ -149,7 +149,7 @@ val mainPage = htmlPage("index.html") {
                 style = css {
                     textAlign = TextAlign.center
                 }
-                +"wakingrufus"
+                +"John Burns"
             }
             div {
                 style = css {
@@ -191,7 +191,9 @@ val mainPage = htmlPage("index.html") {
                             verticalAlign = VerticalAlign.top
                             margin = "0"
                         }
-                        +"@wakingrufus@bigshoulders.city"
+                        a(href = "https://bigshoulders.city/@wakingrufus") {
+                            +"@wakingrufus@bigshoulders.city"
+                        }
                     }
                 }
                 span {
@@ -199,7 +201,7 @@ val mainPage = htmlPage("index.html") {
                         height = 48.px
                         display = Display.inlineBlock
                     }
-                    a(href = "https://bigshoulders.city/@wakingrufus") {
+                    a(href = "https://github.com/wakingrufus") {
                         style = css {
                             paddingRight = 0.5.em
                             display = Display.inlineBlock
@@ -218,7 +220,9 @@ val mainPage = htmlPage("index.html") {
                             verticalAlign = VerticalAlign.top
                             margin = "0"
                         }
-                        +"wakingrufus"
+                        a(href = "https://github.com/wakingrufus") {
+                            +"wakingrufus"
+                        }
                     }
                 }
             }
@@ -233,8 +237,8 @@ val myDashboard: DIV.() -> Unit = {
         topicPanel("Open Source Projects") {
             subPanel("ktlint-gradle", "https://github.com/JLLeitschuh/ktlint-gradle") {
                 description {
-                    +"A gradle plugin for ktlint. "
-                    +"I joined this project in 2023 and have been working on ongoing maintenance for it."
+                    +"The most popular gradle plugin for ktlint. "
+                    +"I joined this project in 2023 and have been doing ongoing maintenance for it."
                 }
             }
             subPanel("JaMM", "https://github.com/wakingrufus/JaMM") {
@@ -267,52 +271,56 @@ val myDashboard: DIV.() -> Unit = {
                     +"lib-elo is kotlin library which implements an Elo game rating system. "
                 }
             }
-            subPanel("filedb (incomplete)", "https://github.com/wakingrufus/filedb") {
-                description {
-                    +"filedb is Kotlin library which allows you to use a file sync service "
-                    +"(such as syncthing) as a persistence backend for an application. "
-                }
-            }
-            subPanel("mastodon-jfx (abandoned)", "https://github.com/wakingrufus/mastodon-jfx") {
-                description {
-                    +"mastodon-jfx was a proof-of-concept desktop client for mastodon written in Kotlin and JavaFX. "
-                }
-            }
         }
         topicPanel("Writing / Speaking") {
+            subPanel("Kotlin for Java Developers") {
+                expandable()
+                entry("St. Louis JUG", "https://youtu.be/EolIxwpVJJI?t=489")
+                entry("Slides", "https://github.com/wakingrufus/kotlin-for-java-devs")
+            }
             subPanel("Functional Kotlin") {
+                expandable()
+                entry("St. Louis JUG", "https://youtu.be/EolIxwpVJJI?t=2697")
                 entry("Slides (Devnexus 2023)", "https://wakingrufus.github.io/functional-kotlin/")
             }
             subPanel("Kotlin in 20XX") {
+                expandable()
                 entry("2022 Video @ CKUG", "https://www.youtube.com/live/PQ61TzbT88M?feature=share&t=2610")
                 entry("2022 Slides ", "https://wakingrufus.github.io/kotlin-2022/")
                 entry("2019 Video @ CKUG", "https://youtu.be/nLKJJASfRh4")
                 entry("2019 Slides", Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html")
             }
-            subPanel("Developer Productivity / Platform Engineering") {
+            subPanel("Platform Engineering") {
+                expandable()
                 entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
                 entry("Bootiful Podcast w/ Josh Long Apr 2023", "https://www.youtube.com/watch?v=DKYN9pGMNcI")
             }
             subPanel("Developing Gradle Plugins") {
+                expandable()
                 entry("Video (JConf 2022)", "https://www.youtube.com/watch?v=7kNLBmAMAno")
                 entry("Slides (JConf 2022)", "https://wakingrufus.github.io/developing-gradle-plugins/")
             }
             subPanel(failAgile.getTitle()) {
+                expandable()
                 entry("Article", failAgile.path)
             }
-            subPanel("Static Web development and Kotlin DSLs") {
+            subPanel("Static Web with Kotlin DSLs") {
+                expandable()
                 entry("Article", staticWeb.path)
                 entry("Slides", Paths.STATIC_WEB_SLIDESHOW_BASE_NAME + "/0.html")
                 entry("Presentation Video", "https://archive.org/details/march2019-static_web_development_kotlin_dsls")
                 entry("Tutorial Video", "https://archive.org/details/kotlin-web-dsl")
             }
             subPanel(adhocPolymorphism.getTitle()) {
+                expandable()
                 entry("Article", adhocPolymorphism.path)
             }
             subPanel("Software Development Antipatterns") {
+                expandable()
                 entry("Refactoring as a Separate Ticket", antipatterns.path + "#refactoring")
             }
             subPanel("Social Media / Fediverse") {
+                expandable()
                 entry("Concerns about Cohost", coHost.path)
             }
         }

@@ -312,7 +312,7 @@ This is a simple pattern I have found to write more testable functional Kotlin, 
 }
 
 val adhocPolymorphism = htmlPage("adhoc-polymorphism.html") {
-    article("Using Ad-hoc Polymorphism to Test Functional Kotlin") {
+    article("Testing Functional Kotlin") {
         htmlSection(dependencyInjection)
         footer(myFooter)
     }
