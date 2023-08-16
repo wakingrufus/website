@@ -10,6 +10,12 @@ data class SubPanel(
 ) {
     var entries: MutableList<TopicEntry> = mutableListOf()
     var content: P.() -> Unit = {}
+    var expandable: Boolean = false
+
+    @WebsiteDsl
+    fun expandable() {
+        expandable = true
+    }
 
     @WebsiteDsl
     fun description(content: P.() -> Unit) {
