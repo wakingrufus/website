@@ -273,6 +273,10 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         topicPanel("Writing / Speaking") {
+            subPanel("JVM Community"){
+                expandable()
+                entry("Foojay Podcast", "https://foojay.io/today/foojay-podcast-27/")
+            }
             subPanel("Kotlin for Java Developers") {
                 expandable()
                 entry("St. Louis JUG", "https://youtu.be/EolIxwpVJJI?t=489")
@@ -311,13 +315,10 @@ val myDashboard: DIV.() -> Unit = {
                 entry("Presentation Video", "https://archive.org/details/march2019-static_web_development_kotlin_dsls")
                 entry("Tutorial Video", "https://archive.org/details/kotlin-web-dsl")
             }
-            subPanel(adhocPolymorphism.getTitle()) {
+            subPanel("Software Development Practices") {
                 expandable()
-                entry("Article", adhocPolymorphism.path)
-            }
-            subPanel("Software Development Antipatterns") {
-                expandable()
-                entry("Refactoring as a Separate Ticket", antipatterns.path + "#refactoring")
+                entry("Testing Functional Kotlin", adhocPolymorphism.path)
+                entry("Antipattern: Refactoring as a Separate Ticket", antipatterns.path + "#refactoring")
             }
             subPanel("Social Media / Fediverse") {
                 expandable()
