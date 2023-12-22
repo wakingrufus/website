@@ -33,10 +33,12 @@ class TrackBuilder(val title: String, private val artist: String, var link: Stri
         link = url
     }
 
+    @MusicListDsl
     fun tag(tag: String) {
         tags.add(tag)
     }
 
+    @MusicListDsl
     fun tags(vararg tag: String) {
         tags.addAll(tag)
     }
@@ -56,18 +58,23 @@ class AlbumBuilder(
 ) {
     private val tags: MutableList<String> = mutableListOf()
     private var review: String? = null
+
+    @MusicListDsl
     fun review(review: String) {
         this.review = review
     }
 
+    @MusicListDsl
     fun link(url: String) {
         link = url
     }
 
+    @MusicListDsl
     fun tag(tag: String) {
         tags.add(tag)
     }
 
+    @MusicListDsl
     fun tags(vararg tag: String) {
         tags.addAll(tag)
     }
@@ -89,12 +96,14 @@ class YearEndListBuilder(private val year: Year) {
         }
     }
 
+    @MusicListDsl
     fun album(title: String, artist: String, build: AlbumBuilder.() -> Unit = {}): Album {
         return AlbumBuilder(title, artist, year)(build).also {
             albums.add(it)
         }
     }
 
+    @MusicListDsl
     fun track(title: String, artist: String, build: TrackBuilder.() -> Unit = {}): Track {
         return TrackBuilder(title, artist)(build).also {
             tracks.add(it)
@@ -113,6 +122,7 @@ class PlaylistBuilder(private val name: String) {
 
     private val tracks: MutableList<Track> = mutableListOf()
 
+    @MusicListDsl
     fun track(title: String, artist: String, build: TrackBuilder.() -> Unit = {}): Track {
         return TrackBuilder(title, artist)(build).also {
             tracks.add(it)
