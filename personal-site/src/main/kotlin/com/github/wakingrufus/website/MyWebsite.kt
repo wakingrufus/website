@@ -22,6 +22,7 @@ import com.github.wakingrufus.website.lib.website
 import com.github.wakingrufus.website.music.music2020
 import com.github.wakingrufus.website.music.music2021
 import com.github.wakingrufus.website.music.music2022
+import com.github.wakingrufus.website.music.music2023
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
@@ -114,6 +115,7 @@ class MyWebsite {
             page(music2020)
             page(music2021)
             page(music2022)
+            page(music2023)
             page(criterion2021)
             page(criterion2022)
 
@@ -334,6 +336,7 @@ val myDashboard: DIV.() -> Unit = {
             h3 { a(href = music2020.path) { +"Best Music of 2020" } }
             h3 { a(href = music2021.path) { +"Best Music of 2021" } }
             h3 { a(href = music2022.path) { +"Best Music of 2022" } }
+            h3 { a(href = music2023.path) { +"Best Music of 2023" } }
         }
         panel("TV / Film") {
             h3 {
