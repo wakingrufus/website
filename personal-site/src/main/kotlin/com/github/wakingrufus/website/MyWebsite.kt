@@ -300,6 +300,10 @@ val myDashboard: DIV.() -> Unit = {
                 expandable()
                 entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
                 entry("Bootiful Podcast w/ Josh Long Apr 2023", "https://www.youtube.com/watch?v=DKYN9pGMNcI")
+                entry(
+                    "Intro to Platform Engineering @ GOTO Night Chicago 2024",
+                    "https://www.youtube.com/live/12-voRHgaZA?t=5739"
+                )
             }
             subPanel("Developing Gradle Plugins") {
                 expandable()
