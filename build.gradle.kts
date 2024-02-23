@@ -3,7 +3,7 @@ allprojects {
 }
 
 tasks.getByName<Wrapper>("wrapper") {
-    gradleVersion = "8.1.1"
+    gradleVersion = "8.6"
     distributionType = Wrapper.DistributionType.ALL
 }
 
