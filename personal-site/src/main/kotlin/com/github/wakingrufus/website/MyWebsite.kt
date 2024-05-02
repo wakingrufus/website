@@ -275,6 +275,18 @@ val myDashboard: DIV.() -> Unit = {
             }
         }
         topicPanel("Writing / Speaking") {
+            subPanel("Platform Engineering") {
+                expandable()
+                entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
+                entry("Bootiful Podcast w/ Josh Long Apr 2023", "https://www.youtube.com/watch?v=DKYN9pGMNcI")
+                entry(
+                    "Intro to Platform Engineering @ GOTO Night Chicago 2024",
+                    "https://www.youtube.com/live/12-voRHgaZA?t=5739"
+                )
+                entry("Technology and Friends Podcast", "https://m.youtube.com/watch?v=TYAA3zkJfUc")
+                entry("Delivering a Great Developer Experience (Devnexus 2024 Slides)",
+                    "https://wakingrufus.github.io/developer-experience-platform-engineering/")
+            }
             subPanel("JVM Community"){
                 expandable()
                 entry("Foojay Podcast", "https://foojay.io/today/foojay-podcast-27/")
@@ -295,15 +307,6 @@ val myDashboard: DIV.() -> Unit = {
                 entry("2022 Slides ", "https://wakingrufus.github.io/kotlin-2022/")
                 entry("2019 Video @ CKUG", "https://youtu.be/nLKJJASfRh4")
                 entry("2019 Slides", Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html")
-            }
-            subPanel("Platform Engineering") {
-                expandable()
-                entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
-                entry("Bootiful Podcast w/ Josh Long Apr 2023", "https://www.youtube.com/watch?v=DKYN9pGMNcI")
-                entry(
-                    "Intro to Platform Engineering @ GOTO Night Chicago 2024",
-                    "https://www.youtube.com/live/12-voRHgaZA?t=5739"
-                )
             }
             subPanel("Developing Gradle Plugins") {
                 expandable()
