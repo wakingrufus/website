@@ -286,6 +286,8 @@ val myDashboard: DIV.() -> Unit = {
                 entry("Technology and Friends Podcast", "https://m.youtube.com/watch?v=TYAA3zkJfUc")
                 entry("Delivering a Great Developer Experience (Devnexus 2024 Slides)",
                     "https://wakingrufus.github.io/developer-experience-platform-engineering/")
+                entry("Prefrontal by Cortex",
+                    "https://www.listennotes.com/podcasts/prefrontal-by-cortex/john-burns-grubhub-from-T3G-WIn7smU/")
             }
             subPanel("JVM Community"){
                 expandable()
