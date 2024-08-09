@@ -24,7 +24,11 @@ data class SubPanel(
 
     @WebsiteDsl
     fun entry(name: String, url: String) {
-        entries.add(TopicEntry(name, url))
+        entries.add(TopicEntry(name, listOf(name to url)))
     }
 
+    @WebsiteDsl
+    fun entry(name: String, entry: EntryDsl.() -> Unit) {
+        entries.add(EntryDsl(name).apply(entry).invoke())
+    }
 }

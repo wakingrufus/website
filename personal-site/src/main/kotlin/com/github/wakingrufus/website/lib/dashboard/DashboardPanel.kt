@@ -106,7 +106,7 @@ class DashboardPanel {
     private fun DETAILS.expandableSubPanelSummary(subPanel: SubPanel) {
         summary {
             style = css {
-          //      display = Display.inline
+                //      display = Display.inline
                 cursor = Cursor.pointer
             }
             h3 {
@@ -137,7 +137,16 @@ class DashboardPanel {
                         paddingTop = 4.px
                         paddingBottom = 12.px
                     }
-                    a(href = topicEntry.link) { +topicEntry.name }
+                    if (topicEntry.links.size == 1) {
+                        a(href = topicEntry.links.first().second) { +topicEntry.name }
+                    } else {
+                        +topicEntry.name
+                        topicEntry.links.forEach {
+                            +" ["
+                            a(href = it.second) { +it.first }
+                            +"] "
+                        }
+                    }
                 }
             }
         }
