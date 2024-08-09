@@ -283,38 +283,42 @@ val myDashboard: DIV.() -> Unit = {
         topicPanel("Writing / Speaking") {
             subPanel("Platform Engineering") {
                 expandable()
-                entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
-                entry("Bootiful Podcast w/ Josh Long Apr 2023", "https://www.youtube.com/watch?v=DKYN9pGMNcI")
+                entry(
+                    "Prefrontal by Cortex",
+                    "https://www.listennotes.com/podcasts/prefrontal-by-cortex/john-burns-grubhub-from-T3G-WIn7smU/"
+                )
+                entry(
+                    "Delivering a Great Developer Experience (Devnexus 2024 Slides)",
+                    "https://wakingrufus.github.io/developer-experience-platform-engineering/"
+                )
+                entry("Technology and Friends Podcast", "https://m.youtube.com/watch?v=TYAA3zkJfUc")
                 entry(
                     "Intro to Platform Engineering @ GOTO Night Chicago 2024",
                     "https://www.youtube.com/live/12-voRHgaZA?t=5739"
                 )
-                entry("Technology and Friends Podcast", "https://m.youtube.com/watch?v=TYAA3zkJfUc")
-                entry("Delivering a Great Developer Experience (Devnexus 2024 Slides)",
-                    "https://wakingrufus.github.io/developer-experience-platform-engineering/")
-                entry("Prefrontal by Cortex",
-                    "https://www.listennotes.com/podcasts/prefrontal-by-cortex/john-burns-grubhub-from-T3G-WIn7smU/")
+                entry("Bootiful Podcast w/ Josh Long Apr 2023", "https://www.youtube.com/watch?v=DKYN9pGMNcI")
+                entry("Developer Productivity Showdown Oct 2022", "https://www.youtube.com/watch?v=o6Epqyh_C3w")
             }
             subPanel("Kotlin") {
                 expandable()
-                entry("Kotlin for Java Developers"){
-                    link("$videoCamera St. Louis JUG","https://youtu.be/EolIxwpVJJI?t=489")
+                entry("Kotlin for Java Developers") {
+                    link("$videoCamera St. Louis JUG", "https://youtu.be/EolIxwpVJJI?t=489")
                     link("Slides", "https://github.com/wakingrufus/kotlin-for-java-devs")
                 }
-                entry("Functional Kotlin"){
-                    link("$videoCamera St. Louis JUG","https://youtu.be/EolIxwpVJJI?t=2697")
+                entry("Functional Kotlin") {
+                    link("$videoCamera St. Louis JUG", "https://youtu.be/EolIxwpVJJI?t=2697")
                     link("Slides (Devnexus 2023)", "https://wakingrufus.github.io/functional-kotlin/")
                 }
-                entry("Kotlin in 2022"){
-                    link("$videoCamera CKUG","https://www.youtube.com/live/PQ61TzbT88M?feature=share&t=2610")
+                entry("Kotlin in 2022") {
+                    link("$videoCamera CKUG", "https://www.youtube.com/live/PQ61TzbT88M?feature=share&t=2610")
                     link("Slides", "https://wakingrufus.github.io/kotlin-2022/")
                 }
-                entry("Kotlin in 2019"){
-                    link("$videoCamera CKUG","https://youtu.be/nLKJJASfRh4")
+                entry("Kotlin in 2019") {
+                    link("$videoCamera CKUG", "https://youtu.be/nLKJJASfRh4")
                     link("Slides", Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html")
                 }
             }
-            subPanel("JVM Community"){
+            subPanel("JVM Community") {
                 expandable()
                 entry("Foojay Podcast", "https://foojay.io/today/foojay-podcast-27/")
             }
