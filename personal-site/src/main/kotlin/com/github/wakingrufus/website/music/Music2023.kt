@@ -46,6 +46,9 @@ val bestMusic2023 = bestMusicOf(2023) {
     album("Systemic", "Divide and Dissolve") {
         link("https://divideanddissolve.bandcamp.com/album/systemic")
     }
+    track("& the Charm", "Avalon Emerson") {
+        link("https://avalonemerson.bandcamp.com/album/the-charm")
+    }
 
     // tracks
     track("Insomnia", "Parannoul") {
@@ -77,9 +80,6 @@ val bestMusic2023 = bestMusicOf(2023) {
     }
     track("Waaba Gwa\u200Ḇ\u200Bsoo ", "Saltwater Hank") {
         link("https://saltwaterhank.bandcamp.com/track/waaba-gwa-soo")
-    }
-    track("Hot Evening", "Avalon Emerson") {
-        link("https://avalonemerson.bandcamp.com/track/hot-evening")
     }
     track("City", "Drinking Boys and Girls Choir") {
         link("https://band-dbgc.bandcamp.com/track/city")
