@@ -14,7 +14,7 @@ Stay for "Ogallala", which hit me hard with:
     // albums
     album("Letter to Self", "SPRINTS") {
         link("https://sprintsmusic.bandcamp.com/album/letter-to-self")
-        review("This we a close runner up for AOTY for me. I highly recommend this album from an Irish post-punk band")
+        review("This was a close runner-up for AOTY for me. I highly recommend this album from an Irish post-punk band")
     }
     album("Below the Waste", "Goat Girl") {
         link("https://goatgirl.bandcamp.com/album/below-the-waste")
