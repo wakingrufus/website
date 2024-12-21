@@ -4,7 +4,15 @@ import com.github.wakingrufus.website.lib.HtmlPage
 import com.github.wakingrufus.website.lib.article.article
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
-import kotlinx.html.*
+import kotlinx.html.a
+import kotlinx.html.h1
+import kotlinx.html.h3
+import kotlinx.html.id
+import kotlinx.html.li
+import kotlinx.html.ol
+import kotlinx.html.p
+import kotlinx.html.span
+import kotlinx.html.ul
 
 fun YearEndList.toHtmlPage(): HtmlPage {
     return yearEndPage(this)
@@ -29,6 +37,9 @@ fun yearEndPage(yearEndList: YearEndList): HtmlPage {
                     yearEndList.albums.forEach { album ->
                         li {
                             a(href = album.link) { +"${album.title} - ${album.artist}" }
+                            album.review?.also {
+                                span { +" - $it" }
+                            }
                         }
                     }
                 }
