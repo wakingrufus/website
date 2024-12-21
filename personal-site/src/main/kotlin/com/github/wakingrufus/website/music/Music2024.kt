@@ -64,8 +64,13 @@ Stay for "Ogallala", which hit me hard with:
         link(
             "https://ostinatorecords.bandcamp.com/album/synthesizing-the-silk-roads-uzbek-disco-tajik-folktronica-uyghur-rock-tatar-jazz-from-1980s-soviet-central-asia"
         )
-        review("This is technically old music, but these songs have been collected and released worldwide for the first time. " +
-                "It is full of buried treasures from a time and place that is often overlooked.")
+        review(
+            "This is technically old music, but these songs have been collected and released worldwide for the first time. " +
+                    "It is full of buried treasures from a time and place that is often overlooked."
+        )
+    }
+    album("Tigers Blood", "Waxahatchee") {
+        link("https://waxahatchee.bandcamp.com/album/tigers-blood")
     }
 
     // tracks
