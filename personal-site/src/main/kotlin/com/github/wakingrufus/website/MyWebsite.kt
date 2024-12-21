@@ -360,6 +360,7 @@ val myDashboard: DIV.() -> Unit = {
             h3 { a(href = music2021.path) { +"Best Music of 2021" } }
             h3 { a(href = music2022.path) { +"Best Music of 2022" } }
             h3 { a(href = music2023.path) { +"Best Music of 2023" } }
+            h3 { a(href = music2024.path) { +"Best Music of 2024" } }
         }
         panel("TV / Film") {
             h3 {
