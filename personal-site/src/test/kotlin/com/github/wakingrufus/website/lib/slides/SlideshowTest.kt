@@ -2,7 +2,7 @@ package com.github.wakingrufus.website.lib.slides
 
 import com.github.wakingrufus.website.lib.CssBuilderPage
 import com.github.wakingrufus.website.testOutputDir
-import kotlinx.css.CSSBuilder
+import kotlinx.css.CssBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -15,7 +15,7 @@ class SlideshowTest {
                 baseDir = File(testOutputDir(), "test").apply {
                     mkdir()
                 },
-                rootCss = CssBuilderPage(p = "style.css", builder = CSSBuilder()))
+                rootCss = CssBuilderPage(p = "style.css", builder = CssBuilder()))
         slideshow.slide(title = "title") {
         }
 

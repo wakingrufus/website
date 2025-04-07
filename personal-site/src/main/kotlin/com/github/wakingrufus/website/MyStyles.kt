@@ -22,7 +22,7 @@ class MyStyles {
                 fontFamily = "sans-serif"
                 backgroundColor = BACKGROUND_COLOR
                 color = FONT_COLOR
-                margin(all = 0.px)
+                margin = Margin(all = 0.px)
             }
             a {
                 color = LINK_COLOR

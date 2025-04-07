@@ -29,6 +29,7 @@ import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
 import com.github.wakingrufus.website.slideshows.whyDoesAgileFail
 import kotlinx.css.Display
+import kotlinx.css.Margin
 import kotlinx.css.TextAlign
 import kotlinx.css.VerticalAlign
 import kotlinx.css.display
@@ -193,7 +194,7 @@ val mainPage = htmlPage("index.html") {
                             display = Display.inlineBlock
                             paddingRight = 2.em
                             verticalAlign = VerticalAlign.top
-                            margin = "0"
+                            margin = Margin(0.px)
                         }
                         a(href = "https://bigshoulders.city/@wakingrufus") {
                             +"@wakingrufus@bigshoulders.city"
@@ -222,7 +223,7 @@ val mainPage = htmlPage("index.html") {
                             display = Display.inlineBlock
                             paddingRight = 2.em
                             verticalAlign = VerticalAlign.top
-                            margin = "0"
+                            margin = Margin(0.px)
                         }
                         a(href = "https://github.com/wakingrufus") {
                             +"wakingrufus"
@@ -318,6 +319,13 @@ val myDashboard: DIV.() -> Unit = {
                 entry("Kotlin in 2019") {
                     link("$videoCamera CKUG", "https://youtu.be/nLKJJASfRh4")
                     link("Slides", Paths.KOTLIN_2019_SLIDESHOW_BASE_NAME + "/0.html")
+                }
+            }
+            subPanel("Spring Boot") {
+                expandable()
+                entry("Functional Spring Boot"){
+                    link("$videoCamera Devnexus 2025", "https://www.youtube.com/watch?v=9njQ8Lun36c")
+                    link("Slides", "https://wakingrufus.github.io/functional-spring-boot/")
                 }
             }
             subPanel("JVM Community") {

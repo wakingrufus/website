@@ -1,6 +1,7 @@
 pluginManagement{
     plugins {
-        id("org.jetbrains.kotlin.jvm") version "1.7.20"
+        id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
+        id("org.jetbrains.kotlin.jvm") version "2.1.20"
         id("com.jfrog.artifactory") version "4.24.12"
     }
 }
@@ -11,12 +12,11 @@ include(":website-dsl")
 include(":recipe-dsl")
 include(":rss-dsl")
 include(":personal-site")
-include(":generationq")
 
 dependencyResolutionManagement {
     versionCatalogs {
         create("kotlinlib"){
-            library("html","org.jetbrains.kotlinx","kotlinx-html-jvm").version("0.8.1")
+            library("html","org.jetbrains.kotlinx","kotlinx-html-jvm").version("0.12.0")
         }
     }
 }

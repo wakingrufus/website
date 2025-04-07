@@ -165,7 +165,7 @@ fun DIV.slideList(block: UL.() -> Unit) {
             fontSize = 2.em
             lineHeight = LineHeight("1.5")
             display = Display.inlineBlock
-            padding(right = 2.em, left = 1.em)
+            padding = Padding(right = 2.em, left = 1.em)
         }
         block(this)
     }
@@ -173,9 +173,9 @@ fun DIV.slideList(block: UL.() -> Unit) {
 
 @HtmlTagMarker
 class PICTURE(val name: String, val alt: String) {
-    var css: (CSSBuilder.() -> Unit)? = null
+    var css: (CssBuilder.() -> Unit)? = null
     var caption: (SPAN.() -> Unit)? = null
-    fun customCss(block: CSSBuilder.() -> Unit) {
+    fun customCss(block: CssBuilder.() -> Unit) {
         css = block
     }
 
@@ -241,7 +241,7 @@ fun TBODY.row(cells: List<String>) {
                     borderStyle = BorderStyle.solid
                     borderColor = Color.white
                     borderWidth = 1.px
-                    padding(.4.em)
+                    padding = Padding(.4.em)
                 }
                 +it
             }
@@ -266,7 +266,7 @@ fun TABLE.headers(headers: List<String>) {
                         borderStyle = BorderStyle.solid
                         borderColor = Color.white
                         borderWidth = 1.px
-                        padding(.4.em)
+                        padding = Padding(.4.em)
                     }
                     +it
                 }
@@ -297,7 +297,7 @@ fun DIV.slideCode(block: CODE.() -> Unit) {
     }
 }
 
-fun CSSBuilder.center() {
+fun CssBuilder.center() {
     this.apply {
         display = Display.block
         marginRight = LinearDimension.auto

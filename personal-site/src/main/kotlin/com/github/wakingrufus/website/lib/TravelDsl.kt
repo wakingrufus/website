@@ -33,7 +33,7 @@ class PLACE(val name: String,
 
     operator fun invoke(code: DIV) {
         code.run {
-            a { id = this@PLACE.name.toLowerCase() }
+            a { id = this@PLACE.name.lowercase() }
             headerLevel(this@PLACE.level)(this, null) {
                 if (this@PLACE.level.value == 6) {
                     style = css {
@@ -92,7 +92,8 @@ fun FlowOrHeadingContent.headerLevel(level: NestedAreaLevel): FlowOrHeadingConte
     }
 }
 
-inline class NestedAreaLevel(val value: Int) {
+@JvmInline
+value class NestedAreaLevel(val value: Int) {
     companion object {
         val default = NestedAreaLevel(2)
     }

@@ -1,6 +1,6 @@
 package com.github.wakingrufus.website.lib
 
-import kotlinx.css.CSSBuilder
+import kotlinx.css.CssBuilder
 import java.io.Writer
 
 sealed class CssPage(val path: String) {
@@ -13,7 +13,7 @@ fun writeCssString(writer: Writer, cssString: String) {
     }
 }
 
-class CssBuilderPage(val p: String, val builder: CSSBuilder) : CssPage(path = p) {
+class CssBuilderPage(val p: String, val builder: CssBuilder) : CssPage(path = p) {
     override fun write(writer: Writer) = writeCssString(writer, builder.toString())
 }
 

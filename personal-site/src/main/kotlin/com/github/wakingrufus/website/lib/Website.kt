@@ -24,7 +24,7 @@ class Website(private val baseDir: File) {
     private var rssFeeds: List<RssFeed> = mutableListOf()
     var slideshows: List<Slideshow> = mutableListOf()
 
-    fun cssFile(path: String, builder: CSSBuilder) {
+    fun cssFile(path: String, builder: CssBuilder) {
         cssFiles += CssBuilderPage(path, builder)
     }
 
@@ -102,8 +102,8 @@ fun website(baseDir: File, builder: Website.(baseDir: File) -> Unit): Website {
 }
 
 
-fun css(builder: CSSBuilder.() -> Unit): String {
-    return CSSBuilder().apply(builder).toString()
+fun css(builder: CssBuilder.() -> Unit): String {
+    return CssBuilder().apply(builder).toString()
 }
 
 fun BODY.content(block: DIV.() -> Unit) {
