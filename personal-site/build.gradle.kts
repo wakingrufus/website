@@ -18,7 +18,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("com.beust:klaxon:5.5")
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
-    implementation("ch.qos.logback:logback-classic:1.4.5")
+    implementation("ch.qos.logback:logback-classic:1.5.22")
     implementation("com.rometools:rome:1.10.0")
     implementation("com.vladsch.flexmark:flexmark-all:0.50.16")
 
@@ -29,21 +29,24 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.1")
 }
 
-val testTask = tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+testing {
+    suites {
+        named<JvmTestSuite>("test"){
+            useJUnitJupiter()
+            targets.all {
+                testTask.configure {
+                    finalizedBy("jacocoTestReport")
+                }
+            }
+        }
+    }
 }
-
-tasks.jacocoTestReport {
-    dependsOn(testTask)
-}
-
-tasks.findByPath("build")?.dependsOn("jacocoTestReport")
 
 tasks.getByName<JavaExec>("run") {
     if (project.hasProperty("neocities.apiKey")) {
-        args(project.properties.get("neocities.apiKey"))
+        args(project.properties.get("neocities.apiKey") ?: "")
     } else if (project.hasProperty("neocities.user")) {
-        args(project.properties.get("neocities.user"), project.properties.get("neocities.password"))
+        args(project.properties.get("neocities.user") ?: "", project.properties.get("neocities.password") ?: "")
     }
 }
 
