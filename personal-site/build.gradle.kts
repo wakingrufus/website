@@ -31,7 +31,7 @@ dependencies {
 
 testing {
     suites {
-        named<JvmTestSuite>("test"){
+        named<JvmTestSuite>("test") {
             useJUnitJupiter()
             targets.all {
                 testTask.configure {
