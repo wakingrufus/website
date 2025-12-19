@@ -2,7 +2,7 @@ name: Deploy
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
 jobs:
   gradle:
     runs-on: ubuntu-latest
