@@ -1,13 +1,19 @@
 package com.github.wakingrufus.website.music
 
 val bestMusic2022 = bestMusicOf(2022) {
-    albumOfTheYear("Squeeze", "Sasami") {
-        link("https://sasami.bandcamp.com/album/squeeze")
+    albumOfTheYear("Unison Life", "Brutus") {
+        link("https://wearebrutus.bandcamp.com/album/unison-life")
         review(
-            "Sasami has an eclectic style that risks being scatterbrained, but it works, and showcases her incredible range."
+            "Brutus is full of raw emotion, culminating in 'What Have We Done' which just floors me with every listen."
         )
     }
-    // albums
+
+    album("Squeeze", "Sasami") {
+        link("https://sasami.bandcamp.com/album/squeeze")
+        review(
+            "Runner up for AOTY: Sasami has an eclectic style that risks being scatterbrained, but it works, and showcases her incredible range."
+        )
+    }
     album("El Bueno y el Malo", "Hermanos Gutierrez") {
         link("https://hermanosgutierrez.bandcamp.com/album/el-bueno-y-el-malo")
     }
@@ -23,6 +29,14 @@ val bestMusic2022 = bestMusicOf(2022) {
     }
     album("Dimensional Bleed", "Holy Fawn") {
         link("https://holyfawn.bandcamp.com/album/dimensional-bleed")
+    }
+    album("Phalaris", "DIR EN GREY") {
+        link("https://www.youtube.com/playlist?list=OLAK5uy_krSBgFTLs115OUnyGT1_IijO87DMDKurI")
+        review(
+            """Not peak Dir en Grey, but 朧 (Oboro) and 落ちた事のある空 (Ochita Koto no Aru Sora) really stand out, 
+               |and the rest of the album is consistent enough to keep this album on the list.""".trimMargin()
+        )
+        tag("metal")
     }
     album("As Above So Below", "Sampa the Great") {
         link("https://sampathegreat.bandcamp.com/album/as-above-so-below")
@@ -45,6 +59,13 @@ val bestMusic2022 = bestMusicOf(2022) {
     album("Drif", "Heilung") {
         link("https://heilung.bandcamp.com/album/drif")
     }
+    album("White Jesus Black Problems", "Fantastic Negrito") {
+        link("https://fantasticnegritomusic.bandcamp.com/album/white-jesus-black-problems")
+    }
+    album("Ritmos en cruz", "La Ciencia Simple") {
+        link("https://lacienciasimple.bandcamp.com/album/ritmos-en-cruz-2022")
+    }
+
     // tracks
     track("SLUGS", "Beautiful Freaks") {
         link("https://fr3aks.bandcamp.com/track/slugs-2")

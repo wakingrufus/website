@@ -46,7 +46,7 @@ val bestMusic2023 = bestMusicOf(2023) {
     album("Systemic", "Divide and Dissolve") {
         link("https://divideanddissolve.bandcamp.com/album/systemic")
     }
-    track("& the Charm", "Avalon Emerson") {
+    album("& the Charm", "Avalon Emerson") {
         link("https://avalonemerson.bandcamp.com/album/the-charm")
     }
 

@@ -33,26 +33,13 @@ fun yearEndPage(yearEndList: YearEndList): HtmlPage {
                 }
                 h1 { +"Great Albums" }
                 p { +"These albums are good from start to finish, have multiple stand out great songs, or both." }
-                ul {
-                    yearEndList.albums.forEach { album ->
-                        li {
-                            a(href = album.link) { +"${album.title} - ${album.artist}" }
-                            album.review?.also {
-                                span { +" - $it" }
-                            }
-                        }
-                    }
-                }
+                albumList(yearEndList.albums)
             }
             htmlSection {
                 h1 { +"Tracks" }
                 a { id = "Tracks" }
                 p { +"These are great songs, released this year, excluding songs from top albums." }
-                ol {
-                    yearEndList.tracks.forEach { track ->
-                        li { a(href = track.link) { +"${track.title} - ${track.artist}" } }
-                    }
-                }
+                trackList(yearEndList.tracks)
             }
             footer(myFooter)
         }

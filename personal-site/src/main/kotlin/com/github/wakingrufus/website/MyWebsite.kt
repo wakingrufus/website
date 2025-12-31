@@ -19,11 +19,13 @@ import com.github.wakingrufus.website.lib.dashboard
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.lib.pageTitle
 import com.github.wakingrufus.website.lib.website
+import com.github.wakingrufus.website.music.essentialMetal
 import com.github.wakingrufus.website.music.music2020
 import com.github.wakingrufus.website.music.music2021
 import com.github.wakingrufus.website.music.music2022
 import com.github.wakingrufus.website.music.music2023
 import com.github.wakingrufus.website.music.music2024
+import com.github.wakingrufus.website.music.music2025
 import com.github.wakingrufus.website.slideshows.functionalKotlinSlideshow
 import com.github.wakingrufus.website.slideshows.kotlin2019Slideshow
 import com.github.wakingrufus.website.slideshows.staticWebSlideshow
@@ -119,6 +121,9 @@ class MyWebsite {
             page(music2022)
             page(music2023)
             page(music2024)
+            page(music2025)
+
+            page(essentialMetal)
             page(criterion2021)
             page(criterion2022)
 
@@ -364,11 +369,13 @@ val myDashboard: DIV.() -> Unit = {
             +"Other Interests"
         }
         panel("Music") {
+            // h3 { a(href = essentialMetal.path) { +"Essential Metal" } }
             h3 { a(href = music2020.path) { +"Best Music of 2020" } }
             h3 { a(href = music2021.path) { +"Best Music of 2021" } }
             h3 { a(href = music2022.path) { +"Best Music of 2022" } }
             h3 { a(href = music2023.path) { +"Best Music of 2023" } }
             h3 { a(href = music2024.path) { +"Best Music of 2024" } }
+            h3 { a(href = music2025.path) { +"Best Music of 2025" } }
         }
         panel("TV / Film") {
             h3 {
