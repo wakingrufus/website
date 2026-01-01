@@ -43,13 +43,18 @@ But those tracks hit hard once the time is right. The album is solid all the way
     album("My First Album", "Jessica Winter") {
         link("https://jessicawinter.bandcamp.com/album/my-first-album")
     }
-    album("We Were Just Here", "Just Mustard"){
+    album("We Were Just Here", "Just Mustard") {
         link("https://justmustard.bandcamp.com/album/we-were-just-here")
     }
-    album("The Spin", "Messa"){
+    album("The Spin", "Messa") {
         link("https://messa.bandcamp.com/album/the-spin")
     }
-    // tallah?
+    album("Flickering Resonance", "Pelican") {
+        link("https://pelican.bandcamp.com/album/flickering-resonance")
+    }
+    album("Primeval: Obsession // Detachment", "Tallah") {
+        link("https://tallah.bandcamp.com/album/primeval-obsession-detachment")
+    }
 
     // tracks
     track("I Feel Numb", "Rosa Bordallo") {
@@ -102,20 +107,20 @@ But those tracks hit hard once the time is right. The album is solid all the way
     track("Split", "Pixel Grip") {
         link("https://pixelgrip.bandcamp.com/track/split-2")
     }
-    track("Behind the Green Door", "Night Beats"){
-
+    track("Behind the Green Door", "Night Beats") {
+        link("https://nightbeats.bandcamp.com/album/behind-the-green-door")
     }
-    track("Indelible", "Pelican"){
-tag("metal")
+    track("Tanana", "Portugal. The Man") {
+        link("https://portugaltheman.bandcamp.com/track/tanana")
     }
-    track("Tanana", "Portugal. The Man"){
-
+    track("Descartes", "SPRINTS") {
+        link("https://sprintsmusic.bandcamp.com/track/descartes")
     }
-    track("Descartes", "SPRINTS"){
-
+    track("Adagio", "Σtella") {
+        link("https://stellawithasigma.bandcamp.com/track/adagio")
     }
-    track("Adagio", "Σtella"){
-
+    track("Time is Not Yours", "Say Sue Me") {
+        link("https://saysueme.bandcamp.com/track/time-is-not-yours")
     }
 }
 
