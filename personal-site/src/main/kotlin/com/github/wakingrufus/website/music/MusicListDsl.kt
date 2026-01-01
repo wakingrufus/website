@@ -11,6 +11,7 @@ data class Album(
     val year: Year,
     val link: String?,
     val review: String?,
+    val rating: Int?,
     val tags: List<String> = listOf()
 )
 
@@ -54,7 +55,8 @@ class AlbumBuilder(
     val title: String,
     private val artist: String,
     private val year: Year,
-    private var link: String? = null
+    private var link: String? = null,
+    private var rating: Int? = null,
 ) {
     private val tags: MutableList<String> = mutableListOf()
     private var review: String? = null
@@ -70,6 +72,11 @@ class AlbumBuilder(
     }
 
     @MusicListDsl
+    fun rating(rating: Int) {
+        this.rating = rating
+    }
+
+    @MusicListDsl
     fun tag(tag: String) {
         tags.add(tag)
     }
@@ -81,7 +88,7 @@ class AlbumBuilder(
 
     operator fun invoke(build: AlbumBuilder.() -> Unit = {}): Album {
         apply(build)
-        return Album(title, artist, year, link, review, tags)
+        return Album(title, artist, year, link, review, rating, tags)
     }
 }
 

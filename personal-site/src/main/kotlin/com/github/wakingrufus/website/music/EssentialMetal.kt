@@ -11,7 +11,7 @@ val essentialMetal = htmlPage("essential-metal.html") {
         htmlSection {
             h1 { +"Albums" }
             a { id = "Albums" }
-            albumList(allAlbums.filter { it.tags.contains("metal") })
+            albumList(allAlbums.filter { it.tags.contains("metal") }.sortedByDescending { it.rating })
         }
         htmlSection {
             h1 { +"Tracks" }
