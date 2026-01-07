@@ -134,6 +134,16 @@ fun BODY.pageTitle(title: String) {
     }
 }
 
+fun BODY.pageSubTitle(title: String) {
+    return h3(classes = "") {
+        style = css {
+            backgroundColor = MyStyles.BACKGROUND_COLOR
+            textAlign = TextAlign.center
+        }
+        +title
+    }
+}
+
 fun htmlPage(path: String, builder: HtmlPage.() -> Unit): HtmlPage {
     return HtmlPage(path).apply(builder)
 }

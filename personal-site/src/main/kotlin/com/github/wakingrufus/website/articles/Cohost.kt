@@ -10,8 +10,8 @@ import kotlinx.html.p
 
 val coHost = htmlPage("cohost.html") {
     article("Concerns about Cohost") {
+        date("November, 2022")
         htmlSection {
-            h3 { +"November, 2022" }
             p {
                 +"With the recent buyout of Twitter by Elon Musk, many people have been discovering Mastodon/Fediverse. "
                 +"I have been on the Fediverse since 2017, and I am a big fan of it, so I am glad that so many others are starting to discover its merits. "

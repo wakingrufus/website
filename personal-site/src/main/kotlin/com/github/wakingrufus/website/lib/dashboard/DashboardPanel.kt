@@ -18,14 +18,18 @@ import kotlinx.css.borderTopWidth
 import kotlinx.css.cursor
 import kotlinx.css.display
 import kotlinx.css.em
+import kotlinx.css.marginBottom
+import kotlinx.css.marginTop
 import kotlinx.css.maxWidth
 import kotlinx.css.paddingBottom
 import kotlinx.css.paddingLeft
 import kotlinx.css.paddingRight
 import kotlinx.css.paddingTop
+import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.css.textAlign
 import kotlinx.css.verticalAlign
+import kotlinx.css.width
 import kotlinx.html.DETAILS
 import kotlinx.html.DIV
 import kotlinx.html.a
@@ -33,6 +37,7 @@ import kotlinx.html.details
 import kotlinx.html.div
 import kotlinx.html.h2
 import kotlinx.html.h3
+import kotlinx.html.img
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.style
@@ -61,8 +66,13 @@ class DashboardPanel {
     }
 
     @WebsiteDsl
-    fun subPanel(title: String, href: String? = null, content: SubPanel.() -> Unit) {
-        subPanels.add(SubPanel(title, href).apply(content))
+    fun subPanel(title: String, href: String? = null, imageUrl: String? = null, content: SubPanel.() -> Unit) {
+        subPanels.add(SubPanel(title, href, imageUrl).apply(content))
+    }
+
+    @WebsiteDsl
+    fun project(org: String, name: String, description: SubPanel.() -> Unit) {
+        subPanel(name, "https://github.com/$org/$name", "https://img.shields.io/github/stars/$org/$name", description)
     }
 
     private fun DIV.summary() {
@@ -94,11 +104,37 @@ class DashboardPanel {
     }
 
     private fun DIV.subPanelSummary(subPanel: SubPanel) {
-        h3 {
-            if (subPanel.link == null) {
-                +subPanel.name
-            } else {
-                a(href = subPanel.link) { +subPanel.name }
+        div {
+            style = css {
+                marginTop = 8.px
+                display = Display.block
+            }
+            h3 {
+                style = css {
+                    display = Display.inlineBlock
+                    width = 49.pct
+                    marginTop = 2.px
+                    marginBottom = 2.px
+                }
+                if (subPanel.link == null) {
+                    +subPanel.name
+                } else {
+                    a(href = subPanel.link) { +subPanel.name }
+                }
+            }
+            div {
+                style = css {
+                    display = Display.inlineBlock
+                    width = 49.pct
+                    textAlign = TextAlign.right
+                    verticalAlign = VerticalAlign.middle
+                }
+                if (subPanel.image != null) {
+                    a(href = subPanel.link) {
+                        img(src = subPanel.image) {
+                        }
+                    }
+                }
             }
         }
     }
@@ -125,6 +161,9 @@ class DashboardPanel {
 
     private fun DIV.renderSubPanelContent(subPanel: SubPanel) {
         p {
+            style = css {
+                paddingRight = 4.px
+            }
             subPanel.content.invoke(this)
         }
         div {

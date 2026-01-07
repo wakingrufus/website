@@ -58,12 +58,12 @@ class MyStyles {
             }
             media("screen and (min-width: 481px) and (max-width: 3000px)") {
                 body {
-                    fontSize = 1.25.em
+                    fontSize = 1.0.em
                 }
             }
             media("screen and (min-width: 3001px)") {
                 body {
-                    fontSize = 1.5.em
+                    fontSize = 1.25.em
                 }
             }
 

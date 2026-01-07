@@ -1,7 +1,15 @@
 package com.github.wakingrufus.website.articles
 
 import com.github.wakingrufus.website.lib.article.article
-import com.github.wakingrufus.website.lib.code.*
+import com.github.wakingrufus.website.lib.code.FUNCTION
+import com.github.wakingrufus.website.lib.code.block
+import com.github.wakingrufus.website.lib.code.call
+import com.github.wakingrufus.website.lib.code.kotlin
+import com.github.wakingrufus.website.lib.code.number
+import com.github.wakingrufus.website.lib.code.on
+import com.github.wakingrufus.website.lib.code.plain
+import com.github.wakingrufus.website.lib.code.sampleCode
+import com.github.wakingrufus.website.lib.code.string
 import com.github.wakingrufus.website.lib.htmlPage
 import com.github.wakingrufus.website.myFooter
 import kotlinx.html.ARTICLE
@@ -313,6 +321,7 @@ This is a simple pattern I have found to write more testable functional Kotlin, 
 
 val adhocPolymorphism = htmlPage("adhoc-polymorphism.html") {
     article("Testing Functional Kotlin") {
+        date("March 21, 2020")
         htmlSection(dependencyInjection)
         footer(myFooter)
     }

@@ -49,8 +49,6 @@ import kotlinx.html.a
 import kotlinx.html.div
 import kotlinx.html.footer
 import kotlinx.html.h1
-import kotlinx.html.h2
-import kotlinx.html.h3
 import kotlinx.html.img
 import kotlinx.html.li
 import kotlinx.html.link
@@ -245,25 +243,25 @@ val mainPage = htmlPage("index.html") {
 val myDashboard: DIV.() -> Unit = {
     dashboard {
         topicPanel("Open Source Projects") {
-            subPanel("ktlint-gradle", "https://github.com/JLLeitschuh/ktlint-gradle") {
+            project("JLLeitschuh", "ktlint-gradle") {
                 description {
                     +"The most popular gradle plugin for ktlint. "
                     +"I joined this project in 2023 and have been doing ongoing maintenance for it."
                 }
             }
-            subPanel("khtmx", "https://github.com/wakingrufus/khtmx") {
+            project("wakingrufus", "khtmx") {
                 description {
                     +"This project provides a multi-platform Kotlin DSL which extends the kotlinx HTML DSL to support HTMX. "
                     +"It also provides a DSL for Spring Boot which allows a seamless integration between Spring Boot routes and HTMX pages and templates."
                 }
             }
-            subPanel("spring-funk", "https://github.com/wakingrufus/spring-funk") {
+            project("wakingrufus", "spring-funk") {
                 description {
                     +"A framework for declarative DSL configuration for Spring Boot. "
                     +"Considered obsolete in Spring Boot 4+ given the introduction of BeanRegistrars. "
                 }
             }
-            subPanel("JaMM", "https://github.com/wakingrufus/JaMM") {
+            project("wakingrufus", "JaMM") {
                 description {
                     +"JaMM is a queue-based music library and player for Linux/Mac/Windows desktop. "
                     +"JaMM is written in JavaFx, and distributed with its own runtime using jlink and jpackage. "
@@ -288,7 +286,7 @@ val myDashboard: DIV.() -> Unit = {
                     +"Tourney is a desktop application which allows you to run an Elo gaming league. "
                 }
             }
-            subPanel("lib-elo", "https://github.com/wakingrufus/lib-elo") {
+            project("wakingrufus", "lib-elo") {
                 description {
                     +"lib-elo is kotlin library which implements an Elo game rating system. "
                 }
@@ -335,7 +333,7 @@ val myDashboard: DIV.() -> Unit = {
             }
             subPanel("Spring Boot") {
                 expandable()
-                entry("Functional Spring Boot"){
+                entry("Functional Spring Boot") {
                     link("$videoCamera Devnexus 2025", "https://www.youtube.com/watch?v=9njQ8Lun36c")
                     link("Slides", "https://wakingrufus.github.io/functional-spring-boot/")
                 }
@@ -370,34 +368,19 @@ val myDashboard: DIV.() -> Unit = {
                 entry("Concerns about Cohost", coHost.path)
             }
         }
-    }
-    dashboard {
-        h2 {
-            +"Other Interests"
-        }
-        panel("Music") {
-            // h3 { a(href = essentialMetal.path) { +"Essential Metal" } }
-            h3 { a(href = music2020.path) { +"Best Music of 2020" } }
-            h3 { a(href = music2021.path) { +"Best Music of 2021" } }
-            h3 { a(href = music2022.path) { +"Best Music of 2022" } }
-            h3 { a(href = music2023.path) { +"Best Music of 2023" } }
-            h3 { a(href = music2024.path) { +"Best Music of 2024" } }
-            h3 { a(href = music2025.path) { +"Best Music of 2025" } }
-        }
-        panel("TV / Film") {
-            h3 {
-                a(href = criterion2021.path) {
-                    +"2021 Criterion Challenge Recap"
-                }
+        topicPanel("Other Interests") {
+            subPanel("Music") {
+                entry("Best Music of 2020", music2020.path)
+                entry("Best Music of 2021", music2021.path)
+                entry("Best Music of 2022", music2022.path)
+                entry("Best Music of 2023", music2023.path)
+                entry("Best Music of 2024", music2024.path)
+                entry("Best Music of 2025", music2025.path)
             }
-            h3 {
-                a(href = criterion2022.path) {
-                    +"2022 Criterion Challenge Recap"
-                }
-            }
-            h3 {
-                a(href = "https://generationq.neocities.org/") { +"Generation Q" }
-                +": Star Trek TNG Podcast"
+            subPanel("Movies") {
+                entry("Letterboxd", "https://letterboxd.com/wakingrufus/")
+                entry("2021 Criterion Challenge Recap", criterion2021.path)
+                entry("2022 Criterion Challenge Recap", criterion2022.path)
             }
         }
     }
