@@ -6,7 +6,8 @@ import kotlinx.html.P
 @WebsiteDsl
 data class SubPanel(
     val name: String,
-    val link: String? = null
+    val link: String? = null,
+    val image: String? = null
 ) {
     var entries: MutableList<TopicEntry> = mutableListOf()
     var content: P.() -> Unit = {}

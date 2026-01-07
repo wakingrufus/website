@@ -5,10 +5,22 @@ import com.github.wakingrufus.website.WebsiteDsl
 import com.github.wakingrufus.website.lib.HtmlPage
 import com.github.wakingrufus.website.lib.content
 import com.github.wakingrufus.website.lib.css
+import com.github.wakingrufus.website.lib.pageSubTitle
 import com.github.wakingrufus.website.lib.pageTitle
 import com.github.wakingrufus.website.standardHead
-import kotlinx.css.*
-import kotlinx.html.*
+import kotlinx.css.backgroundColor
+import kotlinx.css.em
+import kotlinx.css.marginLeft
+import kotlinx.css.marginRight
+import kotlinx.css.maxWidth
+import kotlinx.css.pct
+import kotlinx.html.ARTICLE
+import kotlinx.html.BODY
+import kotlinx.html.FOOTER
+import kotlinx.html.article
+import kotlinx.html.footer
+import kotlinx.html.nav
+import kotlinx.html.style
 
 @WebsiteDsl
 class ArticleBuilder(val title: String) {
@@ -17,6 +29,7 @@ class ArticleBuilder(val title: String) {
     private var content: ARTICLE.() -> Unit = {}
     private val sections: MutableList<Section> = mutableListOf()
     private var source: String? = null
+    private var subTitle: String? = null
 
     fun nav(nav: Navigation.() -> Unit) {
         this.nav = Navigation().apply(nav)
@@ -38,6 +51,10 @@ class ArticleBuilder(val title: String) {
         this.source = source
     }
 
+    fun date(date: String) {
+        this.subTitle = date
+    }
+
     fun getContent(): ARTICLE.() -> Unit = {
         sections.forEach {
             this.apply(it.content)
@@ -47,6 +64,7 @@ class ArticleBuilder(val title: String) {
     operator fun invoke(page: BODY) {
         page.apply {
             pageTitle(this@ArticleBuilder.title)
+            this@ArticleBuilder.subTitle?.let { pageSubTitle(it) }
             content {
                 style = css {
                     marginLeft = 1.em
@@ -58,11 +76,8 @@ class ArticleBuilder(val title: String) {
                 }
                 article {
                     style = css {
-                        if(nav != null){
-                       //     display = Display.inlineBlock
-                            if (nav != null) {
-                                maxWidth = 79.pct
-                            }
+                        if (nav != null) {
+                            maxWidth = 79.pct
                         }
                     }
                     getContent().invoke(this)
