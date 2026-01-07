@@ -22,19 +22,25 @@ But those tracks hit hard once the time is right. The album is solid all the way
     album("Le Point de Non-Retour", "Point Mort") {
         link("https://pointmortband.bandcamp.com/album/le-point-de-non-retour")
         tag("metal")
+        review("Both beautiful and brutal: you never really know where a song will go next.")
     }
     album("LUX", "ROSALÍA") {
         link("https://www.amazon.com/dp/B0FXHD7CKY/")
+        review("Look elsewhere for a proper review. It is not for everyone, but I really enjoyed this album.")
     }
     album("Distimia", "Los Membrillos") {
         link("https://losmembrillos.bandcamp.com/album/distimia")
         tag("shoegaze")
+        review("This up-and-coming shoegaze band from Lima, Peru put out a great debut album.")
     }
     album("Pirouette", "Model/Actriz") {
         link("https://modelactriz.bandcamp.com/album/pirouette")
+        review("This band is simultaneously the musical equivalent to an open wound and something you can dance to. " +
+                "Like a cross between LCD Soundsystem and Xiu Xiu.")
     }
     album("The Age Of Ephemerality", "BRUIT ≤") {
         link("https://bruitofficial.bandcamp.com/album/the-age-of-ephemerality-2")
+        review("Thematic post-rock about our current times.")
     }
     album("The Exodus of Gravity", "Arcadea") {
         link("https://arcadea.bandcamp.com/album/the-exodus-of-gravity")
@@ -48,12 +54,16 @@ But those tracks hit hard once the time is right. The album is solid all the way
     }
     album("The Spin", "Messa") {
         link("https://messa.bandcamp.com/album/the-spin")
+        review("This Italian metal band also has a bit of an Alice In Chains sound to it.")
     }
     album("Flickering Resonance", "Pelican") {
         link("https://pelican.bandcamp.com/album/flickering-resonance")
+        tag("metal")
+        review("I have been a fan of Pelican for over 20 years, and I am happy that their latest did not disappoint.")
     }
     album("Primeval: Obsession // Detachment", "Tallah") {
         link("https://tallah.bandcamp.com/album/primeval-obsession-detachment")
+        review("Tallah shrugs off the stigma of \"nu-metal\" and is continuing to push the style forward. ")
     }
 
     // tracks
