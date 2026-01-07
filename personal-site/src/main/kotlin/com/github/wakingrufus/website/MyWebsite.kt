@@ -245,15 +245,22 @@ val mainPage = htmlPage("index.html") {
 val myDashboard: DIV.() -> Unit = {
     dashboard {
         topicPanel("Open Source Projects") {
-            subPanel("spring-funk", "https://github.com/wakingrufus/spring-funk") {
-                description {
-                    +"A framework for declarative DSL configuration for Spring Boot. I founded this project."
-                }
-            }
             subPanel("ktlint-gradle", "https://github.com/JLLeitschuh/ktlint-gradle") {
                 description {
                     +"The most popular gradle plugin for ktlint. "
                     +"I joined this project in 2023 and have been doing ongoing maintenance for it."
+                }
+            }
+            subPanel("khtmx", "https://github.com/wakingrufus/khtmx") {
+                description {
+                    +"This project provides a multi-platform Kotlin DSL which extends the kotlinx HTML DSL to support HTMX. "
+                    +"It also provides a DSL for Spring Boot which allows a seamless integration between Spring Boot routes and HTMX pages and templates."
+                }
+            }
+            subPanel("spring-funk", "https://github.com/wakingrufus/spring-funk") {
+                description {
+                    +"A framework for declarative DSL configuration for Spring Boot. "
+                    +"Considered obsolete in Spring Boot 4+ given the introduction of BeanRegistrars. "
                 }
             }
             subPanel("JaMM", "https://github.com/wakingrufus/JaMM") {
