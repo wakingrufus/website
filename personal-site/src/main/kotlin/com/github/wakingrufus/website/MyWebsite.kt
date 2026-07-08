@@ -46,15 +46,18 @@ import kotlinx.css.verticalAlign
 import kotlinx.html.DIV
 import kotlinx.html.FOOTER
 import kotlinx.html.a
+import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.footer
 import kotlinx.html.h1
+import kotlinx.html.id
 import kotlinx.html.img
 import kotlinx.html.li
 import kotlinx.html.link
 import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.picture
+import kotlinx.html.script
 import kotlinx.html.span
 import kotlinx.html.style
 import kotlinx.html.title
@@ -82,6 +85,11 @@ val myFooter: FOOTER.() -> Unit = {
         a(href = mainPage.path) { +"Home" }
         +" - "
         a(href = feeds.path) { +"Feeds" }
+        script(src = "https://unpkg.com/website-carbon-badges@1.1.3/b.min.js") { defer = true }
+        div {
+            id = "wcb"
+            classes = setOf("carbonbadge")
+        }
     }
 }
 
@@ -129,6 +137,7 @@ class MyWebsite {
             resource("fediverse-60.png")
             resource("github-sm.png")
             resource("github-60.png")
+            resource("button.gif")
 
             RecipeIndex.recipes.forEach {
                 page(it.recipePage())
@@ -249,6 +258,11 @@ val myDashboard: DIV.() -> Unit = {
                     +"I joined this project in 2023 and have been doing ongoing maintenance for it."
                 }
             }
+            project("nebula-plugins", "nebula-archrules-plugin") {
+                description {
+                    +"Gradle plugins for declaring ArchUnit rule libraries and evaluating rules in Gradle projects."
+                }
+            }
             project("wakingrufus", "khtmx") {
                 description {
                     +"This project provides a multi-platform Kotlin DSL which extends the kotlinx HTML DSL to support HTMX. "
@@ -294,6 +308,13 @@ val myDashboard: DIV.() -> Unit = {
         }
         val videoCamera = "\uD83C\uDFA5"
         topicPanel("Writing / Speaking") {
+            subPanel("ArchUnit / ArchRules") {
+                expandable()
+                entry(
+                    "Netflix TechBlog",
+                    "https://netflixtechblog.com/scaling-archunit-with-nebula-archrules-b4642c464c5a"
+                )
+            }
             subPanel("Platform Engineering") {
                 expandable()
                 entry(
@@ -370,17 +391,10 @@ val myDashboard: DIV.() -> Unit = {
         }
         topicPanel("Other Interests") {
             subPanel("Music") {
-                entry("Best Music of 2020", music2020.path)
-                entry("Best Music of 2021", music2021.path)
-                entry("Best Music of 2022", music2022.path)
-                entry("Best Music of 2023", music2023.path)
-                entry("Best Music of 2024", music2024.path)
-                entry("Best Music of 2025", music2025.path)
+                entry("record.club", "https://record.club/wakingrufus")
             }
             subPanel("Movies") {
                 entry("Letterboxd", "https://letterboxd.com/wakingrufus/")
-                entry("2021 Criterion Challenge Recap", criterion2021.path)
-                entry("2022 Criterion Challenge Recap", criterion2022.path)
             }
         }
     }

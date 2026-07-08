@@ -122,14 +122,14 @@ class DashboardPanel {
                     a(href = subPanel.link) { +subPanel.name }
                 }
             }
-            div {
-                style = css {
-                    display = Display.inlineBlock
-                    width = 49.pct
-                    textAlign = TextAlign.right
-                    verticalAlign = VerticalAlign.middle
-                }
-                if (subPanel.image != null) {
+            if (subPanel.image != null) {
+                div {
+                    style = css {
+                        display = Display.inlineBlock
+                        width = 49.pct
+                        textAlign = TextAlign.right
+                        verticalAlign = VerticalAlign.middle
+                    }
                     a(href = subPanel.link) {
                         img(src = subPanel.image) {
                         }
@@ -160,11 +160,13 @@ class DashboardPanel {
     }
 
     private fun DIV.renderSubPanelContent(subPanel: SubPanel) {
-        p {
-            style = css {
-                paddingRight = 4.px
+        subPanel.content?.also {
+            p {
+                style = css {
+                    paddingRight = 4.px
+                }
+                it.invoke(this)
             }
-            subPanel.content.invoke(this)
         }
         div {
             style = css {
