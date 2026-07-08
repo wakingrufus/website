@@ -10,7 +10,7 @@ data class SubPanel(
     val image: String? = null
 ) {
     var entries: MutableList<TopicEntry> = mutableListOf()
-    var content: P.() -> Unit = {}
+    var content: (P.() -> Unit)? = null
     var expandable: Boolean = false
 
     @WebsiteDsl
