@@ -392,6 +392,12 @@ val myDashboard: DIV.() -> Unit = {
         topicPanel("Other Interests") {
             subPanel("Music") {
                 entry("record.club", "https://record.club/wakingrufus")
+                entry("Best Music of 2020", music2020.path)
+                entry("Best Music of 2021", music2021.path)
+                entry("Best Music of 2022", music2022.path)
+                entry("Best Music of 2023", music2023.path)
+                entry("Best Music of 2024", music2024.path)
+                entry("Best Music of 2025", music2025.path)
             }
             subPanel("Movies") {
                 entry("Letterboxd", "https://letterboxd.com/wakingrufus/")
