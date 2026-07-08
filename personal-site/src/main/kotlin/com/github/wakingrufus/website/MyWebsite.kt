@@ -85,11 +85,11 @@ val myFooter: FOOTER.() -> Unit = {
         a(href = mainPage.path) { +"Home" }
         +" - "
         a(href = feeds.path) { +"Feeds" }
-        script(src = "https://unpkg.com/website-carbon-badges@1.1.3/b.min.js") { defer = true }
         div {
             id = "wcb"
-            classes = setOf("carbonbadge")
+            classes = setOf("carbonbadge", "wcb-d")
         }
+        script(src = "https://unpkg.com/website-carbon-badges@1.1.3/b.min.js") { defer = true }
     }
 }
 
